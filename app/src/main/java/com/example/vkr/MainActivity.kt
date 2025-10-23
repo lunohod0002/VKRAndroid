@@ -1,38 +1,29 @@
 package com.example.vkr
-
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
-import com.example.vkr.OpenCellRepository
+import com.example.vkr.models.State
 import com.example.vkr.models.Station
 import com.example.vkr.models.request.CellInfo
 import com.example.vkr.models.response.CellLocation
-import com.example.vkr.CellLocationService
-import com.example.vkr.models.State
-import com.example.vkr.StationParser
 import com.example.vkr.utils.getCurrentCellInfo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileWriter
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
@@ -47,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var stations: List<Station>
     private lateinit var button_find: Button
     private lateinit var mapView: WebView
+    private var count: Int =0
     private lateinit var progressBar: ProgressBar
     private lateinit var text_location: TextView
     private lateinit var nearby_stations: TextView
@@ -67,10 +59,17 @@ class MainActivity : AppCompatActivity() {
         nearby_stations = findViewById(R.id.nearby_stations)
         stations = StationParser.parseStations(this)
         initView()
-
         requestPermission()
         initLocationLiveData()
+        val db = AppDatabase.getDatabase(this)
+        val repository = CellRepository(db.cellDao())
 
+// Запись
+
+        lifecycleScope.launch {
+            repository.allLogs.collect { logs ->
+            }
+        }
 
     }
 
@@ -143,9 +142,9 @@ class MainActivity : AppCompatActivity() {
     private fun onClickFindLocation() {
 
         val cellInfo = getCurrentCellInfo(this)
-        if (cellInfo != null) {
-            fetchLocation(cellInfo)
-        }
+      //  if (cellInfo != null) {
+             fetchLocation(CellInfo("1","1","1","1","!"))
+        //}
     }
 
 
@@ -202,13 +201,102 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchLocation(cellInfo: CellInfo) {
 
+        println(cellInfo.toString())
+        var found = false
 
-        val repository = OpenCellRepository(
-            service = CellLocationService()
-        )
-        fetchLocation(cellInfo)
+        println(coordinates.get(0).get(0))
+
+        for (station in ce){
+            if (station.get(0).lowercase().equals(cellInfo.radio?.lowercase())
+                && station.get(1).lowercase().equals(cellInfo.mcc?.lowercase())
+                        && station.get(2).lowercase().equals(cellInfo.mnc?.lowercase())
+                        && station.get(3).lowercase().equals(cellInfo.lac?.lowercase())
+                        && station.get(4).lowercase().equals(cellInfo.cid?.lowercase()) ){
+                  //TODO : отправлять файл с ненайденными станциями и найденной на сервер и обновлять базу
+
+                val cellLocation = CellLocation(lat = station.get(7).lowercase().toDouble(), lon = station.get(6).lowercase().toDouble() )
+                _locationLiveData.value = State.Success(cellLocation)
+            }}
+        if (!found){
+            val sb = StringBuilder()
+            sb.append(cellInfo.toString())
+            sb.append("not-found")
+            writeFileOnInternalStorage(this,"no-stations.txt",cellInfo.toString())
+
+            count++
         }
-    
+        val content = readFileFromInternalStorage(this, "no-stations.txt")
+        println("Содержимое файла:\n$content")
+        if (count==3){
+            val dir = File(this.filesDir, "mydir")
+            val file = File(dir, "no-stations.txt")
+            val deleted = file.delete()
+
+        }
+        }
+    fun readFileFromInternalStorage(context: Context, fileName: String): String? {
+        val dir = File(context.filesDir, "mydir")
+        val file = File(dir, fileName)
+
+        if (!file.exists()) {
+            return null // или пустую строку, если предпочитаете
+        }
+
+        return try {
+            file.readText(Charsets.UTF_8)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+    fun writeFileOnInternalStorage(mcoContext: Context, sFileName: String, sBody: String?) {
+        val dir = File(mcoContext.getFilesDir(), "mydir")
+        if (!dir.exists()) {
+            dir.mkdir()
+        }
+
+        try {
+            val gpxfile = File(dir, sFileName)
+            val writer: FileWriter = FileWriter(
+                gpxfile,
+                true
+            )
+            writer.append(sBody)
+            writer.flush()
+            writer.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+//    fun updateCellInfoOnServer(file: File){
+//        val requestFile: RequestBody = RequestBody.create(file, MediaType.parse("text/plain"))
+//
+//
+//// Создаём MultipartBody.Part
+//        val body = MultipartBody.Part.createFormData("file", file.getName(), requestFile)
+//
+//
+//// Вызываем API
+//        val apiService: UpdateCellInfoService = create(UpdateCellInfoService::class.java)
+//        val call: Call<ResponseBody?> = apiService.uploadFile(body)
+//
+//        call.enqueue(object : Callback<ResponseBody?>() {
+//            public override fun onResponse(
+//                call: Call<ResponseBody?>?,
+//                response: Response<ResponseBody?>
+//            ) {
+//                if (response.isSuccessful()) {
+//                    Log.d("Upload", "Файл успешно загружен")
+//                } else {
+//                    Log.e("Upload", "Ошибка: " + response.code())
+//                }
+//            }
+//
+//            public override fun onFailure(call: Call<ResponseBody?>?, t: Throwable) {
+//                Log.e("Upload", "Сбой сети: " + t.message)
+//            }
+//        })
+//    }
 
     @SuppressLint("SetTextI18n")
     private fun showLocationInfo(cellLocation: CellLocation) {
