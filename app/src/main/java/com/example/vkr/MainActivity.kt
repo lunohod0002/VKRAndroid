@@ -18,9 +18,13 @@ import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
 import com.example.vkr.models.State
 import com.example.vkr.models.Station
+import com.example.vkr.models.request.CellEntity
 import com.example.vkr.models.request.CellInfo
 import com.example.vkr.models.response.CellLocation
+import com.example.vkr.repositories.CellRepository
+import com.example.vkr.repositories.CellStationRepository
 import com.example.vkr.utils.getCurrentCellInfo
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileWriter
@@ -38,11 +42,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var stations: List<Station>
     private lateinit var button_find: Button
     private lateinit var mapView: WebView
-    private var count: Int =0
+    private var count: Int = 0
     private lateinit var progressBar: ProgressBar
     private lateinit var text_location: TextView
     private lateinit var nearby_stations: TextView
+    private lateinit var notFoundCellRepository: CellStationRepository
 
+    private lateinit var cellRepository: CellRepository
     private lateinit var text_address: TextView
 
     private val EARTH_RADIUS = 6371000.0
@@ -61,13 +67,16 @@ class MainActivity : AppCompatActivity() {
         initView()
         requestPermission()
         initLocationLiveData()
-        val db = AppDatabase.getDatabase(this)
-        val repository = CellRepository(db.cellDao())
+        lifecycleScope.launch {
+            val db = (application as App).getDb()
+            cellRepository = CellRepository(db.cellDao())
+            notFoundCellRepository = CellStationRepository(db.notFoundCellDao())
 
-// Запись
+        }
+
 
         lifecycleScope.launch {
-            repository.allLogs.collect { logs ->
+            notFoundCellRepository.allLogs.collect { logs ->
             }
         }
 
@@ -78,56 +87,61 @@ class MainActivity : AppCompatActivity() {
             is State.Loading -> {
                 //
             }
+
             is State.Failed -> {
 //
             }
+
             is State.Success -> {
-                showLocationInfo(state.response)
+             //   showLocationInfo(state.response)
             }
         }
     }
-    fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val latDistance = Math.toRadians(lat2 - lat1)
-        val lonDistance = Math.toRadians(lon2 - lon1)
 
-        val a = sin(latDistance / 2).pow(2) +
-                cos(Math.toRadians(lat1)) *
-                cos(Math.toRadians(lat2)) *
-                sin(lonDistance / 2).pow(2)
+//    fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+//        val latDistance = Math.toRadians(lat2 - lat1)
+//        val lonDistance = Math.toRadians(lon2 - lon1)
+//
+//        val a = sin(latDistance / 2).pow(2) +
+//                cos(Math.toRadians(lat1)) *
+//                cos(Math.toRadians(lat2)) *
+//                sin(lonDistance / 2).pow(2)
+//
+//        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+//        return EARTH_RADIUS * c
+//    }
 
-        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-        return EARTH_RADIUS * c
-    }
+//    fun getNearbyStationNames(
+//        stations: List<Station>,
+//        targetLat: Double?,
+//        targetLon: Double?,
+//        radiusMeters: Double = 1500.0
+//    ): List<String>? {
+//        if (targetLon != null && targetLat != null) {
+//
+//            return stations
+//                .filter { station ->
+//                    haversineDistance(
+//                        targetLat,
+//                        targetLon,
+//                        station.latitude,
+//                        station.longitude
+//                    ) <= radiusMeters
+//                }
+//                .map { it.name }
+//        } else {
+//            println("ELSE")
+//            return null
+//        }
+//    }
 
-    fun getNearbyStationNames(
-        stations: List<Station>,
-        targetLat: Double?,
-        targetLon: Double?,
-        radiusMeters: Double = 1500.0
-    ): List<String>? {
-        if (targetLon != null && targetLat != null) {
-
-            return stations
-                .filter { station ->
-                    haversineDistance(
-                        targetLat,
-                        targetLon,
-                        station.latitude,
-                        station.longitude
-                    ) <= radiusMeters
-                }
-                .map { it.name }
-        } else {
-            println("ELSE")
-            return null
-        }
-    }
     private fun initLocationLiveData() {
         locationLiveData.observe(
             this,
             Observer(::onStateChanged)
         )
     }
+
     @SuppressLint("SetJavaScriptEnabled")
     private fun initView() {
         val mapView: WebView = findViewById(R.id.mapView)
@@ -142,8 +156,8 @@ class MainActivity : AppCompatActivity() {
     private fun onClickFindLocation() {
 
         val cellInfo = getCurrentCellInfo(this)
-      //  if (cellInfo != null) {
-             fetchLocation(CellInfo("1","1","1","1","!"))
+        //  if (cellInfo != null) {
+        fetchLocation(CellInfo("1", "1", "1", "1", "!"))
         //}
     }
 
@@ -202,72 +216,75 @@ class MainActivity : AppCompatActivity() {
     private fun fetchLocation(cellInfo: CellInfo) {
 
         println(cellInfo.toString())
-        var found = false
+        var stations: List<CellEntity>
+        stations = cellRepository.allCells
 
-        println(coordinates.get(0).get(0))
 
-        for (station in ce){
-            if (station.get(0).lowercase().equals(cellInfo.radio?.lowercase())
-                && station.get(1).lowercase().equals(cellInfo.mcc?.lowercase())
-                        && station.get(2).lowercase().equals(cellInfo.mnc?.lowercase())
-                        && station.get(3).lowercase().equals(cellInfo.lac?.lowercase())
-                        && station.get(4).lowercase().equals(cellInfo.cid?.lowercase()) ){
-                  //TODO : отправлять файл с ненайденными станциями и найденной на сервер и обновлять базу
-
-                val cellLocation = CellLocation(lat = station.get(7).lowercase().toDouble(), lon = station.get(6).lowercase().toDouble() )
-                _locationLiveData.value = State.Success(cellLocation)
-            }}
-        if (!found){
-            val sb = StringBuilder()
-            sb.append(cellInfo.toString())
-            sb.append("not-found")
-            writeFileOnInternalStorage(this,"no-stations.txt",cellInfo.toString())
-
-            count++
+        for (station in cellRepository.allCells) {
+//            if (station.get(0).lowercase().equals(cellInfo.radio?.lowercase())
+//                && station.get(1).lowercase().equals(cellInfo.mcc?.lowercase())
+//                        && station.get(2).lowercase().equals(cellInfo.mnc?.lowercase())
+//                        && station.get(3).lowercase().equals(cellInfo.lac?.lowercase())
+//                        && station.get(4).lowercase().equals(cellInfo.cid?.lowercase()) ){
+//                  //TODO : отправлять файл с ненайденными станциями и найденной на сервер и обновлять базу
+//
+//                val cellLocation = CellLocation(lat = station.get(7).lowercase().toDouble(), lon = station.get(6).lowercase().toDouble() )
+//                _locationLiveData.value = State.Success(cellLocation)
+//            }}
+//        if (!found){
+//            val sb = StringBuilder()
+//            sb.append(cellInfo.toString())
+//            sb.append("not-found")
+//            writeFileOnInternalStorage(this,"no-stations.txt",cellInfo.toString())
+//
+//            count++
+//        }
+//        val content = readFileFromInternalStorage(this, "no-stations.txt")
+//        println("Содержимое файла:\n$content")
+//        if (count==3){
+//            val dir = File(this.filesDir, "mydir")
+//            val file = File(dir, "no-stations.txt")
+//            val deleted = file.delete()
+//
+//        }
         }
-        val content = readFileFromInternalStorage(this, "no-stations.txt")
-        println("Содержимое файла:\n$content")
-        if (count==3){
-            val dir = File(this.filesDir, "mydir")
-            val file = File(dir, "no-stations.txt")
-            val deleted = file.delete()
+        fun readFileFromInternalStorage(context: Context, fileName: String): String? {
+            val dir = File(context.filesDir, "mydir")
+            val file = File(dir, fileName)
 
-        }
-        }
-    fun readFileFromInternalStorage(context: Context, fileName: String): String? {
-        val dir = File(context.filesDir, "mydir")
-        val file = File(dir, fileName)
+            if (!file.exists()) {
+                return null // или пустую строку, если предпочитаете
+            }
 
-        if (!file.exists()) {
-            return null // или пустую строку, если предпочитаете
+            return try {
+                file.readText(Charsets.UTF_8)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
 
-        return try {
-            file.readText(Charsets.UTF_8)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
+        fun writeFileOnInternalStorage(mcoContext: Context, sFileName: String, sBody: String?) {
+            val dir = File(mcoContext.getFilesDir(), "mydir")
+            if (!dir.exists()) {
+                dir.mkdir()
+            }
+
+            try {
+                val gpxfile = File(dir, sFileName)
+                val writer: FileWriter = FileWriter(
+                    gpxfile,
+                    true
+                )
+                writer.append(sBody)
+                writer.flush()
+                writer.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
-    fun writeFileOnInternalStorage(mcoContext: Context, sFileName: String, sBody: String?) {
-        val dir = File(mcoContext.getFilesDir(), "mydir")
-        if (!dir.exists()) {
-            dir.mkdir()
-        }
-
-        try {
-            val gpxfile = File(dir, sFileName)
-            val writer: FileWriter = FileWriter(
-                gpxfile,
-                true
-            )
-            writer.append(sBody)
-            writer.flush()
-            writer.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+}
 //    fun updateCellInfoOnServer(file: File){
 //        val requestFile: RequestBody = RequestBody.create(file, MediaType.parse("text/plain"))
 //
@@ -298,23 +315,22 @@ class MainActivity : AppCompatActivity() {
 //        })
 //    }
 
-    @SuppressLint("SetTextI18n")
-    private fun showLocationInfo(cellLocation: CellLocation) {
-        text_location.text = getString(
-            R.string.text_location_format,
-            cellLocation.lat,
-            cellLocation.lon
-        )
-        val nearbyNames = getNearbyStationNames(
-            stations,
-            targetLat = cellLocation.lat,
-            targetLon = cellLocation.lon
-        )
-        nearby_stations.text = nearbyNames.toString()
-        text_address.text = "address"
-        mapView.loadUrl(
-            "https://www.google.com/maps/place/${cellLocation.lat},${cellLocation.lon}"
-        )
-    }
+//        @SuppressLint("SetTextI18n")
+//    private fun showLocationInfo(cellLocation: CellLocation) {
+//        text_location.text = getString(
+//            R.string.text_location_format,
+//            cellLocation.lat,
+//            cellLocation.lon
+//        )
+//        val nearbyNames = getNearbyStationNames(
+//            stations,
+//            targetLat = cellLocation.lat,
+//            targetLon = cellLocation.lon
+//        )
+//        nearby_stations.text = nearbyNames.toString()
+//        text_address.text = "address"
+//        mapView.loadUrl(
+//            "https://www.google.com/maps/place/${cellLocation.lat},${cellLocation.lon}"
+//        )
+//    }
 
-}

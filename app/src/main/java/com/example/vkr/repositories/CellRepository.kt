@@ -1,13 +1,13 @@
-package com.example.vkr
+package com.example.vkr.repositories
 
 import com.example.vkr.dao.CellDao
-import com.example.vkr.models.request.CellInfo
+import com.example.vkr.models.request.CellEntity
+import kotlinx.coroutines.flow.Flow
 
 class CellRepository(private val cellDao: CellDao) {
 
-    val allLogs = cellDao.getAllLogs() // Flow<List<LogEntry>>
+    val allCells: List<CellEntity> = cellDao.getAllCells()
 
-    // Опционально: если хотите создавать объект "на лету"
     suspend fun insert(
         lac: String?,
         mcc: String?,
@@ -15,7 +15,7 @@ class CellRepository(private val cellDao: CellDao) {
         cid: String?,
         radio: String?
     ) {
-        val cell = CellInfo(
+        val cell = CellEntity(
             lac = lac,
             mcc = mcc,
             mnc = mnc,
@@ -25,6 +25,3 @@ class CellRepository(private val cellDao: CellDao) {
         cellDao.insert(cell)
     }
 }
-}
-
-// Где-то в Activity/Fragment:
