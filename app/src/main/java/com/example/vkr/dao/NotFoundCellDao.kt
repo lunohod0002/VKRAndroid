@@ -20,7 +20,8 @@ interface NotFoundCellDao {
     suspend fun insertAll(cells: List<NotFoundCell>)
 
     @Query("SELECT * FROM notFoundCell ORDER BY id DESC")
-    suspend fun getAllCells(): Flow<List<NotFoundCell>>
+    fun getAllCells(): List<NotFoundCell>
+
 
     @Query("SELECT * FROM notFoundCell WHERE id = :id")
     suspend fun getCellById(id: Long): NotFoundCell?

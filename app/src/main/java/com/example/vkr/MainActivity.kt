@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ProgressBar
@@ -20,10 +21,12 @@ import com.example.vkr.models.State
 import com.example.vkr.models.Station
 import com.example.vkr.models.request.CellEntity
 import com.example.vkr.models.request.CellInfo
+import com.example.vkr.models.request.NotFoundCell
 import com.example.vkr.models.response.CellLocation
 import com.example.vkr.repositories.CellRepository
 import com.example.vkr.repositories.CellStationRepository
 import com.example.vkr.utils.getCurrentCellInfo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.io.File
@@ -67,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         initView()
         requestPermission()
         initLocationLiveData()
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             val db = (application as App).getDb()
             cellRepository = CellRepository(db.cellDao())
             notFoundCellRepository = CellStationRepository(db.notFoundCellDao())
@@ -75,10 +78,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        lifecycleScope.launch {
-            notFoundCellRepository.allLogs.collect { logs ->
-            }
-        }
+//        lifecycleScope.launch {
+//            notFoundCellRepository.allLogs.collect { logs ->
+//            }
+//        }
 
     }
 
@@ -215,17 +218,61 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchLocation(cellInfo: CellInfo) {
 
-        println(cellInfo.toString())
-        var stations: List<CellEntity>
-        stations = cellRepository.allCells
+        var stations: List<NotFoundCell>
+
+//        lifecycleScope.launch {
+//            val id = notFoundCellRepository.insert("2","250","01","!","!","founded")
+//            Log.d("DB", "Inserted row ID: ${id}")
+//        }
+        lifecycleScope.launch {
+
+            val id = cellRepository.insert("1","250","01","17754","LTE",)
+            Log.d("DB", "Inserted row ID: ${id}")
+        }
+        val cell =cellRepository.getCellAllInfo(
+            lac=cellInfo.lac!!,mcc=cellInfo.mcc!!,mnc=cellInfo.mnc!!,cellInfo.cid!!, radio = cellInfo.radio!!
+        )
+        if (cell==null) {
+            lifecycleScope.launch {
+            val id = notFoundCellRepository.insert(lac=cellInfo.lac!!,mcc=cellInfo.mcc!!,mnc=cellInfo.mnc!!,cellInfo.cid!!, radio = cellInfo.radio!!,status="not-founded")
+            Log.d("DB", "Inserted row ID: ${id}")
+            }
+        } else {
+
+            val allStations=notFoundCellRepository.allStations
+            if (allStations.count() == 0) {
+                lifecycleScope.launch {
+                    val id = notFoundCellRepository.insert(
+                        lac = cellInfo.lac!!,
+                        mcc = cellInfo.mcc!!,
+                        mnc = cellInfo.mnc!!,
+                        cellInfo.cid!!,
+                        radio = cellInfo.radio!!,
+                        status = "founded"
+                    )
+                    Log.d("DB", "Inserted row ID: ${id}")
+                }
+                return
+            }
+            else if (allStations.get(-1).status.equals("not-founded") ){
+                lifecycleScope.launch {
+                    val id = notFoundCellRepository.insert(
+                        lac = cellInfo.lac!!,
+                        mcc = cellInfo.mcc!!,
+                        mnc = cellInfo.mnc!!,
+                        cellInfo.cid!!,
+                        radio = cellInfo.radio!!,
+                        status = "founded"
+                    )
+                    Log.d("DB", "Inserted row ID: ${id}")
+                }
+                return
+                    )
+
+        }
 
 
-        for (station in cellRepository.allCells) {
-//            if (station.get(0).lowercase().equals(cellInfo.radio?.lowercase())
-//                && station.get(1).lowercase().equals(cellInfo.mcc?.lowercase())
-//                        && station.get(2).lowercase().equals(cellInfo.mnc?.lowercase())
-//                        && station.get(3).lowercase().equals(cellInfo.lac?.lowercase())
-//                        && station.get(4).lowercase().equals(cellInfo.cid?.lowercase()) ){
+
 //                  //TODO : отправлять файл с ненайденными станциями и найденной на сервер и обновлять базу
 //
 //                val cellLocation = CellLocation(lat = station.get(7).lowercase().toDouble(), lon = station.get(6).lowercase().toDouble() )

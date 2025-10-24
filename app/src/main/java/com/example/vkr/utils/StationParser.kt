@@ -31,16 +31,16 @@ object StationParser {
 
         return stations
     }
-    fun fetchLocation(context: Context): List<List<String>> {
-
-        val lines = readCsvFromGzFromAssets(context)
-        return lines.map { it.split(",") }
-    }
-    fun readCsvFromGzFromAssets(context: Context): List<String> {
-        return context.resources.openRawResource(R.raw.database).use { rawStream ->
-            GZIPInputStream(rawStream).bufferedReader().use { it.readLines() }
-        }
-    }
+//    fun fetchLocation(context: Context): List<List<String>> {
+//
+//        val lines = readCsvFromGzFromAssets(context)
+//        return lines.map { it.split(",") }
+//    }
+////    fun readCsvFromGzFromAssets(context: Context): List<String> {
+////        return context.resources.openRawResource(R.raw.database).use { rawStream ->
+////            GZIPInputStream(rawStream).bufferedReader().use { it.readLines() }
+////        }
+////    }
 
 
 }

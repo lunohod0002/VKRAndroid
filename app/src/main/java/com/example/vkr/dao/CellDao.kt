@@ -20,6 +20,8 @@ interface CellDao {
     @Query("SELECT * FROM cellInfo WHERE id = :id")
     suspend fun getCellById(id: Long): CellEntity?
 
+    @Query("SELECT * FROM cellInfo WHERE cid = :cid and lac = :lac and mcc = :mcc and mnc = :mnc and radio = :radio")
+    fun getCellByAllInfo(cid: String,lac: String,mcc:String,mnc:String,radio:String): CellEntity?
     @Query("SELECT * FROM cellInfo WHERE stationId = :stationId")
     fun getCellsByStationId(stationId: Long): Flow<List<CellEntity>>
 

@@ -53,7 +53,8 @@ data class NotFoundCell(
     var mnc: String? = null,
     var cid: String? = null,
     var radio: String? = null,
-    val status: String? = null
+    val status: String? = null,
+    val stationId:Long? = null
 )
 object RadioType {
     const val GSM = "gsm"
