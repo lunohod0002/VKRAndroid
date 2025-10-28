@@ -29,6 +29,7 @@ class CellRepository(private val cellDao: CellDao) {
         mcc: String?,
         mnc: String?,
         cid: String?,
+        station: String? = null,
         radio: String?
     ) {
         val cell = CellEntity(
@@ -36,6 +37,7 @@ class CellRepository(private val cellDao: CellDao) {
             mcc = mcc,
             mnc = mnc,
             cid = cid,
+            station = station,
             radio = radio,
         )
 

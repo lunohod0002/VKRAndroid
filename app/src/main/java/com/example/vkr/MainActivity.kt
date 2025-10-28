@@ -1,15 +1,14 @@
 package com.example.vkr
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
@@ -21,20 +20,11 @@ import com.example.vkr.models.CellEntityUpdate
 import com.example.vkr.models.State
 import com.example.vkr.models.Station
 import com.example.vkr.models.request.CellInfo
-import com.example.vkr.models.response.CellLocation
 import com.example.vkr.repositories.CellRepository
-import com.example.vkr.repositories.CellStationRepository
+import com.example.vkr.repositories.CellUpdateRepository
 import com.example.vkr.utils.getCurrentCellInfo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileWriter
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 
 class MainActivity : AppCompatActivity() {
@@ -48,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var text_location: TextView
     private lateinit var nearby_stations: TextView
-    private lateinit var notFoundCellRepository: CellStationRepository
+    private lateinit var cellUpdateRepository: CellUpdateRepository
 
     private lateinit var cellRepository: CellRepository
     private lateinit var text_address: TextView
@@ -68,11 +58,11 @@ class MainActivity : AppCompatActivity() {
         stations = StationParser.parseStations(this)
         initView()
         requestPermission()
-        initLocationLiveData()
+     //   initLocationLiveData()
         lifecycleScope.launch(Dispatchers.IO) {
             val db = (application as App).getDb()
             cellRepository = CellRepository(db.cellDao())
-            notFoundCellRepository = CellStationRepository(db.notFoundCellDao())
+            cellUpdateRepository = CellUpdateRepository(db.notFoundCellDao())
 
         }
 
@@ -84,21 +74,21 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun onStateChanged(state: State) {
-        when (state) {
-            is State.Loading -> {
-                //
-            }
-
-            is State.Failed -> {
+//    private fun onStateChanged(state: State) {
+//        when (state) {
+//            is State.Loading -> {
+//                //
+//            }
 //
-            }
-
-            is State.Success -> {
-                //   showLocationInfo(state.response)
-            }
-        }
-    }
+//            is State.Failed -> {
+////
+//            }
+//
+//            is State.Success -> {
+//                //   showLocationInfo(state.response)
+//            }
+//        }
+//    }
 
 //    fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
 //        val latDistance = Math.toRadians(lat2 - lat1)
@@ -137,12 +127,12 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun initLocationLiveData() {
-        locationLiveData.observe(
-            this,
-            Observer(::onStateChanged)
-        )
-    }
+//    private fun initLocationLiveData() {
+//        locationLiveData.observe(
+//            this,
+//            Observer(::onStateChanged)
+//        )
+//    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initView() {
@@ -158,9 +148,9 @@ class MainActivity : AppCompatActivity() {
     private fun onClickFindLocation() {
 
         val cellInfo = getCurrentCellInfo(this)
-        //  if (cellInfo != null) {
-        fetchLocation(CellInfo("1", "1", "1", "1", "!"))
-        //}
+          if (cellInfo != null) {
+            fetchLocation(cellInfo)
+        }
     }
 
 
@@ -215,29 +205,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun fetchLocation(cellInfo: CellInfo) {
+        //TODO узнать, почему программма падает на return          return@launch
 
-        var stations: List<CellEntityUpdate>
 
-//        lifecycleScope.launch {
-//            val id = notFoundCellRepository.insert("2","250","01","!","!","founded")
-//            Log.d("DB", "Inserted row ID: ${id}")
-//        }
-        lifecycleScope.launch(Dispatchers.IO) {
+            val cell = cellRepository.getCellAllInfo(
+                lac = cellInfo.lac!!,
+                mcc = cellInfo.mcc!!,
+                mnc = cellInfo.mnc!!,
+                cid = cellInfo.cid!!,
+                radio = cellInfo.radio!!
+            )
+            if (cell!=null) {
+                text_address.text = cell.station
+            } else{
 
-            val id = cellRepository.insert("1", "250", "01", "17754", "LTE")
+                text_address.text="Не удалось определить станцию: $cellInfo"
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val id = cellUpdateRepository.insert(
+                        lac = cellInfo.lac!!,
+                        mcc = cellInfo.mcc!!,
+                        mnc = cellInfo.mnc!!,
+                        cellInfo.cid!!,
+                        radio = cellInfo.radio!!,
+                    )
+                }
+            }
+                }
 
-            Log.d("DB", "Inserted row ID: ${id}")
-        }
-        lifecycleScope.launch(Dispatchers.IO) {
 
-            val cell = cellRepository.allCells
-            println(cell)
-        }
+
+
+
 
 
 //
-//            val allStations=notFoundCellRepository.allStations
 //            if (allStations.count() == 0) {
 //                lifecycleScope.launch {
 //                    val id = notFoundCellRepository.insert(
@@ -286,10 +289,17 @@ class MainActivity : AppCompatActivity() {
 //            val deleted = file.delete()
 //
 //        }
-    }
 
 
+    private fun showToast(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
+}
+
 
 //    fun updateCellInfoOnServer(file: File){
 //        val requestFile: RequestBody = RequestBody.create(file, MediaType.parse("text/plain"))

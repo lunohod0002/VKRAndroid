@@ -17,9 +17,8 @@ data class CellInfo(
 
 
 object RadioType {
-    const val GSM = "gsm"
-    const val CDMA = "cdma"
-    const val UMTS = "umts"
-    const val LTE = "lte"
+    const val GSM = "GSM"
+    const val CDMA = "CDMA"
+    const val LTE = "LTE"
 }
 

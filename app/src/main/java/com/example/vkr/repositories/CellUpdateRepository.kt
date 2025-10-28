@@ -3,7 +3,7 @@ package com.example.vkr.repositories
 import com.example.vkr.dao.CellUpdateDao
 import com.example.vkr.models.CellEntityUpdate
 
-class CellStationRepository(private val cellDao: CellUpdateDao) {
+class CellUpdateRepository(private val cellDao: CellUpdateDao) {
 
     val allStations = cellDao.getAllCells()
 
