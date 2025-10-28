@@ -17,11 +17,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
+import com.example.vkr.models.CellEntityUpdate
 import com.example.vkr.models.State
 import com.example.vkr.models.Station
-import com.example.vkr.models.request.CellEntity
 import com.example.vkr.models.request.CellInfo
-import com.example.vkr.models.request.NotFoundCell
 import com.example.vkr.models.response.CellLocation
 import com.example.vkr.repositories.CellRepository
 import com.example.vkr.repositories.CellStationRepository
@@ -96,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             is State.Success -> {
-             //   showLocationInfo(state.response)
+                //   showLocationInfo(state.response)
             }
         }
     }
@@ -218,59 +217,52 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchLocation(cellInfo: CellInfo) {
 
-        var stations: List<NotFoundCell>
+        var stations: List<CellEntityUpdate>
 
 //        lifecycleScope.launch {
 //            val id = notFoundCellRepository.insert("2","250","01","!","!","founded")
 //            Log.d("DB", "Inserted row ID: ${id}")
 //        }
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
 
-            val id = cellRepository.insert("1","250","01","17754","LTE",)
+            val id = cellRepository.insert("1", "250", "01", "17754", "LTE")
+
             Log.d("DB", "Inserted row ID: ${id}")
         }
-        val cell =cellRepository.getCellAllInfo(
-            lac=cellInfo.lac!!,mcc=cellInfo.mcc!!,mnc=cellInfo.mnc!!,cellInfo.cid!!, radio = cellInfo.radio!!
-        )
-        if (cell==null) {
-            lifecycleScope.launch {
-            val id = notFoundCellRepository.insert(lac=cellInfo.lac!!,mcc=cellInfo.mcc!!,mnc=cellInfo.mnc!!,cellInfo.cid!!, radio = cellInfo.radio!!,status="not-founded")
-            Log.d("DB", "Inserted row ID: ${id}")
-            }
-        } else {
+        lifecycleScope.launch(Dispatchers.IO) {
 
-            val allStations=notFoundCellRepository.allStations
-            if (allStations.count() == 0) {
-                lifecycleScope.launch {
-                    val id = notFoundCellRepository.insert(
-                        lac = cellInfo.lac!!,
-                        mcc = cellInfo.mcc!!,
-                        mnc = cellInfo.mnc!!,
-                        cellInfo.cid!!,
-                        radio = cellInfo.radio!!,
-                        status = "founded"
-                    )
-                    Log.d("DB", "Inserted row ID: ${id}")
-                }
-                return
-            }
-            else if (allStations.get(-1).status.equals("not-founded") ){
-                lifecycleScope.launch {
-                    val id = notFoundCellRepository.insert(
-                        lac = cellInfo.lac!!,
-                        mcc = cellInfo.mcc!!,
-                        mnc = cellInfo.mnc!!,
-                        cellInfo.cid!!,
-                        radio = cellInfo.radio!!,
-                        status = "founded"
-                    )
-                    Log.d("DB", "Inserted row ID: ${id}")
-                }
-                return
-                    )
-
+            val cell = cellRepository.allCells
+            println(cell)
         }
 
+
+//
+//            val allStations=notFoundCellRepository.allStations
+//            if (allStations.count() == 0) {
+//                lifecycleScope.launch {
+//                    val id = notFoundCellRepository.insert(
+//                        lac = cellInfo.lac!!,
+//                        mcc = cellInfo.mcc!!,
+//                        mnc = cellInfo.mnc!!,
+//                        cellInfo.cid!!,
+//                        radio = cellInfo.radio!!,
+//                    )
+//                    Log.d("DB", "Inserted row ID: ${id}")
+//                }
+//                return
+//            }
+//            else if (allStations.get(-1).station==null ){
+//                lifecycleScope.launch {
+//                    val id = notFoundCellRepository.insert(
+//                        lac = cellInfo.lac!!,
+//                        mcc = cellInfo.mcc!!,
+//                        mnc = cellInfo.mnc!!,
+//                        cellInfo.cid!!,
+//                        radio = cellInfo.radio!!,
+//                    )
+//                    Log.d("DB", "Inserted row ID: ${id}")
+//                }
+//                return
 
 
 //                  //TODO : отправлять файл с ненайденными станциями и найденной на сервер и обновлять базу
@@ -294,44 +286,11 @@ class MainActivity : AppCompatActivity() {
 //            val deleted = file.delete()
 //
 //        }
-        }
-        fun readFileFromInternalStorage(context: Context, fileName: String): String? {
-            val dir = File(context.filesDir, "mydir")
-            val file = File(dir, fileName)
-
-            if (!file.exists()) {
-                return null // или пустую строку, если предпочитаете
-            }
-
-            return try {
-                file.readText(Charsets.UTF_8)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
-
-        fun writeFileOnInternalStorage(mcoContext: Context, sFileName: String, sBody: String?) {
-            val dir = File(mcoContext.getFilesDir(), "mydir")
-            if (!dir.exists()) {
-                dir.mkdir()
-            }
-
-            try {
-                val gpxfile = File(dir, sFileName)
-                val writer: FileWriter = FileWriter(
-                    gpxfile,
-                    true
-                )
-                writer.append(sBody)
-                writer.flush()
-                writer.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
     }
-}
+
+
+    }
+
 //    fun updateCellInfoOnServer(file: File){
 //        val requestFile: RequestBody = RequestBody.create(file, MediaType.parse("text/plain"))
 //

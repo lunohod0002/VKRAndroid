@@ -11,8 +11,11 @@ class App : Application() {
 
         this.db = Room.databaseBuilder(
             this,
-            AppDatabase::class.java, "cells"
-        ).build()
+            AppDatabase::class.java,"database"
+        )
+            .createFromAsset("database.db")
+            .fallbackToDestructiveMigrationFrom(dropAllTables = true)
+            .build()
     }
 
     fun getDb(): AppDatabase {

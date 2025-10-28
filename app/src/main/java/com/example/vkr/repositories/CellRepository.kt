@@ -1,7 +1,7 @@
 package com.example.vkr.repositories
 
 import com.example.vkr.dao.CellDao
-import com.example.vkr.models.request.CellEntity
+import com.example.vkr.models.CellEntity
 import kotlinx.coroutines.flow.Flow
 
 class CellRepository(private val cellDao: CellDao) {
@@ -36,7 +36,7 @@ class CellRepository(private val cellDao: CellDao) {
             mcc = mcc,
             mnc = mnc,
             cid = cid,
-            radio = radio
+            radio = radio,
         )
 
         cellDao.insert(cell)

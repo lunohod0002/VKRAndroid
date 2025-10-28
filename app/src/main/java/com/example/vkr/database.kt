@@ -5,19 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.vkr.dao.CellDao
-import com.example.vkr.dao.NotFoundCellDao
-import com.example.vkr.models.request.CellEntity
-import com.example.vkr.models.request.NotFoundCell
-import com.example.vkr.models.request.StationEntity
+import com.example.vkr.dao.CellUpdateDao
+import com.example.vkr.models.CellEntity
+import com.example.vkr.models.CellEntityUpdate
+
 
 @Database(
-    entities = [CellEntity::class, StationEntity::class, NotFoundCell::class],
-    version = 3,
+    entities = [CellEntity::class, CellEntityUpdate::class],
+    version = 1,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cellDao(): CellDao
-    abstract fun notFoundCellDao(): NotFoundCellDao
+    abstract fun notFoundCellDao(): CellUpdateDao
 
 }
