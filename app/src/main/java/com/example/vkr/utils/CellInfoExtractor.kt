@@ -78,6 +78,7 @@ fun getCellInfo(info: CellInfoLte): CellInfo {
     cellInfo.radio = RadioType.LTE
 
     info.cellIdentity.let {
+
         val (mcc, mnc) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             Pair(it.mccString?.toInt() ?: 0, it.mncString?.toInt() ?: 0)
         } else {
