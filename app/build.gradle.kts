@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    kotlin("plugin.serialization") version "2.0.21"
 
     id("com.google.devtools.ksp")
 }
@@ -13,7 +14,7 @@ android {
     }
     defaultConfig {
         applicationId = "com.example.vkr"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -42,6 +43,22 @@ android {
 }
 
 dependencies {
+    val nav_version = "2.9.6"
+
+    // Jetpack Compose integration
+
+    // Views/Fragments integration
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Feature module support for Fragments
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+
+    // JSON serialization library, works with the Kotlin serialization plugin
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation("com.yandex.android:maps.mobile:4.25.0-lite")
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.72")
     implementation("com.google.android.material:material:1.10.0")
@@ -52,6 +69,9 @@ dependencies {
     // Kotlin Coroutines
     implementation(libs.jetbrains.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.cardview)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.androidx.recyclerview)
 
     val room_version = "2.8.3"
 
@@ -79,7 +99,6 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
 
     // Firebase Crashlytics (build tools)
-    implementation("com.google.firebase:firebase-crashlytics-buildtools:3.0.6")
 
     // Test
     testImplementation("junit:junit:4.13.2")

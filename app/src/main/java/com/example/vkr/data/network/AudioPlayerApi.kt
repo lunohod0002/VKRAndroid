@@ -1,4 +1,4 @@
-package com.example.vkr.network
+package com.example.vkr.data.network
 
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody

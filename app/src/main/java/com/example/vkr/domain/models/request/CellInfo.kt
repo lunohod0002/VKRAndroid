@@ -1,4 +1,4 @@
-package com.example.vkr.models.request
+package com.example.vkr.domain.models.request
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

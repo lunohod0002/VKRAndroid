@@ -1,13 +1,16 @@
-package com.example.vkr.repositories
+package com.example.vkr.data.repositories
 
-import com.example.vkr.dao.CellDao
-import com.example.vkr.models.CellEntity
-import kotlinx.coroutines.flow.Flow
+import com.example.vkr.data.dao.CellDao
+import com.example.vkr.domain.repositories.CellRepository
+import com.example.vkr.domain.models.CellEntity
 
-class CellRepository(private val cellDao: CellDao) {
+class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
+    override fun getAllCells(): List<CellEntity> {
+        return cellDao.getAllCells()
 
-    val allCells: List<CellEntity> = cellDao.getAllCells()
-    fun getCellAllInfo(
+    }
+
+    override fun getCellAllInfo(
         lac: String,
         mcc: String,
         mnc: String,
@@ -24,14 +27,15 @@ class CellRepository(private val cellDao: CellDao) {
     }
 
 
-    suspend fun insert(
+    override suspend fun insert(
         lac: String?,
         mcc: String?,
         mnc: String?,
         cid: String?,
-        station: String? = null,
-        radio: String?
-    ) {
+        radio: String?,
+        station: String?,
+
+        ) {
         val cell = CellEntity(
             lac = lac,
             mcc = mcc,

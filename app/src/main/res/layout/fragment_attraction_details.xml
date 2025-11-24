@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.AttractionFragmentDetails"
+
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/back_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#000000"
+        android:text="@string/back_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/attraction_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Название достопримечатльности"
+        android:textSize="28sp"
+        android:textColor="#000000"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_text" />
+
+    <TextView
+        android:id="@+id/distance_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#706A6A"
+        android:text="Расстояние"
+        android:textSize="14sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/attraction_name_txt" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="100dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="15dp"
+        android:layout_marginTop="28dp"
+        app:flow_horizontalGap="10dp"
+        android:textColor="#000000"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/distance_txt" />
+    <TextView
+        android:id="@+id/address_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Адрес"
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gallery" />
+    <TextView
+        android:id="@+id/address_details_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="Москва, ул.Спиридоновка, 2, стр.1
+«Пушкинская», «Баррикадная», «Арбатская»"
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/address_txt" />
+    <TextView
+        android:id="@+id/reference_information_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Справки и запись на экскурсии:"
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/address_details_txt" />
+    <TextView
+        android:id="@+id/reference_information_details_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="+7 495 695-53-08
+ex@goslitmuz.ru"
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        android:textColor="#000000"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reference_information_txt" />
+    <TextView
+        android:id="@+id/working_hourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="#000000"
+
+        android:text="График работы"
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reference_information_details_txt" />
+    <TextView
+        android:id="@+id/working_hourse_details_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="ВТ, ПТ, СБ, ВС - 11:00–18:00 (касса до 17:30)\nСР, ЧТ - 11:00–21:00 (касса до 20:30)\nПН - Выходной день"
+        android:textSize="14sp"
+        android:textColor="#000000"
+
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/working_hourse" />
+    <TextView
+        android:id="@+id/tickets_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Билеты"
+        android:textColor="#000000"
+
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/working_hourse_details_txt" />
+    <TextView
+        android:id="@+id/tickets_details_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="Полный/льготный - 400 /300 "
+        android:textColor="#000000"
+
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tickets_txt" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buy_ticket_btn"
+        android:layout_width="270dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="23dp"
+        style="@style/RedButtonStyle"
+        android:minHeight="0dp"
+        android:text="Купить билеты"
+        android:textAllCaps="false"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tickets_details_txt" />
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/audio_player_attraction"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="15dp"
+
+        android:keepScreenOn="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buy_ticket_btn"/>
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/video_player_attraction"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="15dp"
+
+        android:keepScreenOn="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/audio_player_attraction" />
+
+
+    <TextView
+        android:id="@+id/info_attraction_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Информация"
+        android:textSize="28sp"
+        android:textColor="#000000"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/video_player_attraction" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/attraction_info_text"
+        android:textSize="14sp"
+        android:textColor="#000000"
+
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_attraction_txt" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

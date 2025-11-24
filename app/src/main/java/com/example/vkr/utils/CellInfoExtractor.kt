@@ -8,8 +8,8 @@ import android.telephony.CellInfoGsm
 import android.telephony.CellInfoLte
 import android.telephony.CellInfoWcdma
 import android.telephony.TelephonyManager
-import com.example.vkr.models.request.CellInfo
-import com.example.vkr.models.request.RadioType
+import com.example.vkr.domain.models.request.CellInfo
+import com.example.vkr.domain.models.request.RadioType
 
 
 @SuppressLint("MissingPermission")

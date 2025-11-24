@@ -3,4 +3,20 @@
     <string name="text_current_location">Текущая станция:</string>
     <string name="button_text_find">Узнать мою станцию</string>
     <string name="text_location_format">%f, %f</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="station_name">Название станции</string>
+    <string name="branch_logo">branchLogo</string>
+    <string name="branch_name">Название ветки</string>
+    <string name="places_nearby">Места рядом</string>
+    <string name="audio_guide_text">Аудио гид</string>
+    <string name="back_text">Назад</string>
+    <string name="attraction_info_text">
+        <![CDATA[Вкабинете А. Н. Толстого можно увидеть старинные китайские курильницы и кресла из дворца императора Павла I, письменный прибор каррарского мрамора и пишущую машинку марки «Ундервуд», любимые курительные трубки писателя и каминные часы фирмы «Павел Буре». А также многочисленные предметы, помогавшие Толстому в работе над романом «Петр I»: прижизненные портрет и маску императора, его бронзовый бюст и мозаичную картину, сделанную из спичек. В столовой-гостиной помимо мебели в стиле ампир и хрустальной люстры времен Екатерины II, экспонируются натюрморты известных фламандских живописцев — Давида Тенирса, Мельхиора де Хондекутора.]]>
+    </string>
+    <string name="contact_info_link_text"><u href="https://mosmetro.ru/contacts/service-center">Контакт-центр «Московский транспорт»</u></string>
+    <string name="phon_title">Телефон</string>
+    <string name="phone_number_text"><u>+7 (495) 539-54-54</u></string>
+    <string name="alexandra_chat_bot"><u href="https://mosmetro.ru/chat-bot">Помощник Александра</u></string>
+
 </resources>
