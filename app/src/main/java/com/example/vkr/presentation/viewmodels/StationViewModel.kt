@@ -7,4 +7,5 @@ class StationViewModel : ViewModel() {
     init {
         Log.e("AAA","vm created")
     }
+
 }
