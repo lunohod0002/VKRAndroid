@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.domain.data.BranchColor
 import com.example.vkr.presentation.viewmodels.MapViewModel
-import com.google.android.play.core.integrity.b
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
@@ -38,7 +34,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
         mapView = binding.mapview
         val mapObjects =mapView.mapWindow.map.mapObjects
-        // TODO: Убрать ненужные детали на карте (подписи к зданиям, назавания районов названия улиц и т.д.;
         //  TODO    Добавить слушатель по нажатию на станцию, для появления pop-up с краткой инфой о станции
         initMap()
         val textStyle =TextStyle()
@@ -80,6 +75,8 @@ class MapFragment : Fragment(R.layout.fragment_map) {
                 /* tilt = */ 0.0f
             ),
         )
+        val styleJson = "[{\"elements\":[\"label\"],\"stylers\":{\"visibility\":\"off\"}}]"
+        mapView.getMapWindow().getMap().setMapStyle(styleJson)
     }
     private val placemarkTapListener = MapObjectTapListener { mapObject,_ ->
         val title = mapObject.userData as? String ?: "Без названия"
