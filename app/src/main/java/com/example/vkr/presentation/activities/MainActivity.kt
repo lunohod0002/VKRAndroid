@@ -32,21 +32,12 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-//    private lateinit var button_find: Button
-//  //  private lateinit var playerView: PlayerView
-//    private lateinit var mapView: MapView
-//
-//    private lateinit var progressBar: ProgressBar
-//
-//    private lateinit var cellRepository: CellRepository
-//    private lateinit var text_address: TextView
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+    }
 
 //        MapKitFactory.initialize(this)
 //        setContentView(R.layout.activity_main)
@@ -75,115 +66,9 @@ class MainActivity : AppCompatActivity() {
 //
 //        }
 
-    }
 
 
 
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        MapKitFactory.getInstance().onStop()
-//        super.onStop()
-//    }
-//    @SuppressLint("SetJavaScriptEnabled")
-//    private fun initView() {
-////val mapView: WebView = findViewById(R.id.mapView)
-//
-//        button_find.setOnClickListener {
-//            onClickFindLocation()
-//        }
-//       // mapView.settings.javaScriptEnabled = true
-//    }
 
 
-    private fun onClickFindLocation() {
-
-//        val cellInfo = getCurrentCellInfo(this)
-//          if (cellInfo != null) {
-//            fetchLocation(cellInfo)
-//        }
-//        fetchLocation(CellInfo("2","@","#","#","#"))
-
-    }
-
-
-//    private fun requestPermission() {
-//        if (ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                this,
-//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                2000
-//            )
-//        }
-//        if (ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                this,
-//                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-//                2001
-//            )
-//        }
-//        if (ActivityCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                ActivityCompat.requestPermissions(
-//                    this,
-//                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-//                    2002
-//
-//
-//                )
-//            }
-//        }
-//    }
-
-//    @SuppressLint("SetTextI18n")
-//    private fun fetchLocation(cellInfo: CellInfo) {
-//        //TODO узнать, почему программма падает на return          return@launch
-//
-//
-//
-//        lifecycleScope.launch(Dispatchers.IO) {
-//
-//            val cell = cellRepository.getCellAllInfo(
-//                lac = cellInfo.lac!!,
-//                mcc = cellInfo.mcc!!,
-//                mnc = cellInfo.mnc!!,
-//                cid = cellInfo.cid!!,
-//                radio = cellInfo.radio!!
-//            )
-//            if (cell!=null) {
-//                text_address.text = cell.station
-//                //TODO узнать, почему программма падает на return          return@launch
-//            } else{
-//                runOnUiThread(object : Runnable {
-//                    override fun run() {
-//                        text_address.text="Не удалось определить станцию: $cellInfo"
-//
-//                       }
-//                })
-//
-//
-//
-//            }
-//        }
-//    }
-//
-//
-//    private fun showToast(message: String) {
-//        Toast.makeText(
-//            this,
-//            message,
-//            Toast.LENGTH_LONG
-//        ).show()
-//    }
 }
