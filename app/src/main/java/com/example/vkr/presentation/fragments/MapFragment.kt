@@ -15,7 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.App
-import com.example.vkr.domain.data.BranchColor
+import com.example.vkr.domain.data.MapMarker
+import com.example.vkr.domain.data.StationCoordinates
 import com.example.vkr.domain.models.request.CellInfo
 import com.example.vkr.presentation.viewmodels.MapViewModel
 import com.yandex.mapkit.MapKitFactory
@@ -104,32 +105,29 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         textStyle.placement = TextStyle.Placement.BOTTOM
         iconStyle.scale=0.60f
         viewModel.markers.forEach { marker ->
-            val icon = when (marker.branchColor) {
-                BranchColor.RED -> redImageProvider
-                BranchColor.GRAY -> grayImageProvider
-                BranchColor.BLUE -> blueImageProvider
-                BranchColor.BROWN -> brownImageProvider
+            val icon = when (marker.branchNumber) {
+                1 -> redImageProvider
+                9 -> grayImageProvider
+                3 -> blueImageProvider
+                5 -> brownImageProvider
+                else -> null
             }
-
-            mapObjects.addPlacemark().apply {
-                geometry = Point(marker.coordinates.latitude, marker.coordinates.longitude)
-                setIcon(icon)
-                setText(marker.title)
-                setTextStyle(textStyle)
-                setIconStyle(iconStyle)
-                userData = marker.title
-                addTapListener(placemarkTapListener)
+            if (icon!=null) {
+                mapObjects.addPlacemark().apply {
+                    geometry = Point(marker.coordinates.latitude, marker.coordinates.longitude)
+                    setIcon(icon)
+                    setText(marker.title)
+                    setTextStyle(textStyle)
+                    setIconStyle(iconStyle)
+                    userData = marker
+                    addTapListener(placemarkTapListener)
+                }
             }
         }
     }
     private val placemarkTapListener = MapObjectTapListener { mapObject,_ ->
-        val title = mapObject.userData as? String ?: "Без названия"
+        val marker = mapObject.userData as? MapMarker ?: MapMarker(StationCoordinates(0.0,0.0),"Без названия",0)
 
-        Toast.makeText(
-            context,
-            "Выбран: $title",
-            Toast.LENGTH_SHORT
-        ).show()
 
         true
     }
