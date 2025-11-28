@@ -2,8 +2,10 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     kotlin("plugin.serialization") version "2.0.21"
-
+    id("androidx.navigation.safeargs.kotlin") // add safe args in navigation with navGraph
     id("com.google.devtools.ksp")
+
+
 }
 
 android {

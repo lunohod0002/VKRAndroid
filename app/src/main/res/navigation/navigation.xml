@@ -3,13 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/map_fragment">
+    app:startDestination="@id/screen_map">
 
 
     <fragment
-        android:id="@+id/map_fragment"
+        android:id="@+id/screen_map"
         android:name="com.example.vkr.presentation.fragments.MapFragment"
-        android:label="map_fragment"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <argument
+            android:name="STATION"
+            app:argType="com.example.vkr.domain.models.StationData"
+            app:nullable="false"/>
+        <action
+            android:id="@+id/action_screen_map_to_screen_station"
+            app:destination="@id/screen_station" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/screen_station"
+
+        android:name="com.example.vkr.presentation.fragments.StationFragment"
+        tools:layout="@layout/fragment_station">
+        <argument
+            android:name="STATION"
+            app:argType="com.example.vkr.domain.models.StationData"
+            app:nullable="false"/>
+
+    </fragment>
 
 </navigation>

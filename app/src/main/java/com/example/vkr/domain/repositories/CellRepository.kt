@@ -1,6 +1,6 @@
 package com.example.vkr.domain.repositories
 
-import com.example.vkr.domain.models.CellEntity
+import com.example.vkr.data.models.CellEntity
 
 interface CellRepository {
     fun getAllCells() : List<CellEntity>

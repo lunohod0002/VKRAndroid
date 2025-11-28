@@ -1,23 +1,22 @@
 package com.example.vkr.presentation.fragments
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.App
-import com.example.vkr.domain.data.MapMarker
-import com.example.vkr.domain.data.StationCoordinates
-import com.example.vkr.domain.models.request.CellInfo
+import com.example.vkr.domain.models.MapMarker
+import com.example.vkr.domain.models.StationCoordinates
+import com.example.vkr.domain.models.StationData
 import com.example.vkr.presentation.viewmodels.MapViewModel
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Circle
@@ -48,14 +47,14 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
         mapView = binding.mapview
         mapObjects =mapView.mapWindow.map.mapObjects
-        //  TODO  Поменять при определении текущего положения на карте на поиск по станции и ветке из базы данных
-
-        //  TODO    Добавить слушатель по нажатию на станцию, для появления pop-up с краткой инфой о станции
+        requestPermission()
         initMap()
         displayMap()
         displayCurrentLocation()
         initLocationLiveData()
-        requestPermission()
+
+        //  TODO    Добавить слушатель по нажатию на станцию, для появления pop-up с краткой инфой о станции
+
     }
 
     private fun displayCurrentLocation(){
@@ -127,8 +126,11 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     }
     private val placemarkTapListener = MapObjectTapListener { mapObject,_ ->
         val marker = mapObject.userData as? MapMarker ?: MapMarker(StationCoordinates(0.0,0.0),"Без названия",0)
-
-
+        val stationData = StationData(title=marker.title, branchNumber = marker.branchNumber)
+        val action= MapFragmentDirections.actionScreenMapToScreenStation(
+            STATION = stationData
+        )
+        findNavController().navigate(action)
         true
     }
     private fun requestPermission() {

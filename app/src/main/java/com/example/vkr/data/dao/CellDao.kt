@@ -1,7 +1,7 @@
 package com.example.vkr.data.dao
 
 import androidx.room.*
-import com.example.vkr.domain.models.CellEntity
+import com.example.vkr.data.models.CellEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

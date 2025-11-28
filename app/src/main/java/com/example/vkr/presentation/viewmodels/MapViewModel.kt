@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.vkr.data.dao.CellDao
 import com.example.vkr.data.repositories.CellRepositoryImpl
 import com.example.vkr.data.repositories.TelephoneRepositoryImpl
-import com.example.vkr.domain.data.MapMarker
-import com.example.vkr.domain.data.StationCoordinates
+import com.example.vkr.domain.models.MapMarker
+import com.example.vkr.domain.models.StationCoordinates
 import com.example.vkr.domain.repositories.CellRepository
 import com.example.vkr.domain.repositories.TelephoneRepository
 import kotlinx.coroutines.Dispatchers
@@ -50,8 +50,7 @@ class MapViewModel(
         MapMarker(StationCoordinates(55.758467, 37.658763), "Курская", 3),
         MapMarker(StationCoordinates(55.760214, 37.577219), "Краснопресненская", 5),
         MapMarker(StationCoordinates(55.779566, 37.601422), "Новослободская", 5),
-        MapMarker(StationCoordinates(55.779610, 37.633298), "Краснопресненская", 5),
-        MapMarker(StationCoordinates(55.760214, 37.577219), "Проспект Мира", 5),
+        MapMarker(StationCoordinates(55.779636, 37.633473), "Проспект Мира", 5),
         MapMarker(StationCoordinates(55.774397, 37.655634), "Комсомольская", 5),
         MapMarker(StationCoordinates(55.776776, 37.585257), "Белоруская", 5),
         MapMarker(StationCoordinates(55.757450, 37.659938), "Курская", 5),
