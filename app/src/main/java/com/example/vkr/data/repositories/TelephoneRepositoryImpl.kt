@@ -24,13 +24,13 @@ class TelephoneRepositoryImpl(private val context : Context) : TelephoneReposito
                     else -> null
                 }
             }
-        //return CellInfo(lac="660", mcc = "250",mnc="1",cid="7437",radio="GSM")
+        return CellInfo(lac="660", mcc = "250",mnc="1",cid="7437",radio="GSM")
 
-        if (allCellInfo.isEmpty()){
-            return null
-        }
-
-        return allCellInfo.get(0)
+//        if (allCellInfo.isEmpty()){
+//            return null
+//        }
+//
+//        return allCellInfo.get(0)
     }
 
     private fun getCellInfo(info: CellInfoGsm): CellInfo {

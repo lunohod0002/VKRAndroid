@@ -16,7 +16,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.ReferenceInfoFragmentBinding
 
 
-class ReferenceInfoFragment : Fragment(R.layout.fragment_attraction) {
+class ReferenceInfoFragment : Fragment(R.layout.reference_info_fragment) {
     private var _binding: ReferenceInfoFragmentBinding? = null
     private val binding: ReferenceInfoFragmentBinding
         get() = _binding ?: throw RuntimeException()

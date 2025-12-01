@@ -29,6 +29,12 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().popBackStack(R.id.screen_map, false)
         }
+        displayInitData()
+
+            //TODO: подключить загрузку аудио и видео от бекенда
+    }
+
+    private fun displayInitData() {
         val args: StationFragmentArgs by navArgs()
         binding.stationNameTxt.text = args.STATION.title
         val branchName = when (args.STATION.branchNumber) {
@@ -41,9 +47,9 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         if (branchName != null) {
             binding.branchNameTxt.text = branchName
         }
-            //TODO: подключить загрузку аудио и видео от бекенда
     }
-        override fun onDestroyView() {
+
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }

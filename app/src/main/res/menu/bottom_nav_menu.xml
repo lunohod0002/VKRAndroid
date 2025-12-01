@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/screen_map"
+        android:title="Карта"
+        android:icon="@drawable/map_logo">
+
+    </item>
+    <item android:id="@+id/screen_station"
+        android:title="Текущая станция"
+        android:icon="@drawable/current_location_item">
+
+    </item>
+    <item android:id="@+id/screen_reference_info"
+        android:title="Инфо"
+        android:icon="@drawable/info_item">
+
+    </item>
+</menu>

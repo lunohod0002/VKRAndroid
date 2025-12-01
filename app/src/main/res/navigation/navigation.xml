@@ -31,5 +31,16 @@
             app:nullable="false"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/screen_reference_info"
+
+        android:name="com.example.vkr.presentation.fragments.ReferenceInfoFragment"
+        tools:layout="@layout/reference_info_fragment">
+        <argument
+            android:name="STATION"
+            app:argType="com.example.vkr.domain.models.StationData"
+            app:nullable="false"/>
+
+    </fragment>
 
 </navigation>
