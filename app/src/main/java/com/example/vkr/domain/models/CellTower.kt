@@ -1,11 +1,10 @@
-package com.example.vkr.data.models
+package com.example.vkr.domain.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "cell")
-data class CellEntity(
+data class CellTower(
         @PrimaryKey(autoGenerate = true)
         val id: Int = 0,
         var lac: String? = null,

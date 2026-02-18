@@ -2,10 +2,10 @@ package com.example.vkr.data.repositories
 
 import com.example.vkr.data.dao.CellDao
 import com.example.vkr.domain.repositories.CellRepository
-import com.example.vkr.data.models.CellEntity
+import com.example.vkr.domain.models.CellTower
 
 class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
-    override fun getAllCells(): List<CellEntity> {
+    override fun getAllCells(): List<CellTower> {
         return cellDao.getAllCells()
 
     }
@@ -16,7 +16,7 @@ class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
         mnc: String,
         cid: String,
         radio: String
-    ) : CellEntity?{
+    ) : CellTower?{
 
         return cellDao.getCellByAllInfo(
             lac = lac,
@@ -36,7 +36,7 @@ class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
         radio: String?,
 
         ) {
-        val cell = CellEntity(
+        val cellTower = CellTower(
             lac = lac,
             mcc = mcc,
             mnc = mnc,
@@ -45,6 +45,6 @@ class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
             radio = radio,
         )
 
-        cellDao.insert(cell)
+        cellDao.insert(cellTower)
     }
 }

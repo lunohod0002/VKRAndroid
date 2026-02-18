@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/branch_with_logo" />
 
     <androidx.media3.ui.PlayerView
-        android:id="@+id/player"
+        android:id="@+id/audioPlayer"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="25dp"
@@ -73,7 +73,7 @@
         android:keepScreenOn="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" >
+        app:layout_constraintTop_toBottomOf="@+id/audioGuideTextView" >
 
     </androidx.media3.ui.PlayerView>
 
@@ -102,16 +102,25 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/descriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+
+        android:layout_marginTop="20dp"
+        android:text="@string/station_description_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attractionsGallery" />
+
+    <TextView
+        android:id="@+id/audioGuideTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
-        android:text="@string/audio_guide_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gallery" />
-
-    <androidx.media3.ui.PlayerView
+       <androidx.media3.ui.PlayerView
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -122,6 +131,6 @@
         android:keepScreenOn="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player" />
+        app:layout_constraintTop_toBottomOf="@+id/audioPlayer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

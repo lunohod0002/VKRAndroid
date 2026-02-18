@@ -1,46 +1,19 @@
 package com.example.vkr.presentation.activities
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.webkit.WebView
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.App
-import com.example.vkr.data.repositories.CellRepositoryImpl
-import com.example.vkr.data.repositories.TelephoneRepositoryImpl
-import com.example.vkr.domain.models.StationData
-import com.example.vkr.domain.models.request.CellInfo
-import com.example.vkr.domain.repositories.CellRepository
-import com.example.vkr.domain.repositories.TelephoneRepository
+import com.example.vkr.domain.dto.StationData
 import com.example.vkr.presentation.fragments.StationFragmentArgs
 import com.example.vkr.presentation.viewmodels.MainActivityViewModel
-import com.example.vkr.presentation.viewmodels.MapViewModel
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.mapview.MapView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -64,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             handleNavigation(item.itemId, navController)
         }
+
     }
     private fun handleNavigation(itemId: Int, navController: NavController): Boolean {
         when (itemId) {
@@ -82,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                return false
+                return true
             }
             else -> {
                 navController.navigate(itemId)

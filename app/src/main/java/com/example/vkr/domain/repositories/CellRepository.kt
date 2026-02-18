@@ -1,14 +1,14 @@
 package com.example.vkr.domain.repositories
 
-import com.example.vkr.data.models.CellEntity
+import com.example.vkr.domain.models.CellTower
 
 interface CellRepository {
-    fun getAllCells() : List<CellEntity>
+    fun getAllCells() : List<CellTower>
     fun getCellAllInfo(        lac: String,
                                mcc: String,
                                mnc: String,
                                cid: String,
-                               radio: String): CellEntity?
+                               radio: String): CellTower?
     suspend fun insert(  lac: String?,
                  mcc: String?,
                  mnc: String?,

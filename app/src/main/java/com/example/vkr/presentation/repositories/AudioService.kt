@@ -1,4 +1,4 @@
-package com.example.vkr.data.network
+package com.example.vkr.presentation.repositories
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

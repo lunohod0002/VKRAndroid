@@ -7,8 +7,8 @@ import android.telephony.CellInfoGsm
 import android.telephony.CellInfoLte
 import android.telephony.CellInfoWcdma
 import android.telephony.TelephonyManager
-import com.example.vkr.domain.models.request.CellInfo
-import com.example.vkr.domain.models.request.RadioType
+import com.example.vkr.domain.dto.request.CellInfo
+import com.example.vkr.domain.dto.request.RadioType
 import com.example.vkr.domain.repositories.TelephoneRepository
 
 class TelephoneRepositoryImpl(private val context : Context) : TelephoneRepository {

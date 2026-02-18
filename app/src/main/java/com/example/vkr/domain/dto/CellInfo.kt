@@ -1,8 +1,4 @@
-package com.example.vkr.domain.models.request
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.ForeignKey
+package com.example.vkr.domain.dto.request
 
 data class CellInfo(
 

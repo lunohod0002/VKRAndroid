@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -14,9 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.App
-import com.example.vkr.domain.models.MapMarker
-import com.example.vkr.domain.models.StationCoordinates
-import com.example.vkr.domain.models.StationData
+import com.example.vkr.domain.dto.MapMarker
+import com.example.vkr.domain.dto.StationCoordinates
+import com.example.vkr.domain.dto.StationData
 import com.example.vkr.presentation.viewmodels.MapViewModel
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Circle

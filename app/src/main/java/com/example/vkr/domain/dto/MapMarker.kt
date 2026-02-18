@@ -1,4 +1,4 @@
-package com.example.vkr.domain.models
+package com.example.vkr.domain.dto
 
 data class MapMarker(
     val coordinates: StationCoordinates,
