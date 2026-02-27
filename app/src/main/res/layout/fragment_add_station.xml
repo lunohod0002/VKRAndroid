@@ -99,7 +99,289 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_station_description_txt" />
+            <LinearLayout
+                android:id="@+id/add_station_photo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_station_description_edit" >
+            <TextView
+                android:id="@+id/upload_photo_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
 
+                android:text="Загрузить фото"
+                 />
+                <com.google.android.material.button.MaterialButton
+
+                android:id="@+id/add_station_upload_photo_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Выберите файл"
+                style="@style/GreyButtonStyle"
+                android:textAllCaps="false"
+                app:icon="@drawable/vector__1_"
+                app:iconPadding="12dp"
+                    app:iconTint="@color/colorBlack"
+                app:iconGravity="textStart"
+                android:drawablePadding="8dp"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/add_station_video_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_station_photo_layout" >
+                <TextView
+                    android:id="@+id/upload_video_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:text="Загрузить видео"
+                    />
+                <com.google.android.material.button.MaterialButton
+
+                    android:id="@+id/add_station_upload_video_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Выберите файл"
+                    style="@style/GreyButtonStyle"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/vector__1_"
+                    app:iconPadding="12dp"
+                    app:iconTint="@color/colorBlack"
+                    app:iconGravity="textStart"
+                    android:drawablePadding="8dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/add_station_audio_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_station_video_layout" >
+                <TextView
+                    android:id="@+id/upload_audio_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:text="Загрузить аудио"
+                    />
+                <com.google.android.material.button.MaterialButton
+
+                    android:id="@+id/add_station_upload_audio_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Выберите файл"
+                    style="@style/GreyButtonStyle"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/vector__1_"
+                    app:iconPadding="12dp"
+                    app:iconTint="@color/colorBlack"
+                    app:iconGravity="textStart"
+                    android:drawablePadding="8dp"
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/add_station_extra_services_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Дополнительные сервисы"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_station_audio_layout" />
+            <EditText
+                android:id="@+id/add_station_extra_services_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_rounded"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_station_extra_services_txt" />
+
+            <TextView
+                android:id="@+id/add_cell_towers_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Добавить вышки"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_station_extra_services_edit" />
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flex_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:alignItems="flex_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_cell_towers_txt" >
+                <!-- Блок 1 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    app:layout_flexBasisPercent="30%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="LAC"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=""
+                        android:background="@drawable/edit_text_rounded"
+
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <!-- Блок 2 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    app:layout_flexBasisPercent="30%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CID"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=""
+                        android:background="@drawable/edit_text_rounded"
+
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <!-- Блок 3 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    app:layout_flexBasisPercent="30%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MCC"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=""
+                        android:background="@drawable/edit_text_rounded"
+
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <!-- Блок 4 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    app:layout_flexBasisPercent="30%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="MNC"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=""
+                        android:background="@drawable/edit_text_rounded"
+
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <!-- Блок 5 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    app:layout_flexBasisPercent="30%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RADIO"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=""
+                        android:background="@drawable/edit_text_rounded"
+
+                        android:inputType="text" />
+                </LinearLayout>
+
+            </com.google.android.flexbox.FlexboxLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_station_add_cell_btn"
+                android:layout_width="270dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="23dp"
+                style="@style/RedButtonStyle"
+                android:minHeight="0dp"
+                android:text="Добавить"
+                android:textAllCaps="false"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flex_box" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_station_btn"
+                android:layout_width="270dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="23dp"
+                style="@style/RedButtonStyle"
+                android:minHeight="0dp"
+                android:text="Сохранить"
+                android:textAllCaps="false"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_station_add_cell_btn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

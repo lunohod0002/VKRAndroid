@@ -49,7 +49,7 @@ dependencies {
     val nav_version = "2.9.6"
 
     // Jetpack Compose integration
-
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
     // Views/Fragments integration
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
