@@ -6,7 +6,9 @@ import com.example.vkr.domain.models.CellTower
 
 class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
     override fun getAllCells(): List<CellTower> {
+        
         return cellDao.getAllCells()
+
 
     }
 
