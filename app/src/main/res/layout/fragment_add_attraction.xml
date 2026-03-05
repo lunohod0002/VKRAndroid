@@ -222,16 +222,16 @@
                     />
             </LinearLayout>
             <TextView
-                android:id="@+id/add_attraction_extra_services_txt"
+                android:id="@+id/add_attraction_phone_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Дополнительные сервисы"
+                android:text="Телефон"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_attraction_audio_layout" />
             <EditText
-                android:id="@+id/add_attraction_extra_services_edit"
+                android:id="@+id/add_attraction_phone_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -239,172 +239,50 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_extra_services_txt" />
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_phone_txt" />
 
             <TextView
-                android:id="@+id/add_cell_towers_txt"
+                android:id="@+id/add_attraction_website_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Добавить вышки"
+                android:text="Сайт"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_extra_services_edit" />
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/flex_box"
-                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_phone_edit" />
+            <EditText
+                android:id="@+id/add_attraction_website_edit"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:flexWrap="wrap"
-                app:justifyContent="flex_start"
-                app:alignItems="flex_start"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_cell_towers_txt" >
-                <!-- Блок 1 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    app:layout_flexBasisPercent="30%">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="LAC"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint=""
-                        android:background="@drawable/edit_text_rounded"
-
-                        android:inputType="text" />
-                </LinearLayout>
-
-                <!-- Блок 2 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    app:layout_flexBasisPercent="30%">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="CID"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint=""
-                        android:background="@drawable/edit_text_rounded"
-
-                        android:inputType="text" />
-                </LinearLayout>
-
-                <!-- Блок 3 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    app:layout_flexBasisPercent="30%">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="MCC"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint=""
-                        android:background="@drawable/edit_text_rounded"
-
-                        android:inputType="text" />
-                </LinearLayout>
-
-                <!-- Блок 4 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    app:layout_flexBasisPercent="30%">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="MNC"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint=""
-                        android:background="@drawable/edit_text_rounded"
-
-                        android:inputType="text" />
-                </LinearLayout>
-
-                <!-- Блок 5 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    app:layout_flexBasisPercent="30%">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="RADIO"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint=""
-                        android:background="@drawable/edit_text_rounded"
-
-                        android:inputType="text" />
-                </LinearLayout>
-
-            </com.google.android.flexbox.FlexboxLayout>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add_attraction_add_cell_btn"
-                android:layout_width="270dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="23dp"
-                style="@style/RedButtonStyle"
-                android:minHeight="0dp"
-                android:text="Добавить"
-                android:textAllCaps="false"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_rounded"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/flex_box" />
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_website_txt" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add_attraction_btn"
-                android:layout_width="270dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="23dp"
-                style="@style/RedButtonStyle"
-                android:minHeight="0dp"
-                android:text="Сохранить"
-                android:textAllCaps="false"
-                android:layout_marginBottom="20dp"
+            <TextView
+                android:id="@+id/add_attraction_email_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_attraction_add_cell_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_website_edit" />
+            <EditText
+                android:id="@+id/add_attraction_email_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_rounded"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_email_txt" />
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
