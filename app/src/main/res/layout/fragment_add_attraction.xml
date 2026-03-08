@@ -291,13 +291,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_attraction_email_edit" />
             <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/flex_box"
+                android:id="@+id/flex_box_attraction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 app:flexWrap="wrap"
                 app:justifyContent="flex_start"
-                app:alignItems="flex_start"
+                app:alignItems="flex_end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_stations_to_attraction_txt" >
@@ -350,7 +350,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp"
+                    android:paddingHorizontal="8dp"
+                    android:paddingTop="8dp"
+
                     app:layout_flexBasisPercent="30%">
 
                     <TextView
@@ -367,22 +369,20 @@
 
                         android:inputType="text" />
                 </LinearLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/add_attraction_add_cell_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    style="@style/RedButtonStyle"
+                    android:minHeight="0dp"
+                    android:text="Добавить"
+                    android:textAllCaps="false"
+                    app:layout_flexBasisPercent="60%"
 
+        />
             </com.google.android.flexbox.FlexboxLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/add_attraction_add_cell_btn"
-                android:layout_width="270dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="23dp"
-                style="@style/RedButtonStyle"
-                android:minHeight="0dp"
-                android:text="Добавить"
-                android:textAllCaps="false"
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/flex_box" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/add_attraction_btn"
@@ -397,7 +397,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_attraction_add_cell_btn" />
+                app:layout_constraintTop_toBottomOf="@id/flex_box_attraction" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
