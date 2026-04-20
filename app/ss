@@ -1,7 +1,7 @@
 app/
 │   ├── main/
-│   │   ├── assets/
-│   │   │   └── database.db
+│   │   ├── assets/ # Встроенные файлы
+│   │   │   └── database.db # База данных сотовых вышек
 │   │   ├── java/
 │   │   │   ├── com/
 │   │   │       ├── example/
@@ -43,11 +43,11 @@ app/
 │   │   │               │   │   └── TelephoneRepositoryImpl.kt
 │   │   │               │   └── AppDatabase.kt
 │   │   │               └── App.kt
-│   │   ├── res/
-│   │   │   ├── layout/
+│   │   ├── res/ # Верстка XML
+│   │   │   ├── layout/ # Макеты
 │   │   │   │   ├── activity_main.xml
 │   │   │   │   ├── fragment_add_attraction.xml
 │   │   │   │   ├── fragment_attraction.xml
 │   │   │   │   ├── fragment_attraction_details.xml
 │   │   │   │   └── reference_info_fragment.xml
-└── build.gradle.kts
+└── build.gradle.kts # Скрипт сборки модуля
