@@ -1,16 +1,9 @@
 package com.example.vkr.presentation.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.activity.addCallback
 
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,10 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.App
-import com.example.vkr.presentation.viewmodels.MapViewModel
-import com.example.vkr.presentation.viewmodels.StationViewModel
-import com.yandex.mapkit.geometry.Circle
-import com.yandex.mapkit.geometry.Point
+import com.example.vkr.logic.viewmodels.StationViewModel
 import kotlin.getValue
 
 

@@ -11,9 +11,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.vkr.App
-import com.example.vkr.domain.dto.StationData
+import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.fragments.StationFragmentArgs
-import com.example.vkr.presentation.viewmodels.MainActivityViewModel
+import com.example.vkr.logic.viewmodels.MainActivityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.getValue

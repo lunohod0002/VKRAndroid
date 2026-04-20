@@ -13,10 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.App
-import com.example.vkr.domain.dto.MapMarker
-import com.example.vkr.domain.dto.StationCoordinates
-import com.example.vkr.domain.dto.StationData
-import com.example.vkr.presentation.viewmodels.MapViewModel
+import com.example.vkr.network.dto.MapMarker
+import com.example.vkr.network.dto.StationCoordinates
+import com.example.vkr.network.dto.StationData
+import com.example.vkr.logic.viewmodels.MapViewModel
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Circle
 import com.yandex.mapkit.geometry.Point

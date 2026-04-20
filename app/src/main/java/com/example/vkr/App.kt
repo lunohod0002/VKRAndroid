@@ -2,7 +2,7 @@ package com.example.vkr
 
 import android.app.Application
 import androidx.room.Room
-import com.example.vkr.data.AppDatabase
+import com.example.vkr.storage.AppDatabase
 import com.yandex.mapkit.MapKitFactory
 
 class App : Application() {

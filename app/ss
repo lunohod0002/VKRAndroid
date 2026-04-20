@@ -1,0 +1,53 @@
+app/
+│   ├── main/
+│   │   ├── assets/
+│   │   │   └── database.db
+│   │   ├── java/
+│   │   │   ├── com/
+│   │   │       ├── example/
+│   │   │           ├── vkr/
+│   │   │               ├── logic/ # Слой бизнес-логики
+│   │   │               │   ├── usecases/ # Пользовательские сценарии
+│   │   │               │   │   └── GetCurrentStationUseCase.java
+│   │   │               │   ├── viewmodels/ # Viewmodels (управление состоянием)
+│   │   │               │       ├── MainActivityViewModel.kt
+│   │   │               │       ├── MapViewModel.kt
+│   │   │               │       └── StationViewModel.kt
+│   │   │               ├── network/ # Слой доступа к данным (работа с сетью)
+│   │   │               │   ├── api/ # Классы Reftrofit
+│   │   │               │   │   ├── AudioPlayerApi.kt
+│   │   │               │   │   ├── StationRepository.kt
+│   │   │               │   │   └── StationRepositoryImpl.kt
+│   │   │               │   ├── dto/ # DTO запросов и ответов
+│   │   │               │       ├── CellInfo.kt
+│   │   │               │       ├── MapMarker.kt
+│   │   │               │       ├── StationCoordinates.kt
+│   │   │               │       └── StationData.kt
+│   │   │               ├── presentation/ # Слой представления
+│   │   │               │   ├── activities/ # Активити
+│   │   │               │   │   └── MainActivity.kt
+│   │   │               │   ├── fragments/ # Фрагменты
+│   │   │               │       ├── AddAttractionFragment.kt
+│   │   │               │       ├── AttractionFragment.kt
+│   │   │               │       ├── MapFragment.kt
+│   │   │               │       └── StationFragment.kt
+│   │   │               ├── storage/ # Слой доступа к даннм (локальное хранилище данных)
+│   │   │               │   ├── dao/ # DAO Room
+│   │   │               │   │   └── CellDao.kt
+│   │   │               │   ├── models/ # Entity Room
+│   │   │               │   │   └── CellTower.kt
+│   │   │               │   ├── repositories/ # Репозитории Room
+│   │   │               │   │   ├── CellRepository.kt
+│   │   │               │   │   ├── CellRepositoryImpl.kt
+│   │   │               │   │   ├── TelephoneRepository.kt
+│   │   │               │   │   └── TelephoneRepositoryImpl.kt
+│   │   │               │   └── AppDatabase.kt
+│   │   │               └── App.kt
+│   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   │   ├── activity_main.xml
+│   │   │   │   ├── fragment_add_attraction.xml
+│   │   │   │   ├── fragment_attraction.xml
+│   │   │   │   ├── fragment_attraction_details.xml
+│   │   │   │   └── reference_info_fragment.xml
+└── build.gradle.kts
