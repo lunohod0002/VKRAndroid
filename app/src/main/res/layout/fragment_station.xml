@@ -75,32 +75,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/branch_with_logo" />
 
-          <androidx.media3.ui.PlayerView
+            <androidx.media3.ui.PlayerView
                 android:id="@+id/audioPlayer"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginVertical="15dp"
-
-                android:keepScreenOn="true"
+                app:show_timeout="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gallery" >
+                app:layout_constraintTop_toBottomOf="@+id/gallery" />
 
-            </androidx.media3.ui.PlayerView>
-
+            <!-- Video Player (добавлены параметры для лучшей работы) -->
             <androidx.media3.ui.PlayerView
                 android:id="@+id/videoPlayer"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="15dp"
-
-                android:layout_marginTop="12dp"
-                android:keepScreenOn="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/audioPlayer" />
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="15dp"
+            android:layout_marginTop="12dp"
+            android:keepScreenOn="true"
+            app:surface_type="surface_view"
+            app:show_buffering="when_playing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/audioPlayer" />
 
 
 

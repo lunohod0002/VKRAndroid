@@ -14,6 +14,8 @@ class AttractionFragment : Fragment(R.layout.fragment_attraction) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //TODO:Поменять onCreate на         super.onViewCreated(view,savedInstanceState)
+
 //        _binding = OnboardFragmentBinding.bind(view)
 //
 //

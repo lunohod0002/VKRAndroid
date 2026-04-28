@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.media3.session)
     implementation(libs.androidx.navigation.fragment.ktx)
     val nav_version = "2.9.6"
 

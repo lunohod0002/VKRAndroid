@@ -41,6 +41,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //TODO:Поменять onCreate на         super.onViewCreated(view,savedInstanceState)
         MapKitFactory.initialize(context)
         _binding = FragmentMapBinding.bind(view)
 
