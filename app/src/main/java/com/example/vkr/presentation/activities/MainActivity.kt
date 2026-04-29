@@ -89,6 +89,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleNavigation(itemId: Int, navController: NavController): Boolean {
+        val previousItemId = binding.bottomNavigationView.selectedItemId
+
         when (itemId) {
             R.id.screen_station -> {
                 if (ContextCompat.checkSelfPermission(
@@ -98,6 +100,8 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     Toast.makeText(this@MainActivity, "Не удалось определить текущую станцию.\n" +
                             "Выдайте разрешение на определение местоположения", Toast.LENGTH_SHORT).show()
+                    binding.bottomNavigationView.menu.findItem(previousItemId)?.isChecked = true
+
                     return true
 
 
@@ -122,6 +126,8 @@ class MainActivity : AppCompatActivity() {
                                     "Не удалось определить текущую станцию",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                binding.bottomNavigationView.menu.findItem(previousItemId)?.isChecked = true
+
                             }
                         }
                     }

@@ -19,6 +19,7 @@ import com.example.vkr.network.dto.MapMarker
 import com.example.vkr.network.dto.StationCoordinates
 import com.example.vkr.network.dto.StationData
 import com.example.vkr.logic.viewmodels.MapViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Circle
 import com.yandex.mapkit.geometry.Point
@@ -133,6 +134,10 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         val action= MapFragmentDirections.actionScreenMapToScreenStation(
             STATION = stationData
         )
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val previousItemId = bottomNavigationView?.selectedItemId!!
+        bottomNavigationView.menu.findItem(previousItemId)?.isChecked = false
+
         findNavController().navigate(action)
         true
     }
