@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.media3.common.MediaItem
@@ -101,17 +103,36 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                     videoPlayer?.prepare()
                 }
 
-                // Загружаем первое аудио (если есть) в фоновый контроллер
-                val controller = audioControllerFuture?.get()
-                if (controller != null && station.audiosRef.isNotEmpty()) {
-                    val audioItem = MediaItem.fromUri(station.audiosRef[0])
-                    controller.setMediaItem(audioItem)
-                    controller.prepare()
-                } else if (station.audiosRef.isNotEmpty()) {
-                    // Если контроллер еще не готов, запускаем сервис и ставим очередь
-                    startAudioService(station.audiosRef[0])
+                // Безопасная загрузка первого аудио
+                if (station.audiosRef.isNotEmpty()) {
+                    playAudioSafely(station.audiosRef[0])
                 }
             }
+        }
+    }
+
+    // Вынесем логику в отдельный метод для удобства
+    private fun playAudioSafely(audioUrl: String) {
+        val future = audioControllerFuture ?: return
+
+        val setupPlayer = Runnable {
+            try {
+                // Внутри листенера future уже выполнен, поэтому .get() вернет мгновенно
+                val controller = future.get()
+                val audioItem = MediaItem.fromUri(audioUrl)
+                controller.setMediaItem(audioItem)
+                controller.prepare()
+            } catch (e: Exception) {
+                e.printStackTrace() // Обработка ошибки, если сервис упал
+            }
+        }
+
+        // Если контроллер УЖЕ готов, просто запускаем
+        if (future.isDone) {
+            setupPlayer.run()
+        } else {
+            // Если еще готовится — вешаем слушатель, который запустится в главном потоке
+            future.addListener(setupPlayer, ContextCompat.getMainExecutor(requireContext()))
         }
     }
 
@@ -153,7 +174,9 @@ class StationFragment : Fragment(R.layout.fragment_station) {
 
         // Отвязываем UI от аудио-контроллера (сам сервис и плеер в нем НЕ убиваются)
         binding.audioPlayer.player = null
-        audioControllerFuture?.release()
+        audioControllerFuture?.let { future ->
+            MediaController.releaseFuture(future)
+        }
         audioControllerFuture = null
 
         _binding = null

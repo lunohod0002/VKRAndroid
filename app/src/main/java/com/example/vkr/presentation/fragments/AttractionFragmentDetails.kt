@@ -13,8 +13,8 @@ class AttractionFragmentDetails : Fragment(R.layout.fragment_attraction) {
 //        get() = _binding ?: throw RuntimeException()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        _binding = OnboardFragmentBinding.bind(view)
+        super.onViewCreated(view,savedInstanceState)
+    //        _binding = OnboardFragmentBinding.bind(view)
 //
 //
 //        binding.btnSignIn.setOnClickListener {

@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -39,18 +41,19 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     private val binding: FragmentMapBinding
         get() = _binding ?: throw RuntimeException()
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view,savedInstanceState)
         //TODO:Поменять onCreate на         super.onViewCreated(view,savedInstanceState)
         MapKitFactory.initialize(context)
         _binding = FragmentMapBinding.bind(view)
 
         mapView = binding.mapview
         mapObjects =mapView.mapWindow.map.mapObjects
-        requestPermission()
+        displayCurrentLocation()
         initMap()
         displayMap()
-        displayCurrentLocation()
         initLocationLiveData()
 
         //  TODO    Добавить слушатель по нажатию на станцию, для появления pop-up с краткой инфой о станции
@@ -132,45 +135,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         )
         findNavController().navigate(action)
         true
-    }
-    private fun requestPermission() {
-                if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                2000
-            )
-        }
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                2001
-            )
-        }
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                    2002
-
-
-                )
-            }
-        }
     }
     override fun onStart() {
 

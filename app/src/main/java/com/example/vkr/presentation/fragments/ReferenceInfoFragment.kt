@@ -22,8 +22,7 @@ class ReferenceInfoFragment : Fragment(R.layout.reference_info_fragment) {
         get() = _binding ?: throw RuntimeException()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+        super.onViewCreated(view,savedInstanceState)
 
 //        _binding = OnboardFragmentBinding.bind(view)
 //

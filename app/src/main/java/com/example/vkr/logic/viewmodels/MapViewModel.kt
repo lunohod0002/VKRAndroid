@@ -66,11 +66,13 @@ class MapViewModel(
     fun fetchCurrentLocation() {
         val cellInfo  = telephoneRepository.getCurrentCellInfo()
         if (cellInfo == null){
-            resultLiveMutable.value = null
+            resultLiveMutable.value = StationCoordinates(55.729218, 37.611187)
             return
         }
+        println(2)
 
         viewModelScope.launch(Dispatchers.IO) {
+            println(1)
             val cell = cellRepository.getCellAllInfo(
                 lac = cellInfo.lac!!,
                 mcc = cellInfo.mcc!!,
@@ -78,6 +80,7 @@ class MapViewModel(
                 cid = cellInfo.cid!!,
                 radio = cellInfo.radio!!
             )
+            println(cell)
             if (cell != null) {
                 markers.forEach { it ->
                     if (it.title == cell.station && it.branchNumber == cell.branch) {

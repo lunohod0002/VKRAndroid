@@ -5,17 +5,17 @@ import android.view.View
 
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
+import com.example.myapplication.databinding.EmptyFragmentBinding
 
 
-class AttractionFragment : Fragment(R.layout.fragment_attraction) {
-//    private var _binding: StationFragmentBinding? = null
-//    private val binding: StationFragmentBinding
-//        get() = _binding ?: throw RuntimeException()
+class EmptyFragment : Fragment(R.layout.empty_fragment) {
+    private var _binding: EmptyFragmentBinding? = null
+    private val binding: EmptyFragmentBinding
+        get() = _binding ?: throw RuntimeException()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view,savedInstanceState)        //TODO:Поменять onCreate на         super.onViewCreated(view,savedInstanceState)
-
-//        _binding = OnboardFragmentBinding.bind(view)
+        super.onViewCreated(view,savedInstanceState)
+        _binding = EmptyFragmentBinding.bind(view)
 //
 //
 //        binding.btnSignIn.setOnClickListener {
@@ -35,7 +35,7 @@ class AttractionFragment : Fragment(R.layout.fragment_attraction) {
     }
     override fun onDestroyView() {
         super.onDestroyView()
-       // _binding = null
+        _binding = null
     }
 
 

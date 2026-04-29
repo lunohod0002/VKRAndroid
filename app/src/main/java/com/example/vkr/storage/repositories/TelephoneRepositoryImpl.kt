@@ -13,16 +13,16 @@ import com.example.vkr.logic.dto.request.RadioType
 class TelephoneRepositoryImpl(private val context : Context) : TelephoneRepository {
     @SuppressLint("MissingPermission")
     override fun getCurrentCellInfo(): CellInfo? {
-        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        val allCellInfo= telephonyManager.allCellInfo
-            .mapNotNull {
-                when (it) {
-                    is CellInfoGsm -> getCellInfo(it)
-                    is CellInfoWcdma -> getCellInfo(it)
-                    is CellInfoLte -> getCellInfo(it)
-                    else -> null
-                }
-            }
+//        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+//        val allCellInfo= telephonyManager.allCellInfo
+//            .mapNotNull {
+//                when (it) {
+//                    is CellInfoGsm -> getCellInfo(it)
+//                    is CellInfoWcdma -> getCellInfo(it)
+//                    is CellInfoLte -> getCellInfo(it)
+//                    else -> null
+//                }
+//            }
         return CellInfo(lac="660", mcc = "250",mnc="1",cid="7437",radio="GSM")
 
 //        if (allCellInfo.isEmpty()){

@@ -9,7 +9,7 @@ import android.util.Log
 class StationRepositoryImpl : StationRepository {
 
     companion object {
-        const val BASE_URL = "http://192.168.1.20:8081"
+        const val BASE_URL = "http://192.168.1.20:8080"
     }
 
     private val networkApi: StationRepository by lazy {
