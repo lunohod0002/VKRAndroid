@@ -19,6 +19,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.App
 import com.example.vkr.logic.viewmodels.StationViewModel
+import com.example.vkr.presentation.adapters.ImagePagerAdapter
 import com.example.vkr.presentation.service.AudioService
 import com.google.common.util.concurrent.ListenableFuture
 
@@ -106,6 +107,18 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 binding.descriptionTextView.text = station.description
                 binding.stationNameTxt.text = station.name
                 binding.branchNameTxt.text = station.branch
+                if (station.imagesRef.isNotEmpty()) { // Замените imagesRef на ваше поле
+                    binding.gallery.adapter = ImagePagerAdapter(station.imagesRef)
+                }
+                val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.page_margin) // создайте dimen со значением 16dp
+                binding.gallery.setPageTransformer { page, position ->
+                    val offset = position * (pageMarginPx / 2)
+                    page.translationX = -offset
+                }
+//                // 2. Галерея достопримечательностей
+//                if (station.a.isNotEmpty()) { // Замените attractionsRef на ваше поле
+//                    binding.attractionsGallery.adapter = ImagePagerAdapter(station.attractionsRef)
+//                }
 
                 if (station.videosRef.isNotEmpty()) {
                     val videoItem = MediaItem.fromUri(station.videosRef[0])

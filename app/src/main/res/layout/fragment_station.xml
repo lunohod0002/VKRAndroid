@@ -7,7 +7,7 @@
     tools:context=".fragments.StationFragment"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -64,16 +64,12 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/gallery"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxHeight="100dp"
+                android:layout_height="100dp"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="15dp"
-                android:layout_marginTop="28dp"
-                app:flow_horizontalGap="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/branch_with_logo" />
+            android:layout_marginVertical="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/branch_with_logo" />
 
             <androidx.media3.ui.PlayerView
                 android:id="@+id/audioPlayer"
@@ -113,18 +109,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/videoPlayer" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/attractionsGallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="100dp"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginVertical="15dp"
-
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/attractionsGallery"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
             <TextView
@@ -170,5 +163,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/extraServicesTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

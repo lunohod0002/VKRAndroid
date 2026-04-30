@@ -5,9 +5,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin") // add safe args in navigation with navGraph
     id("com.google.devtools.ksp")
 
-
 }
-
 android {
     namespace = "com.example.myapplication"
     compileSdk = 35
@@ -80,7 +78,7 @@ dependencies {
     val room_version = "2.8.3"
 
     implementation("androidx.room:room-runtime:$room_version")
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     ksp("androidx.room:room-compiler:$room_version")
@@ -93,6 +91,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.9.6")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // ViewModel & Lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
