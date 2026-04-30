@@ -6,18 +6,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
@@ -29,38 +25,35 @@ import com.google.common.util.concurrent.ListenableFuture
 class StationFragment : Fragment(R.layout.fragment_station) {
 
     private val viewModel: StationViewModel by viewModels {
-        StationViewModel.Factory(requireContext(), (requireActivity().application as App).getDb().cellDao())
+        StationViewModel.Factory(
+            requireContext(),
+            (requireActivity().application as App).getDb().cellDao()
+        )
     }
 
     private var _binding: FragmentStationBinding? = null
     private val binding: FragmentStationBinding
         get() = _binding ?: throw RuntimeException()
 
-    // Локальный плеер ТОЛЬКО для видео
     private var videoPlayer: ExoPlayer? = null
-    // Контроллер для подключения к фоновому аудио сервису
     private var audioControllerFuture: ListenableFuture<MediaController>? = null
 
-    // Запрос разрешения на уведомления для Android 13+
+    // Переменная для сохранения URL, если данные пришли быстрее, чем подключился MediaController
+    private var pendingAudioUrl: String? = null
+
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { isGranted -> /* Не критично, просто не покажется уведомление */ }
+    ) { /* isGranted -> можно добавить логику, если нужно */ }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view,savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStationBinding.bind(view)
 
         requestNotificationPermission()
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().popBackStack(R.id.screen_map, false)
-        }
-
-        displayInitData()
         initStationData()
         displayStationData()
-
         initVideoPlayer()
-        initAudioController()
+        initAudioServiceAndController()
     }
 
     private fun requestNotificationPermission() {
@@ -74,36 +67,53 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         binding.videoPlayer.player = videoPlayer
     }
 
-    private fun initAudioController() {
-        val sessionToken = SessionToken(requireContext(), ComponentName(requireContext(), AudioService::class.java))
+    private fun initAudioServiceAndController() {
+        // 1. СНАЧАЛА запускаем сервис, чтобы он создал MediaSession
+        val intent = Intent(requireContext(), AudioService::class.java)
+        ContextCompat.startForegroundService(requireContext(), intent)
+
+        // 2. Подключаемся к сессии сервиса через MediaController
+        val sessionToken = SessionToken(
+            requireContext(),
+            ComponentName(requireContext(), AudioService::class.java)
+        )
+
         audioControllerFuture = MediaController.Builder(requireContext(), sessionToken).buildAsync()
 
+        // 3. Добавляем слушатель ПОДКЛЮЧЕНИЯ контроллера (обязательно в главном потоке!)
         audioControllerFuture?.addListener({
-            // Когда контроллер готов, привязываем его к UI аудиоплеера
-            binding.audioPlayer.player = audioControllerFuture?.get()
-        }, Runnable::run)
-    }
+            try {
+                val controller = audioControllerFuture?.get()
+                if (controller != null) {
+                    // Привязываем контроллер к UI
+                    binding.audioPlayer.player = controller
 
-    private fun initStationData() {
-        viewModel.getStationInfo(
-            name = binding.stationNameTxt.text.toString(),
-            branch = binding.branchNameTxt.text.toString()
-        )
+                    // Если URL аудио уже пришел (гонка), запускаем его
+                    pendingAudioUrl?.let { url ->
+                        playAudio(controller, url)
+                        pendingAudioUrl = null
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }, ContextCompat.getMainExecutor(requireContext())) // Безопасный Executor для UI
     }
 
     private fun displayStationData() {
         viewModel.resultLive.observe(viewLifecycleOwner) { station ->
             if (station != null) {
                 binding.descriptionTextView.text = station.description
+                binding.stationNameTxt.text = station.name
+                binding.branchNameTxt.text = station.branch
 
-                // Загружаем первое видео (если есть)
                 if (station.videosRef.isNotEmpty()) {
                     val videoItem = MediaItem.fromUri(station.videosRef[0])
                     videoPlayer?.setMediaItem(videoItem)
                     videoPlayer?.prepare()
+                    // videoPlayer?.playWhenReady = true // раскомментируйте, если нужно авто-воспроизведение
                 }
 
-                // Безопасная загрузка первого аудио
                 if (station.audiosRef.isNotEmpty()) {
                     playAudioSafely(station.audiosRef[0])
                 }
@@ -111,73 +121,63 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         }
     }
 
-    // Вынесем логику в отдельный метод для удобства
     private fun playAudioSafely(audioUrl: String) {
         val future = audioControllerFuture ?: return
 
-        val setupPlayer = Runnable {
-            try {
-                // Внутри листенера future уже выполнен, поэтому .get() вернет мгновенно
-                val controller = future.get()
-                val audioItem = MediaItem.fromUri(audioUrl)
-                controller.setMediaItem(audioItem)
-                controller.prepare()
-            } catch (e: Exception) {
-                e.printStackTrace() // Обработка ошибки, если сервис упал
-            }
-        }
-
-        // Если контроллер УЖЕ готов, просто запускаем
         if (future.isDone) {
-            setupPlayer.run()
+            // Если контроллер уже готов, просто играем
+            try {
+                val controller = future.get()
+                playAudio(controller, audioUrl)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         } else {
-            // Если еще готовится — вешаем слушатель, который запустится в главном потоке
-            future.addListener(setupPlayer, ContextCompat.getMainExecutor(requireContext()))
+            // Если контроллер еще в процессе подключения, сохраняем URL в pendingAudioUrl.
+            // Когда контроллер подключится (в initAudioServiceAndController), он сам запустит этот URL.
+            pendingAudioUrl = audioUrl
         }
     }
 
-    private fun startAudioService(audioUrl: String) {
-        // Запускаем сервис, чтобы он создал MediaSession
-        val intent = Intent(requireContext(), AudioService::class.java)
-        requireContext().startService(intent)
-
-        // Ждем подключения контроллера и ставим трек
-        audioControllerFuture?.addListener({
-            val controller = audioControllerFuture?.get()
-            val audioItem = MediaItem.fromUri(audioUrl)
-            controller?.setMediaItem(audioItem)
-            controller?.prepare()
-        }, Runnable::run)
+    // Вынесенная логика непосредственно воспроизведения
+    private fun playAudio(controller: MediaController, audioUrl: String) {
+        val audioItem = MediaItem.fromUri(audioUrl)
+        controller.setMediaItem(audioItem)
+        controller.prepare()
+        // controller.playWhenReady = true // раскомментируйте для авто-воспроизведения
     }
 
-    private fun displayInitData() {
+    private fun initStationData() {
         val args: StationFragmentArgs by navArgs()
-        binding.stationNameTxt.text = args.STATION.title
+        val stationName = args.STATION.title
         val branchName = when (args.STATION.branchNumber) {
             1 -> "Сокольническая"
             3 -> "Арбатско-Покровская"
             5 -> "Кольцевая"
             9 -> "Серпуховско-Тимирязевская"
-            else -> null
+            else -> ""
         }
-        if (branchName != null) {
-            binding.branchNameTxt.text = branchName
-        }
+        viewModel.getStationInfo(
+            name = stationName,
+            branch = branchName
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Освобождаем локальный видеоплеер
+
+        // Очистка VideoPlayer
         binding.videoPlayer.player = null
         videoPlayer?.release()
         videoPlayer = null
 
-        // Отвязываем UI от аудио-контроллера (сам сервис и плеер в нем НЕ убиваются)
+        // Очистка AudioController (отключаем от UI, но не останавливаем сервис!)
         binding.audioPlayer.player = null
         audioControllerFuture?.let { future ->
             MediaController.releaseFuture(future)
         }
         audioControllerFuture = null
+        pendingAudioUrl = null
 
         _binding = null
     }

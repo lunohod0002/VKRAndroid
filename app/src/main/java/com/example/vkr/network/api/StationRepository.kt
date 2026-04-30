@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface StationRepository {
-    @GET(value="/api/stations/")
+    @GET(value="/api/stations")
     suspend fun getStationByNameAndBranch(@Query("stationName") name:String, @Query("branch") branch:String): Response<Station>
 }
