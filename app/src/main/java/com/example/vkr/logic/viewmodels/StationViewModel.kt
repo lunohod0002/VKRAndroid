@@ -23,29 +23,29 @@ class StationViewModel(
     fun getStationInfo(name:String,branch:String) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            resultLiveMutable.postValue(
-                Station(
-                    ",", ",",
-                    listOf(
-                        "1",
-                        "2",
-                    ),
-                    "2", "D",
-                    listOf(
-                        "https://i.pinimg.com/236x/e1/93/77/e19377801345931014961fba19a5eb4c.jpg",
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTQ04WdzI8_nx_D7_gGQK5nyjsunQOHNm5g&s",
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnkXX1msb3FcwUKdveOb4VJ_8dlsezqUlqEQ&s",
-                    ),
-                    emptyList(), emptyList(),
-                )
-            )
-//            val station = stationRepository.getStationByNameAndBranch(name = name, branch = branch)
-//            if (station.body() != null) {
-//                resultLiveMutable.postValue(station.body())
-//            } else {
-//                resultLiveMutable.postValue(null)
-//
-//            }
+//            resultLiveMutable.postValue(
+//                Station(
+//                    ",", ",",
+//                    listOf(
+//                        "1",
+//                        "2",
+//                    ),
+//                    "2", "D",
+//                    listOf(
+//                        "https://i.pinimg.com/236x/e1/93/77/e19377801345931014961fba19a5eb4c.jpg",
+//                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTQ04WdzI8_nx_D7_gGQK5nyjsunQOHNm5g&s",
+//                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnkXX1msb3FcwUKdveOb4VJ_8dlsezqUlqEQ&s",
+//                    ),
+//                    emptyList(), emptyList(),
+//                )
+//            )
+            val station = stationRepository.getStationByNameAndBranch(name = name, branch = branch)
+            if (station.body() != null) {
+                resultLiveMutable.postValue(station.body())
+            } else {
+                resultLiveMutable.postValue(null)
+
+            }
 
         }
     }

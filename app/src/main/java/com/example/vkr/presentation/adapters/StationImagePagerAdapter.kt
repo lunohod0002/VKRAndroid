@@ -7,8 +7,8 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ItemImageBinding
 
-class ImagePagerAdapter(private val imageUrls: List<String>) :
-    RecyclerView.Adapter<ImagePagerAdapter.ViewHolder>() {
+class StationImagePagerAdapter(private val imageUrls: List<String>) :
+    RecyclerView.Adapter<StationImagePagerAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root)
 

@@ -20,7 +20,8 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.App
 import com.example.vkr.logic.viewmodels.StationViewModel
-import com.example.vkr.presentation.adapters.ImagePagerAdapter
+import com.example.vkr.presentation.adapters.StationAttractionPagerAdapter
+import com.example.vkr.presentation.adapters.StationImagePagerAdapter
 import com.example.vkr.presentation.service.AudioService
 import com.google.common.util.concurrent.ListenableFuture
 
@@ -109,20 +110,24 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 binding.stationNameTxt.text = station.name
                 binding.branchNameTxt.text = station.branch
                 if (station.imagesRef.isNotEmpty()) {
-                    binding.gallery.adapter = ImagePagerAdapter(station.imagesRef)
+                    binding.gallery.adapter = StationImagePagerAdapter(station.imagesRef)
 
                     val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)
                     binding.gallery.setPageTransformer(MarginPageTransformer(pageMarginPx))
 
-                    // Чтобы соседние страницы не «вырезались» при анимации
                     binding.gallery.offscreenPageLimit = 1
                 }
 
 
 //                // 2. Галерея достопримечательностей
-//                if (station.a.isNotEmpty()) { // Замените attractionsRef на ваше поле
-//                    binding.attractionsGallery.adapter = ImagePagerAdapter(station.attractionsRef)
-//                }
+              if (station.attractionResponseList.isNotEmpty()) {
+                    binding.attractionsGallery.adapter = StationAttractionPagerAdapter(station.attractionResponseList)
+
+                    val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)
+                    binding.attractionsGallery.setPageTransformer(MarginPageTransformer(pageMarginPx))
+
+                    binding.attractionsGallery.offscreenPageLimit = 1
+            }
 
                 if (station.videosRef.isNotEmpty()) {
                     val videoItem = MediaItem.fromUri(station.videosRef[0])

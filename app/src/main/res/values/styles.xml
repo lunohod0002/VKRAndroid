@@ -57,5 +57,9 @@
         <item name="cornerRadius">10dp</item>
         <item name="backgroundTint">#FFFFFF</item>
     </style>
+    <style name="RoundedAttractionImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">14dp</item>
+    </style>
     <style name="Theme.VKR" parent="Base.Theme.VKR" />
 </resources>
