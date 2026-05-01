@@ -15,6 +15,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.App
@@ -107,14 +108,17 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 binding.descriptionTextView.text = station.description
                 binding.stationNameTxt.text = station.name
                 binding.branchNameTxt.text = station.branch
-                if (station.imagesRef.isNotEmpty()) { // Замените imagesRef на ваше поле
+                if (station.imagesRef.isNotEmpty()) {
                     binding.gallery.adapter = ImagePagerAdapter(station.imagesRef)
+
+                    val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)
+                    binding.gallery.setPageTransformer(MarginPageTransformer(pageMarginPx))
+
+                    // Чтобы соседние страницы не «вырезались» при анимации
+                    binding.gallery.offscreenPageLimit = 1
                 }
-                val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.page_margin) // создайте dimen со значением 16dp
-                binding.gallery.setPageTransformer { page, position ->
-                    val offset = position * (pageMarginPx / 2)
-                    page.translationX = -offset
-                }
+
+
 //                // 2. Галерея достопримечательностей
 //                if (station.a.isNotEmpty()) { // Замените attractionsRef на ваше поле
 //                    binding.attractionsGallery.adapter = ImagePagerAdapter(station.attractionsRef)
