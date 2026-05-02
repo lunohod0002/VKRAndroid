@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 
 
-class AttractionFragmentDetails : Fragment(R.layout.fragment_attraction) {
+class AttractionFragmentDetails : Fragment(R.layout.fragment_attraction_details) {
 //    private var _binding: StationFragmentBinding? = null
 //    private val binding: StationFragmentBinding
 //        get() = _binding ?: throw RuntimeException()

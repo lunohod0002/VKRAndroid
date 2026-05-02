@@ -30,7 +30,7 @@ class StationAttractionPagerAdapter(
         val item = items[position]
 
         holder.name.text = item.name
-        holder.distance.text = item.distance + " метров от вас"
+        holder.distance.text = item.distance.toString() + " метров от вас"
         holder.price.text = "От " + item.price.toString() + " ₽"
 
         Glide.with(holder.image.context)

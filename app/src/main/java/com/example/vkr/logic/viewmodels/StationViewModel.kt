@@ -38,8 +38,8 @@ class StationViewModel(
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnkXX1msb3FcwUKdveOb4VJ_8dlsezqUlqEQ&s",
                     ),
                     emptyList(), emptyList(),listOf(
-                        StationAttractionResponse(1,"Московский зоопарк и еее кп цв йцвйцв йцв цц", 200,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-_HGFkK3BhjnV2sHm3zv11GcRlHEjIq4zGg&s","t"),
-                        StationAttractionResponse(1,"Зоопарк", 200,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-_HGFkK3BhjnV2sHm3zv11GcRlHEjIq4zGg&s","t")
+                        StationAttractionResponse(1,"Московский зоопарк и еее кп цв йцвйцв йцв цц", 200,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-_HGFkK3BhjnV2sHm3zv11GcRlHEjIq4zGg&s",200),
+                        StationAttractionResponse(1,"Зоопарк", 200,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-_HGFkK3BhjnV2sHm3zv11GcRlHEjIq4zGg&s",500)
                     )
                 )
             )

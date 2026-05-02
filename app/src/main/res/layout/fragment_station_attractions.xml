@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".fragments.AttractionFragment"
+    android:layout_height="match_parent"
+    tools:context=".fragments.StationAttractionsFragment"
 
     android:padding="16dp">
 
@@ -51,7 +51,7 @@
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="10dp"
             android:src="@drawable/redbranchlogo"
-             />
+            />
 
         <TextView
             android:id="@+id/branch_name_txt"
@@ -63,17 +63,17 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userList"
+        android:id="@+id/attractionsList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="250dp"
-
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filter_panel"
-        tools:listitem="@layout/list_item" />
+        tools:listitem="@layout/item_station_attraction" />
 
     <TextView
         android:id="@+id/textView4"

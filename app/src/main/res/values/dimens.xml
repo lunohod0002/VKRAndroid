@@ -6,7 +6,7 @@
 
     <dimen name="gallery_corner_radius">16dp</dimen>
     <dimen name="attractions_gallery_height">120dp</dimen>
-    <dimen name="station_attractions_image_gallery_height">120dp</dimen> <!-- gallery_height + место под текст -->
+    <dimen name="station_attractions_image_gallery_height">150dp</dimen> <!-- gallery_height + место под текст -->
     <!-- gallery_height + место под текст -->
 
 </resources>

@@ -14,6 +14,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.myapplication.R
@@ -51,7 +52,11 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStationBinding.bind(view)
+        binding.seeAllTextView.setOnClickListener {
+            val action= StationFragmentDirections.actionScreenStationToStationAttractionsFragment()
+            findNavController().navigate(action)
 
+        }
         requestNotificationPermission()
         initStationData()
         displayStationData()
@@ -71,11 +76,6 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     }
 
     private fun initAudioServiceAndController() {
-        // 1. СНАЧАЛА запускаем сервис, чтобы он создал MediaSession
-        val intent = Intent(requireContext(), AudioService::class.java)
-        ContextCompat.startForegroundService(requireContext(), intent)
-
-        // 2. Подключаемся к сессии сервиса через MediaController
         val sessionToken = SessionToken(
             requireContext(),
             ComponentName(requireContext(), AudioService::class.java)
@@ -83,15 +83,11 @@ class StationFragment : Fragment(R.layout.fragment_station) {
 
         audioControllerFuture = MediaController.Builder(requireContext(), sessionToken).buildAsync()
 
-        // 3. Добавляем слушатель ПОДКЛЮЧЕНИЯ контроллера (обязательно в главном потоке!)
         audioControllerFuture?.addListener({
             try {
                 val controller = audioControllerFuture?.get()
                 if (controller != null) {
-                    // Привязываем контроллер к UI
                     binding.audioPlayer.player = controller
-
-                    // Если URL аудио уже пришел (гонка), запускаем его
                     pendingAudioUrl?.let { url ->
                         playAudio(controller, url)
                         pendingAudioUrl = null
@@ -100,7 +96,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }, ContextCompat.getMainExecutor(requireContext())) // Безопасный Executor для UI
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
     private fun displayStationData() {
