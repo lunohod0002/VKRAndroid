@@ -1,64 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/gallery_corner_radius"
     app:cardElevation="0dp"
     app:strokeWidth="0dp">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <!-- Карточка с изображением (точно как у галереи станции) -->
-    <com.google.android.material.card.MaterialCardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/gallery_height"
-        app:cardCornerRadius="@dimen/gallery_corner_radius"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp">
+        android:layout_height="match_parent">
 
-
+        <!-- Изображение растянуто на весь экран как фон -->
         <ImageView
             android:id="@+id/attractionImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:contentDescription="" />
-    </com.google.android.material.card.MaterialCardView>
+            android:contentDescription=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
-    <!-- Текстовая информация под изображением -->
-    <TextView
-        android:id="@+id/attractionName"
-        android:layout_width="match_parent"
+        <!-- Опционально: Градиент для читаемости белого текста на любой картинке -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_gradient_bottom_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineHalf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/attractionName"
+            android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
         android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="16sp"
+        android:maxLines="2"
+        android:textColor="#FFFFFF"
+            android:shadowColor="#80000000"
+        android:shadowDx="0"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:fontFamily="@font/inter_bold"
+        android:textSize="17sp"
         android:textStyle="bold"
-        tools:text="Московский зоопарк" />
+        android:textAlignment="viewStart"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guidelineHalf"
+        app:layout_constraintBottom_toTopOf="@+id/attractionDistance"
+        tools:text="Зоопарк" />
 
-    <TextView
-        android:id="@+id/attractionDistance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="14sp"
-        android:alpha="0.6"
-        tools:text="390 метров от вас" />
+        <!-- Расстояние (привязано к низу и началу) -->
+        <TextView
+            android:id="@+id/attractionDistance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:shadowColor="#80000000"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/attractionPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="390 метров от вас" />
 
-    <TextView
-        android:id="@+id/attractionPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        tools:text="От 1500 ₽" />
-</LinearLayout>
+        <!-- Цена (привязана к низу и концу) -->
+        <TextView
+            android:id="@+id/attractionPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="15sp"
+            android:shadowColor="#80000000"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="От 1500 ₽" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>
