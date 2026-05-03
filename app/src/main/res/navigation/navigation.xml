@@ -58,6 +58,13 @@
     <fragment
         android:id="@+id/stationAttractionsFragment"
         android:name="com.example.vkr.presentation.fragments.StationAttractionsFragment"
-        android:label="StationAttractionsFragment" />
+        android:label="StationAttractionsFragment">
+        <argument
+            android:name="STATION"
+            app:argType="com.example.vkr.network.dto.StationData"
+            app:nullable="false"/>
+
+    </fragment>
+
 
 </navigation>

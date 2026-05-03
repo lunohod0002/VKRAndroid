@@ -50,6 +50,7 @@
             android:id="@+id/branchLogo"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:scaleType="centerCrop"
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="10dp"
             android:contentDescription="@string/branch_logo"

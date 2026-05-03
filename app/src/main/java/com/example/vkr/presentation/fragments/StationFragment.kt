@@ -17,14 +17,20 @@ import androidx.media3.session.SessionToken
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.App
 import com.example.vkr.logic.viewmodels.StationViewModel
+import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.adapters.StationAttractionPagerAdapter
 import com.example.vkr.presentation.adapters.StationImagePagerAdapter
 import com.example.vkr.presentation.service.AudioService
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.common.util.concurrent.ListenableFuture
+import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.map.TextStyle
+import com.yandex.runtime.image.ImageProvider
 
 class StationFragment : Fragment(R.layout.fragment_station) {
 
@@ -42,21 +48,17 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     private var videoPlayer: ExoPlayer? = null
     private var audioControllerFuture: ListenableFuture<MediaController>? = null
 
-    // Переменная для сохранения URL, если данные пришли быстрее, чем подключился MediaController
     private var pendingAudioUrl: String? = null
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { /* isGranted -> можно добавить логику, если нужно */ }
+    ) {  }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStationBinding.bind(view)
-        binding.seeAllTextView.setOnClickListener {
-            val action= StationFragmentDirections.actionScreenStationToStationAttractionsFragment()
-            findNavController().navigate(action)
 
-        }
+
         requestNotificationPermission()
         initStationData()
         displayStationData()
@@ -137,6 +139,36 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 }
             }
         }
+        val args: StationFragmentArgs by navArgs()
+        val branchNumber = args.STATION.branchNumber
+        val iconResId = when (branchNumber) {
+            1 -> R.drawable.red_branch_logo
+            9 -> R.drawable.gray_branch_logo
+            3 -> R.drawable.blue_branch_logo
+            5 -> R.drawable.brown_branch_logo
+            else -> 0
+        }
+
+        if (iconResId != 0) {
+            binding.branchLogo.setImageResource(iconResId)
+        } else {
+            binding.branchLogo.setImageResource(0)
+        }
+
+        binding.seeAllTextView.setOnClickListener {
+            val stationData = StationData(title = args.STATION.title, branchNumber = args.STATION.branchNumber)
+
+            val action= StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
+                STATION = stationData
+            )
+            val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            val previousItemId = bottomNavigationView?.selectedItemId
+            if (previousItemId != null) {
+                bottomNavigationView.menu.findItem(previousItemId)?.isChecked = false
+
+            }
+            findNavController().navigate(action)
+        }
     }
 
     private fun playAudioSafely(audioUrl: String) {
@@ -175,10 +207,12 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             9 -> "Серпуховско-Тимирязевская"
             else -> ""
         }
+
         viewModel.getStationInfo(
             name = stationName,
             branch = branchName
         )
+
     }
 
     override fun onDestroyView() {
