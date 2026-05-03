@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
-import com.example.vkr.network.dto.StationAttractionResponse
+import com.example.vkr.network.dto.StationAttractionInfo
 
 
 class StationAttractionRecyclerAdapter(
-    private val onItemClick: (StationAttractionResponse) -> Unit
-) : ListAdapter<StationAttractionResponse, StationAttractionRecyclerAdapter.AttractionViewHolder>(DIFF) {
+    private val onItemClick: (StationAttractionInfo) -> Unit
+) : ListAdapter<StationAttractionInfo, StationAttractionRecyclerAdapter.AttractionViewHolder>(DIFF) {
 
     class AttractionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.stationAttractionsImage)
@@ -52,11 +52,11 @@ class StationAttractionRecyclerAdapter(
         else "%.1f км от вас".format(meters / 1000.0)
 
     companion object {
-        private val DIFF = object : DiffUtil.ItemCallback<StationAttractionResponse>() {
-            override fun areItemsTheSame(oldItem: StationAttractionResponse, newItem: StationAttractionResponse) =
+        private val DIFF = object : DiffUtil.ItemCallback<StationAttractionInfo>() {
+            override fun areItemsTheSame(oldItem: StationAttractionInfo, newItem: StationAttractionInfo) =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: StationAttractionResponse, newItem: StationAttractionResponse) =
+            override fun areContentsTheSame(oldItem: StationAttractionInfo, newItem: StationAttractionInfo) =
                 oldItem == newItem
         }
     }

@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.vkr.network.api.StationRepository
 import com.example.vkr.storage.dao.CellDao
 import com.example.vkr.storage.repositories.CellRepositoryImpl
 import com.example.vkr.storage.repositories.TelephoneRepositoryImpl
 import com.example.vkr.network.dto.MapMarker
+import com.example.vkr.network.dto.StationAttractionInfo
 import com.example.vkr.network.dto.StationCoordinates
 import com.example.vkr.storage.repositories.CellRepository
 import com.example.vkr.storage.repositories.TelephoneRepository
@@ -17,18 +19,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class StationAttractionsViewModel(
-    private val cellRepository: CellRepository,
-    private val telephoneRepository: TelephoneRepository,
+    private val stationRepository: StationRepository,
 ) : ViewModel() {
 
-    private val resultLiveMutable = MutableLiveData<StationCoordinates?>()
-    val resultLive: LiveData<StationCoordinates?> = resultLiveMutable
+    private val resultLiveMutable = MutableLiveData<List<StationAttractionInfo>?>()
+    val resultLive: LiveData<List<StationAttractionInfo>?> = resultLiveMutable
 
 
-    fun getStationAttractions() {
-        //
+    fun getStationAttractions(stationId:Long) {
+        viewModelScope.launch(Dispatchers.IO) {
 
-    }
+            val attractions = stationRepository.getStationAttractions(stationId)
+            resultLiveMutable.postValue(attractions.body()?.content)
+
+            }
+        }
+
+
     companion object {
         fun Factory(context: Context,cellDao: CellDao): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

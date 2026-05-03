@@ -8,5 +8,5 @@ class Station(
     var imagesRef:List<String>,
     var videosRef:List<String>,
     var audiosRef:List<String>,
-    var attractionResponseList:List<StationAttractionResponse>
+    var attractionResponseList:List<StationAttractionInfo>
 ) {}

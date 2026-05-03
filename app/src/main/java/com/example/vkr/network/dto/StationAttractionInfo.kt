@@ -1,6 +1,6 @@
 package com.example.vkr.network.dto
 
-data class StationAttractionResponse(
+data class StationAttractionInfo(
     var id: Long,
     var name: String,
     var price: Int,
