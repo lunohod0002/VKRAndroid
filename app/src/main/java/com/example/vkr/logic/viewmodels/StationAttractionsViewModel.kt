@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.vkr.network.api.StationRepository
+import com.example.vkr.network.api.StationRepositoryImpl
 import com.example.vkr.storage.dao.CellDao
 import com.example.vkr.storage.repositories.CellRepositoryImpl
 import com.example.vkr.storage.repositories.TelephoneRepositoryImpl
@@ -37,16 +38,13 @@ class StationAttractionsViewModel(
 
 
     companion object {
-        fun Factory(context: Context,cellDao: CellDao): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun Factory(): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
             ): T {
-                val telephoneRepository = TelephoneRepositoryImpl(context = context)
-                val cellRepository = CellRepositoryImpl(cellDao)
-                return StationAttractionsViewModel(
-                    cellRepository,
-                    telephoneRepository
+                val stationRepository = StationRepositoryImpl()
+                return StationAttractionsViewModel(stationRepository
                 ) as T
             }
         }

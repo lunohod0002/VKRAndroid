@@ -61,7 +61,7 @@
         android:label="StationAttractionsFragment">
         <argument
             android:name="STATION"
-            app:argType="com.example.vkr.network.dto.StationData"
+            app:argType="com.example.vkr.network.dto.StationAttractionData"
             app:nullable="false"/>
 
     </fragment>

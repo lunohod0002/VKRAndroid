@@ -1,6 +1,7 @@
 package com.example.vkr.network.dto
 
 class Station(
+    var id : Long,
     var name: String,
     var branch: String,
     var extraServices: List<String>,

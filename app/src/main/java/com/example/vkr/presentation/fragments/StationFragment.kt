@@ -22,6 +22,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.App
 import com.example.vkr.logic.viewmodels.StationViewModel
+import com.example.vkr.network.dto.StationAttractionData
 import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.adapters.StationAttractionPagerAdapter
 import com.example.vkr.presentation.adapters.StationImagePagerAdapter
@@ -40,7 +41,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             (requireActivity().application as App).getDb().cellDao()
         )
     }
-
+    private  var stationId : Long?=null
     private var _binding: FragmentStationBinding? = null
     private val binding: FragmentStationBinding
         get() = _binding ?: throw RuntimeException()
@@ -104,6 +105,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     private fun displayStationData() {
         viewModel.resultLive.observe(viewLifecycleOwner) { station ->
             if (station != null) {
+                stationId=station.id
                 binding.descriptionTextView.text = station.description
                 binding.stationNameTxt.text = station.name
                 binding.branchNameTxt.text = station.branch
@@ -156,7 +158,9 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         }
 
         binding.seeAllTextView.setOnClickListener {
-            val stationData = StationData(title = args.STATION.title, branchNumber = args.STATION.branchNumber)
+
+            val stationData = StationAttractionData(
+                title = args.STATION.title,id=stationId!!, branchNumber = args.STATION.branchNumber)
 
             val action= StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
                 STATION = stationData

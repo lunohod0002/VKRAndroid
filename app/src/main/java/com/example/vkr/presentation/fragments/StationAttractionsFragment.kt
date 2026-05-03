@@ -5,16 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationAttractionsBinding
+import com.example.vkr.App
+import com.example.vkr.logic.viewmodels.StationAttractionsViewModel
+import com.example.vkr.logic.viewmodels.StationViewModel
 import com.example.vkr.network.dto.StationAttractionInfo
 import com.example.vkr.presentation.adapters.StationAttractionRecyclerAdapter
 import kotlin.getValue
 
 
 class StationAttractionsFragment : Fragment() {
+
+    private val viewModel: StationAttractionsViewModel by viewModels {
+        StationAttractionsViewModel.Factory()
+    }
 
     private var _binding: FragmentStationAttractionsBinding? = null
     private val binding get() = _binding!!
@@ -88,10 +96,7 @@ class StationAttractionsFragment : Fragment() {
             else -> ""
         }
 
-//        viewModel.getStationInfo(
-//            name = stationName,
-//            branch = branchName
-//        )
+        viewModel.getStationAttractions(args.STATION.id)
 
     }
     private fun setupRecyclerView() {
@@ -101,8 +106,13 @@ class StationAttractionsFragment : Fragment() {
         binding.attractionsList.layoutManager = LinearLayoutManager(requireContext())
         binding.attractionsList.adapter = adapter
     }
-
-    private fun loadData() {
+    private fun displayStationAttractionsData() {
+        viewModel.resultLive.observe(viewLifecycleOwner) { station ->
+            if (station != null) {
+            }
+        }
+    }
+                private fun loadData() {
         attractions = listOf(
             StationAttractionInfo(1, "Зоопарк", 390, "https://s0.rbk.ru/v6_top_pics/media/img/1/14/756594550679141.webp",1500),
             StationAttractionInfo(2, "Музей космонавтики", 850, "https://cdn.iz.ru/sites/default/files/news-2018-12/2880px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",800),
