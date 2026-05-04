@@ -60,8 +60,10 @@ class MainActivity : AppCompatActivity() {
             handleNavigation(item.itemId, navController)
         }
 
-        // Проверяем права и запрашиваем
-        checkPermissionAndOpenMap()
+        if (savedInstanceState == null) {
+
+            checkPermissionAndOpenMap()
+        }
     }
 
     private fun checkPermissionAndOpenMap() {
