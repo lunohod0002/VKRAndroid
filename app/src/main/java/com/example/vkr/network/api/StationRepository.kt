@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface StationRepository {
     @GET(value="/api/stations")
     suspend fun getStationByNameAndBranch(@Query("stationName") name:String, @Query("branch") branch:String): Response<Station>
-    @GET(value="/stations/{stationId}/attractions")
+    @GET(value="/api/stations/{stationId}/attractions?page=0&size=10")
     suspend fun getStationAttractions(@Path("stationId") stationId:Long): Response<StationAttractionsResponse>
 
 }
