@@ -25,6 +25,7 @@ class AudioService : MediaSessionService() {
         val player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setWakeMode(C.WAKE_MODE_LOCAL)
+
             .build()
 
         mediaSession = MediaSession.Builder(this, player)

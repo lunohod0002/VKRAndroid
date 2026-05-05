@@ -196,6 +196,8 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     // Вынесенная логика непосредственно воспроизведения
     private fun playAudio(controller: MediaController, audioUrl: String) {
         val audioItem = MediaItem.fromUri(audioUrl)
+
+
         controller.setMediaItem(audioItem)
         controller.prepare()
         // controller.playWhenReady = true // раскомментируйте для авто-воспроизведения
