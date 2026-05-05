@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_screen_station_to_stationAttractionsFragment"
             app:destination="@id/stationAttractionsFragment" />
+        <action
+            android:id="@+id/action_screen_station_to_attractionFragmentDetails"
+            app:destination="@id/attractionFragmentDetails" />
 
     </fragment>
     <fragment
@@ -63,7 +66,19 @@
             android:name="STATION"
             app:argType="com.example.vkr.network.dto.StationAttractionData"
             app:nullable="false"/>
+        <action
+            android:id="@+id/action_stationAttractionsFragment_to_attractionFragmentDetails"
+            app:destination="@id/attractionFragmentDetails" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/attractionFragmentDetails"
+        android:name="com.example.vkr.presentation.fragments.AttractionFragmentDetails"
+        android:label="AttractionFragmentDetails">
+    <argument
+        android:name="ATTRACTION"
+        app:argType="com.example.vkr.network.dto.AttractionId"
+        app:nullable="false"/>
     </fragment>
 
 

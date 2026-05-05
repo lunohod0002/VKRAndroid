@@ -1,120 +1,128 @@
+package com.example.vkr.presentation.fragments
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.databinding.FragmentAttractionDetailsBinding
-import com.example.vkr.network.dto.Attraction
-import com.example.vkr.presentation.adapters.AttractionImagesPagerAdapter
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
+import com.example.myapplication.databinding.FragmentStationAttractionsBinding
+import com.example.vkr.App
+import com.example.vkr.logic.viewmodels.StationAttractionsViewModel
+import com.example.vkr.logic.viewmodels.StationViewModel
+import com.example.vkr.network.dto.AttractionId
+import com.example.vkr.network.dto.StationAttractionInfo
+import com.example.vkr.presentation.adapters.StationAttractionRecyclerAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlin.getValue
 
-class AttractionFragmentDetails : Fragment() {
-    //TODO: Добавить nav args
-    private var _binding: FragmentAttractionDetailsBinding? = null
+
+class StationAttractionsFragment : Fragment() {
+
+    private val viewModel: StationAttractionsViewModel by viewModels {
+        StationAttractionsViewModel.Factory()
+    }
+
+    private var _binding: FragmentStationAttractionsBinding? = null
     private val binding get() = _binding!!
 
-    private var audioPlayer: ExoPlayer? = null
-    private var videoPlayer: ExoPlayer? = null
-
-    private lateinit var attraction: Attraction
-
+    private lateinit var adapter: StationAttractionRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAttractionDetailsBinding.inflate(inflater, container, false)
+        _binding = FragmentStationAttractionsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindStaticData()
-        setupGallery()
-        setupBackButton()
-        setupBuyButton()
-        setupAudio()
-        setupVideo()
-    }
-    private fun bindStaticData() = with(binding) {
-        attractionNameTxt.text = attraction.name
-        // distance в новом DTO нет — либо убери TextView, либо считай отдельно
-        distanceTxt.visibility = View.GONE
-        addressDetailsTxt.text = attraction.address
-        referenceInformationDetailsTxt.text =
-            "${attraction.phoneNumber}\n${attraction.email}"
-        workingHoursDetailsTxt.text = attraction.workingHours
-        ticketsDetailsTxt.text = attraction.price ?: "Бесплатно"
-        infoDetailsTxt.text = attraction.description
-    }
 
-    private fun setupGallery() {
-        binding.gallery.adapter = AttractionImagesPagerAdapter(attraction.images)
-    }
+        setupRecyclerView()
+        initStationData()
+        displayStationAttractionsData()
+        setupFilters()
+        displayStationLogo()
+        displayStationData()
 
-    private fun setupBuyButton() {
-        binding.buyTicketBtn.setOnClickListener {
-            val intent = android.content.Intent(
-                android.content.Intent.ACTION_VIEW, attraction.urlRef.toUri()
-            )
-            startActivity(intent)
-        }
-    }
-
-    private fun setupBackButton() {
         binding.backText.setOnClickListener {
-            findNavController().navigateUp()
+            parentFragmentManager.popBackStack()
         }
     }
+    private fun displayStationData() {
+        val args: StationAttractionsFragmentArgs by navArgs()
 
 
-
-    private fun setupAudio() {
-        val url = attraction.audioUrl
-        if (url.isNullOrBlank()) {
-            binding.audioPlayerAttraction.visibility = View.GONE
-            return
+        val stationName = args.STATION.title
+        val branchName = when (args.STATION.branchNumber) {
+            1 -> "Сокольническая"
+            3 -> "Арбатско-Покровская"
+            5 -> "Кольцевая"
+            9 -> "Серпуховско-Тимирязевская"
+            else -> ""
         }
-        audioPlayer = ExoPlayer.Builder(requireContext()).build().also { player ->
-            binding.audioPlayerAttraction.player = player
-            player.setMediaItem(MediaItem.fromUri(url))
-            player.prepare()
-            player.playWhenReady = false
+        binding.stationAttractionStationNameTxt.text = stationName
+        binding.stationAttractionBranchNameTxt.text = branchName
+    }
+    private fun displayStationLogo(){
+        val args: StationAttractionsFragmentArgs by navArgs()
+
+        val branchNumber = args.STATION.branchNumber
+        val iconResId = when (branchNumber) {
+            1 -> R.drawable.red_branch_logo
+            9 -> R.drawable.gray_branch_logo
+            3 -> R.drawable.blue_branch_logo
+            5 -> R.drawable.brown_branch_logo
+            else -> 0
+        }
+
+        if (iconResId != 0) {
+            binding.stationAttractionBranchLogo.setImageResource(iconResId)
+        } else {
+            binding.stationAttractionBranchLogo.setImageResource(0)
         }
     }
+    private fun initStationData() {
+        val args: StationAttractionsFragmentArgs by navArgs()
+        viewModel.getStationAttractions(args.STATION.id)
 
-    private fun setupVideo() {
-        val url = attraction.videoUrl
-        if (url.isNullOrBlank()) {
-            binding.videoPlayerAttraction.visibility = View.GONE
-            return
-        }
-        videoPlayer = ExoPlayer.Builder(requireContext()).build().also { player ->
-            binding.videoPlayerAttraction.player = player
-            player.setMediaItem(MediaItem.fromUri(url))
-            player.prepare()
-            player.playWhenReady = false
-        }
     }
+    private fun setupRecyclerView() {
+        adapter = StationAttractionRecyclerAdapter { attraction ->
+            val action= StationAttractionsFragmentDirections.actionStationAttractionsFragmentToAttractionFragmentDetails(
+                ATTRACTION = AttractionId(attraction.id)
+            )
+            findNavController().navigate(action)
+        }
+        binding.attractionsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.attractionsList.adapter = adapter
+    }
+    private fun displayStationAttractionsData() {
+        viewModel.resultLive.observe(viewLifecycleOwner) { attractions ->
+            if (attractions != null) {
+                adapter.submitList(attractions)
+            }
+        }
 
-    override fun onPause() {
-        super.onPause()
-        audioPlayer?.pause()
-        videoPlayer?.pause()
+    }
+    //TODO:Сделать фильтрацию в другую сторону при повторном нажатии
+    private fun setupFilters() {
+        binding.byPriceFilter.setOnClickListener {
+            adapter.submitList(adapter.currentList.sortedBy { it.price })
+        }
+        binding.byDistanceFilter.setOnClickListener {
+            adapter.submitList(adapter.currentList.sortedBy { it.distance })
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        audioPlayer?.release()
-        videoPlayer?.release()
-        audioPlayer = null
-        videoPlayer = null
         _binding = null
     }
-
-
 }

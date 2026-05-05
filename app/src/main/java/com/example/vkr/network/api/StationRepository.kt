@@ -1,5 +1,7 @@
 package com.example.vkr.network.api
 
+import com.example.vkr.network.dto.Attraction
+import com.example.vkr.network.dto.AttractionResponse
 import com.example.vkr.network.dto.Station
 import com.example.vkr.network.dto.StationAttractionsResponse
 import retrofit2.Response
@@ -12,5 +14,7 @@ interface StationRepository {
     suspend fun getStationByNameAndBranch(@Query("stationName") name:String, @Query("branch") branch:String): Response<Station>
     @GET(value="/api/stations/{stationId}/attractions?page=0&size=10")
     suspend fun getStationAttractions(@Path("stationId") stationId:Long): Response<StationAttractionsResponse>
+    @GET(value="/api/attractions/{attractionId}")
+    suspend fun getAttraction(@Path("attractionId") attractionId:Long): Response<Attraction>
 
 }

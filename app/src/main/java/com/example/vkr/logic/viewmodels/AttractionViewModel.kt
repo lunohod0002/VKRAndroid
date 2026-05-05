@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.vkr.network.api.StationRepository
 import com.example.vkr.network.api.StationRepositoryImpl
+import com.example.vkr.network.dto.Attraction
 import com.example.vkr.storage.dao.CellDao
 import com.example.vkr.storage.repositories.CellRepositoryImpl
 import com.example.vkr.storage.repositories.TelephoneRepositoryImpl
@@ -19,15 +20,15 @@ import com.example.vkr.storage.repositories.TelephoneRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class StationAttractionsViewModel(
+class AttractionViewModel(
     private val stationRepository: StationRepository,
 ) : ViewModel() {
 
-    private val resultLiveMutable = MutableLiveData<List<StationAttractionInfo>?>()
-    val resultLive: LiveData<List<StationAttractionInfo>?> = resultLiveMutable
+    private val resultLiveMutable = MutableLiveData<Attraction?>()
+    val resultLive: LiveData<Attraction?> = resultLiveMutable
 
 
-    fun getStationAttractions(stationId:Long) {
+    fun getAttraction(stationId:Long) {
         viewModelScope.launch(Dispatchers.IO) {
 //            val attractions = listOf(
 //                StationAttractionInfo(1, "Зоопарк", 390, "https://s0.rbk.ru/v6_top_pics/media/img/1/14/756594550679141.webp",1500),
@@ -39,8 +40,8 @@ class StationAttractionsViewModel(
 //            )
 //            resultLiveMutable.postValue(attractions)
 
-            val attractions = stationRepository.getStationAttractions(stationId)
-            resultLiveMutable.postValue(attractions.body()?.content)
+            val attraction = stationRepository.getAttraction(stationId)
+            resultLiveMutable.postValue(attraction.body())
 
             }
         }
@@ -53,7 +54,7 @@ class StationAttractionsViewModel(
                 modelClass: Class<T>,
             ): T {
                 val stationRepository = StationRepositoryImpl()
-                return StationAttractionsViewModel(stationRepository
+                return AttractionViewModel(stationRepository
                 ) as T
             }
         }

@@ -5,6 +5,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.util.Log
+import com.example.vkr.network.dto.Attraction
 import com.example.vkr.network.dto.StationAttractionsResponse
 
 class StationRepositoryImpl : StationRepository {
@@ -46,4 +47,14 @@ class StationRepositoryImpl : StationRepository {
         }
     }
 
+    override suspend fun getAttraction(attractionId: Long): Response<Attraction> {
+        networkApi.getAttraction(attractionId).let { response ->
+            if (response.code() == 200 && response.body() != null) {
+                return response
+            } else {
+                Log.e("Error", response.toString())
+                return response
+            }
+        }
+    }
 }
