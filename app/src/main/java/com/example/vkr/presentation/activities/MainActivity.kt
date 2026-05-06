@@ -24,6 +24,13 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private var refTapCount = 0
+    private var refFirstTapAt = 0L
+
+    companion object {
+        private const val SECRET_TAP_WINDOW_MS = 5_000L
+        private const val SECRET_TAP_REQUIRED = 5
+    }
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainActivityViewModel by viewModels {
         MainActivityViewModel.Factory(this, (application as App).getDb().cellDao())
@@ -59,13 +66,32 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             handleNavigation(item.itemId, navController)
         }
-
+        binding.bottomNavigationView.setOnItemReselectedListener { item ->
+            if (item.itemId == R.id.screen_reference_info) {
+                registerReferenceInfoTap(navController)
+            }
+        }
         if (savedInstanceState == null) {
 
             checkPermissionAndOpenMap()
         }
     }
+    private fun registerReferenceInfoTap(navController: NavController) {
+        val now = System.currentTimeMillis()
+        if (now - refFirstTapAt > SECRET_TAP_WINDOW_MS) {
+            // Окно истекло — начинаем заново с этого тапа
+            refTapCount = 1
+            refFirstTapAt = now
+        } else {
+            refTapCount++
+        }
 
+        if (refTapCount >= SECRET_TAP_REQUIRED) {
+            refTapCount = 0
+            refFirstTapAt = 0L
+            navController.navigate(R.id.loginFragment)
+        }
+    }
     private fun checkPermissionAndOpenMap() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -136,6 +162,12 @@ class MainActivity : AppCompatActivity() {
                     return true
                 }
             }
+             R.id.screen_reference_info -> {
+                registerReferenceInfoTap(navController)
+                 navController.navigate(itemId)
+                 return true
+
+             }
             else -> {
                 navController.navigate(itemId)
                 return true

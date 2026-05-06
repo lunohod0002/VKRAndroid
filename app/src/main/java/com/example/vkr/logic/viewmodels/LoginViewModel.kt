@@ -17,13 +17,11 @@ class LoginViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = AuthApiImpl(RetrofitClient.authApi(tokenStorage), tokenStorage)
 
     sealed class State {
-        object Idle : State()
-        object Loading : State()
         object Success : State()
         data class Error(val message: String) : State()
     }
 
-    private val _state = MutableLiveData<State>(State.Idle)
+    private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
     fun login(login: String, password: String) {
@@ -31,7 +29,6 @@ class LoginViewModel(app: Application) : AndroidViewModel(app) {
             _state.value = State.Error("Заполните логин и пароль")
             return
         }
-        _state.value = State.Loading
         viewModelScope.launch {
             _state.value = when (val r = repo.login(login.trim(), password)) {
                 is AuthApiImpl.Result.Success -> State.Success

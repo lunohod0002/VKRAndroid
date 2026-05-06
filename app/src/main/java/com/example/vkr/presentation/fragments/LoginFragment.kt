@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.vkr.logic.viewmodels.LoginViewModel
 
@@ -34,13 +37,10 @@ class LoginFragment : Fragment() {
 
         viewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is LoginViewModel.State.Idle -> renderIdle()
-                is LoginViewModel.State.Loading -> renderLoading()
                 is LoginViewModel.State.Error -> renderError(state.message)
                 is LoginViewModel.State.Success -> {
-                    renderIdle()
-                    // TODO: navigate to main screen
-                    // findNavController().navigate(R.id.action_login_to_main)
+                    Toast.makeText(context, "Успешный вход"
+                        , Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -51,8 +51,9 @@ class LoginFragment : Fragment() {
 
 
     private fun renderError(message: String) {
+        Toast.makeText(context, "Не удалось выполнить запрос, ошибка: " + message
+            , Toast.LENGTH_SHORT).show()
 
-        binding.loginBtn.isEnabled = true
     }
 
     override fun onDestroyView() {
