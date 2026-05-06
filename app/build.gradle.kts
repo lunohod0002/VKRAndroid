@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.navigation.fragment.ktx)
     val nav_version = "2.9.6"
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Jetpack Compose integration
     implementation("com.google.android.flexbox:flexbox:3.0.0")
