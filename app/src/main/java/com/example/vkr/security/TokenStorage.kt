@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.vkr.security.CryptoManager
+import com.example.vkr.security.JwtUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -27,6 +28,10 @@ class TokenStorage(private val context: Context) {
         }
     }
 
+    suspend fun isRefreshTokenValid(): Boolean {
+        val refresh = getRefreshToken()
+        return JwtUtils.isValid(refresh)
+    }
     val accessTokenFlow: Flow<String?> = context.authDataStore.data.map { prefs ->
         prefs[accessKey]?.let { runCatching { crypto.decrypt(it) }.getOrNull() }
     }

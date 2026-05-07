@@ -28,7 +28,7 @@ import com.google.common.util.concurrent.MoreExecutors
 class AttractionFragmentDetails : Fragment() {
 
     private val viewModel: AttractionViewModel by viewModels {
-        AttractionViewModel.Factory()
+        AttractionViewModel.Factory(requireContext())
     }
 
     private var _binding: FragmentAttractionDetailsBinding? = null

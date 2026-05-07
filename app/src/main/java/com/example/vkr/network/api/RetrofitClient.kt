@@ -1,8 +1,10 @@
 package com.example.vkr.network
 
+import com.example.vkr.network.api.AttractionApi
 import com.example.vkr.network.api.AuthApi
 import com.example.vkr.network.api.AuthInterceptor
-import com.example.vkr.network.api.StationRepository
+import com.example.vkr.network.api.MediaApi
+import com.example.vkr.network.api.StationApi
 import com.example.vkr.storage.TokenStorage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +22,8 @@ object RetrofitClient {
             .addInterceptor(AuthInterceptor(tokenStorage))
             .addInterceptor(logging)
             .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)   // больше тайм-аут — на случай загрузки видео
+            .writeTimeout(60, TimeUnit.SECONDS)
             .build()
     }
 
@@ -33,6 +36,12 @@ object RetrofitClient {
     fun authApi(tokenStorage: TokenStorage): AuthApi =
         retrofit(tokenStorage).create(AuthApi::class.java)
 
-    fun stationApi(tokenStorage: TokenStorage): StationRepository =
-        retrofit(tokenStorage).create(StationRepository::class.java)
+    fun stationApi(tokenStorage: TokenStorage): StationApi =
+        retrofit(tokenStorage).create(StationApi::class.java)
+
+    fun mediaApi(tokenStorage: TokenStorage): MediaApi =
+        retrofit(tokenStorage).create(MediaApi::class.java)
+
+    fun attractionApi(tokenStorage: TokenStorage): AttractionApi =
+        retrofit(tokenStorage).create(AttractionApi::class.java)
 }

@@ -6,16 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.vkr.network.RetrofitClient
 import com.example.vkr.storage.dao.CellDao
 import com.example.vkr.network.dto.Station
-import com.example.vkr.network.api.StationRepository
-import com.example.vkr.network.api.StationRepositoryImpl
-import com.example.vkr.network.dto.StationAttractionInfo
+import com.example.vkr.network.api.StationApi
+import com.example.vkr.network.api.StationApiImpl
+import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class StationViewModel(
-    private val stationRepository: StationRepository,
+    private val stationApi: StationApiImpl,
 ) : ViewModel() {
 
     private val resultLiveMutable = MutableLiveData<Station?>()
@@ -43,7 +44,7 @@ class StationViewModel(
 //                    )
 //                )
 //            )
-            val station = stationRepository.getStationByNameAndBranch(name = name, branch = branch)
+            val station = stationApi.getStationByNameAndBranch(name = name, branch = branch)
                 resultLiveMutable.postValue(station.body())
 
 
@@ -52,14 +53,16 @@ class StationViewModel(
 
 
     companion object {
-        fun Factory(context: Context,cellDao: CellDao): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun Factory(context: Context): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
             ): T {
-                val stationRepository = StationRepositoryImpl()
+                val stationApi = StationApiImpl(
+                    RetrofitClient.stationApi(TokenStorage(context = context.applicationContext))
+                )
                 return StationViewModel(
-                    stationRepository
+                    stationApi
                 ) as T
             }
         }

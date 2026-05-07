@@ -6,21 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.vkr.network.api.StationRepository
-import com.example.vkr.network.api.StationRepositoryImpl
-import com.example.vkr.storage.dao.CellDao
-import com.example.vkr.storage.repositories.CellRepositoryImpl
-import com.example.vkr.storage.repositories.TelephoneRepositoryImpl
-import com.example.vkr.network.dto.MapMarker
+import com.example.vkr.network.RetrofitClient
+import com.example.vkr.network.api.StationApi
+import com.example.vkr.network.api.StationApiImpl
 import com.example.vkr.network.dto.StationAttractionInfo
-import com.example.vkr.network.dto.StationCoordinates
-import com.example.vkr.storage.repositories.CellRepository
-import com.example.vkr.storage.repositories.TelephoneRepository
+import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class StationAttractionsViewModel(
-    private val stationRepository: StationRepository,
+    private val stationApi: StationApiImpl,
 ) : ViewModel() {
 
     private val resultLiveMutable = MutableLiveData<List<StationAttractionInfo>?>()
@@ -39,7 +34,7 @@ class StationAttractionsViewModel(
 //            )
 //            resultLiveMutable.postValue(attractions)
 
-            val attractions = stationRepository.getStationAttractions(stationId)
+            val attractions = stationApi.getStationAttractions(stationId)
             resultLiveMutable.postValue(attractions.body()?.content)
 
             }
@@ -47,13 +42,16 @@ class StationAttractionsViewModel(
 
 
     companion object {
-        fun Factory(): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun Factory(context: Context): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
+
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
             ): T {
-                val stationRepository = StationRepositoryImpl()
-                return StationAttractionsViewModel(stationRepository
+                val stationApi = StationApiImpl(
+                    RetrofitClient.stationApi(TokenStorage(context = context.applicationContext))
+                )
+                return StationAttractionsViewModel(stationApi
                 ) as T
             }
         }

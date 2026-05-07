@@ -34,7 +34,8 @@
             app:destination="@id/stationAttractionsFragment" />
         <action
             android:id="@+id/action_screen_station_to_attractionFragmentDetails"
-            app:destination="@id/attractionFragmentDetails" />
+            app:destination="@id/attractionFragmentDetails"
+            />
 
     </fragment>
     <fragment
@@ -83,7 +84,16 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.vkr.fragments.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_addAttractionFragment"
+            app:destination="@id/addAttractionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAttractionFragment"
+        android:name="com.example.vkr.presentation.fragments.AddAttractionFragment"
+        android:label="fragment_add_attraction"
+        tools:layout="@layout/fragment_add_attraction" />
 
 
 </navigation>

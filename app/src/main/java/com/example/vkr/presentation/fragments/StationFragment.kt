@@ -37,8 +37,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
 
     private val viewModel: StationViewModel by viewModels {
         StationViewModel.Factory(
-            requireContext(),
-            (requireActivity().application as App).getDb().cellDao()
+            requireContext()
         )
     }
     private  var stationId : Long?=null

@@ -19,6 +19,7 @@ import com.example.vkr.App
 import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.fragments.StationFragmentArgs
 import com.example.vkr.logic.viewmodels.MainActivityViewModel
+import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         if (refTapCount >= SECRET_TAP_REQUIRED) {
             refTapCount = 0
             refFirstTapAt = 0L
-            navController.navigate(R.id.loginFragment)
+            decideStartDestination(navController)
         }
     }
     private fun checkPermissionAndOpenMap() {
@@ -115,7 +116,18 @@ class MainActivity : AppCompatActivity() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHost.navController.navigate(R.id.action_emptyFragment_to_screen_map)
     }
-
+    private fun decideStartDestination(navController: NavController) {
+        val tokenStorage = TokenStorage(applicationContext)
+        lifecycleScope.launch {
+            val isLoggedIn = tokenStorage.isRefreshTokenValid()
+            if (isLoggedIn) {
+                navController.navigate(R.id.addAttractionFragment)
+            } else {
+                // Refresh истёк или его нет — на логин
+                navController.navigate(R.id.map_fragment)
+            }
+        }
+    }
     private fun handleNavigation(itemId: Int, navController: NavController): Boolean {
         val previousItemId = binding.bottomNavigationView.selectedItemId
 

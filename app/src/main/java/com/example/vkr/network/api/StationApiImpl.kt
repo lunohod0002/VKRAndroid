@@ -8,25 +8,15 @@ import android.util.Log
 import com.example.vkr.network.dto.Attraction
 import com.example.vkr.network.dto.StationAttractionsResponse
 
-class StationRepositoryImpl : StationRepository {
+class StationApiImpl(
+    private val stationApi: StationApi
+){
 
-    companion object {
-        const val BASE_URL = "http://192.168.1.20:8080"
-    }
-
-    private val networkApi: StationRepository by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(StationRepository::class.java)
-    }
-
-    override suspend fun getStationByNameAndBranch(
+suspend fun getStationByNameAndBranch(
         name: String,
         branch: String
     ): Response<Station> {
-        networkApi.getStationByNameAndBranch(name=name,branch=branch).let { response ->
+    stationApi.getStationByNameAndBranch(name=name,branch=branch).let { response ->
             if (response.code() == 200 && response.body() != null) {
                 return response
             } else {
@@ -36,8 +26,9 @@ class StationRepositoryImpl : StationRepository {
         }
     }
 
-    override suspend fun getStationAttractions(stationId: Long): Response<StationAttractionsResponse> {
-        networkApi.getStationAttractions(stationId).let { response ->
+
+    suspend fun getStationAttractions(stationId: Long): Response<StationAttractionsResponse> {
+        stationApi.getStationAttractions(stationId).let { response ->
             if (response.code() == 200 && response.body() != null) {
                 return response
             } else {
@@ -47,8 +38,8 @@ class StationRepositoryImpl : StationRepository {
         }
     }
 
-    override suspend fun getAttraction(attractionId: Long): Response<Attraction> {
-        networkApi.getAttraction(attractionId).let { response ->
+    suspend fun getAttraction(attractionId: Long): Response<Attraction> {
+        stationApi.getAttraction(attractionId).let { response ->
             if (response.code() == 200 && response.body() != null) {
                 return response
             } else {

@@ -24,7 +24,7 @@ import kotlin.getValue
 class StationAttractionsFragment : Fragment() {
 
     private val viewModel: StationAttractionsViewModel by viewModels {
-        StationAttractionsViewModel.Factory()
+        StationAttractionsViewModel.Factory(requireContext())
     }
 
     private var _binding: FragmentStationAttractionsBinding? = null
