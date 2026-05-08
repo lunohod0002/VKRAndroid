@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel(app: Application) : AndroidViewModel(app) {
 
     private val tokenStorage = TokenStorage(app.applicationContext)
-    private val repo = AuthApiImpl(RetrofitClient.authApi(tokenStorage), tokenStorage)
+    private val repo = AuthApiImpl(RetrofitClient.authApi(), tokenStorage)
 
     sealed class State {
         object Success : State()

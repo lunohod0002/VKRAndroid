@@ -5,6 +5,7 @@ import com.example.vkr.network.api.AuthApi
 import com.example.vkr.network.api.AuthInterceptor
 import com.example.vkr.network.api.MediaApi
 import com.example.vkr.network.api.StationApi
+import com.example.vkr.network.api.TokenAuthenticator
 import com.example.vkr.storage.TokenStorage
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,13 +17,35 @@ object RetrofitClient {
 
     private const val BASE_URL = "http://192.168.1.20:8080"
 
+
+    private val cleanClient: OkHttpClient by lazy {
+        val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+        OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build()
+    }
+
+    private val cleanRetrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(cleanClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    private val authApi: AuthApi by lazy { cleanRetrofit.create(AuthApi::class.java) }
+
     private fun okHttp(tokenStorage: TokenStorage): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         return OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(tokenStorage))
+            .authenticator(TokenAuthenticator(tokenStorage, authApi))
             .addInterceptor(logging)
             .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)   // больше тайм-аут — на случай загрузки видео
+            .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .build()
     }
@@ -33,8 +56,7 @@ object RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun authApi(tokenStorage: TokenStorage): AuthApi =
-        retrofit(tokenStorage).create(AuthApi::class.java)
+    fun authApi(): AuthApi = authApi
 
     fun stationApi(tokenStorage: TokenStorage): StationApi =
         retrofit(tokenStorage).create(StationApi::class.java)

@@ -1,6 +1,6 @@
 package com.example.vkr.network.dto
 
 data class MediaRequest(
-    val urfRef: String,
+    val urlRef: String,
     val type: String
 )

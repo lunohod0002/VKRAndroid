@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.vkr.logic.viewmodels.LoginViewModel
+import com.example.vkr.presentation.fragments.MapFragmentDirections
 
 class LoginFragment : Fragment() {
 
@@ -39,8 +41,10 @@ class LoginFragment : Fragment() {
             when (state) {
                 is LoginViewModel.State.Error -> renderError(state.message)
                 is LoginViewModel.State.Success -> {
-                    Toast.makeText(context, "Успешный вход"
-                        , Toast.LENGTH_SHORT).show()
+                    val action= LoginFragmentDirections.actionLoginFragmentToAddAttractionFragment(
+                    )
+                    findNavController().navigate(action)
+
                 }
             }
         }

@@ -32,7 +32,7 @@ class AttractionApiImpl(
                 throw IOException("Media upload failed: HTTP ${response.code()}")
             }
             val keys = response.body().orEmpty()
-            keys.map { MediaRequest(urfRef = it, type = type) }
+            keys.map { MediaRequest(urlRef = "/api/medias/download/"+ it, type = type) }
         }
 
     suspend fun createAttraction(request: AttractionRequest): AttractionCreatedResponse =

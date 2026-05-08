@@ -27,6 +27,12 @@ class TokenStorage(private val context: Context) {
             prefs[refreshKey] = encRefresh
         }
     }
+    suspend fun refreshToken(accessToken: String) {
+        val encAccess = crypto.encrypt(accessToken)
+        context.authDataStore.edit { prefs ->
+            prefs[accessKey] = encAccess
+        }
+    }
 
     suspend fun isRefreshTokenValid(): Boolean {
         val refresh = getRefreshToken()

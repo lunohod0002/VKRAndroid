@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -19,6 +20,7 @@ import com.example.vkr.App
 import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.fragments.StationFragmentArgs
 import com.example.vkr.logic.viewmodels.MainActivityViewModel
+import com.example.vkr.network.api.AuthEvents
 import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,6 +78,11 @@ class MainActivity : AppCompatActivity() {
 
             checkPermissionAndOpenMap()
         }
+        lifecycleScope.launch {
+            AuthEvents.logoutEvents.collect {
+                findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment)
+            }
+        }
     }
     private fun registerReferenceInfoTap(navController: NavController) {
         val now = System.currentTimeMillis()
@@ -124,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.addAttractionFragment)
             } else {
                 // Refresh истёк или его нет — на логин
-                navController.navigate(R.id.map_fragment)
+                navController.navigate(R.id.loginFragment)
             }
         }
     }
