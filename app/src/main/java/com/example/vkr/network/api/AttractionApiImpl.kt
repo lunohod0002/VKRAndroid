@@ -3,6 +3,7 @@ package com.example.vkr.network.api
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import com.example.vkr.network.RetrofitClient
 import com.example.vkr.network.dto.AttractionCreatedResponse
 import com.example.vkr.network.dto.AttractionRequest
 import com.example.vkr.network.dto.MediaRequest
@@ -32,7 +33,7 @@ class AttractionApiImpl(
                 throw IOException("Media upload failed: HTTP ${response.code()}")
             }
             val keys = response.body().orEmpty()
-            keys.map { MediaRequest(urlRef = "/api/medias/download/"+ it, type = type) }
+            keys.map { MediaRequest(urlRef = RetrofitClient.BASE_URL+"/api/medias/download/"+ it, type = type) }
         }
 
     suspend fun createAttraction(request: AttractionRequest): AttractionCreatedResponse =

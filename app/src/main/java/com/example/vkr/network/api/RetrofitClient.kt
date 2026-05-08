@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://192.168.1.20:8080"
+    const val BASE_URL = "http://192.168.1.20:8080"
 
 
     private val cleanClient: OkHttpClient by lazy {
