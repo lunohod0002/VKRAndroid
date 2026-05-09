@@ -3,7 +3,6 @@ package com.example.vkr.presentation.service
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -17,7 +16,6 @@ class AudioService : MediaSessionService() {
     override fun onCreate() {
         super.onCreate()
 
-        // 1. Защита от повторного создания, если сервис пересоздается
         if (mediaSession != null) return
 
         val audioAttributes = AudioAttributes.Builder()
@@ -31,7 +29,6 @@ class AudioService : MediaSessionService() {
             .build()
 
         mediaSession = MediaSession.Builder(this, player)
-            // 2. ОБЯЗАТЕЛЬНО ЗАДАЕМ УНИКАЛЬНЫЙ ID СЕССИИ
             .setId("AudioServiceSession_VKR")
             .setCallback(object : MediaSession.Callback {
                 override fun onAddMediaItems(
