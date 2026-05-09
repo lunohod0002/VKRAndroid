@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorControlNormal">
+
+    <!-- Стрелка-круг (указывает назад / против часовой) -->
+    <path
+        android:fillColor="@android:color/black"
+        android:pathData="M11.99,5V1L7,6l4.99,5V7c3.31,0 6,2.69 6,6s-2.69,6 -6,6s-6,-2.69 -6,-6h-2c0,4.42 3.58,8 8,8s8,-3.58 8,-8s-3.58,-8 -8.01,-8z" />
+
+    <!--
+        Цифра "1" — оригинальная высота 4.27 ед., растянута по Y
+        в 1.213 раза, чтобы совпасть с высотой цифры "5" (5.18 ед).
+        pivotY=15.94 — это низ цифры; растягиваем только вверх.
+    -->
+    <group
+        android:pivotX="9.93"
+        android:pivotY="15.94"
+        android:scaleY="1.213">
+        <path
+            android:fillColor="@android:color/black"
+            android:pathData="M10.86,15.94v-4.27h-0.09L9,12.3v0.69l1.01,-0.31v3.26z" />
+    </group>
+
+    <!-- Цифра "5" — оригинальный path Material Icons -->
+    <path
+        android:fillColor="@android:color/black"
+        android:pathData="M14.99,12.39c-0.43,0 -0.86,0.16 -1.13,0.45l0.18,-1.13h2.13v-0.95H13.4l-0.31,2.71l0.84,0.21c0.07,-0.07 0.19,-0.16 0.34,-0.21c0.5,-0.18 1.13,-0.05 1.13,0.74c0,0.42 -0.31,0.74 -0.69,0.74c-0.39,0 -0.66,-0.31 -0.66,-0.66h-0.95c0,0.95 0.79,1.54 1.61,1.54c1.07,0 1.65,-0.79 1.65,-1.65C16.39,12.97 15.7,12.39 14.99,12.39z" />
+</vector>

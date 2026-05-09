@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/exo_controller"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="4dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="4dp">
+
+    <!-- Текущая позиция (00:00) -->
+    <TextView
+        android:id="@id/exo_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:00" />
+
+    <!-- Длительность (02:02) -->
+    <TextView
+        android:id="@id/exo_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:includeFontPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="02:02" />
+
+    <!-- Прогресс-бар -->
+    <androidx.media3.ui.DefaultTimeBar
+        android:id="@id/exo_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:bar_height="3dp"
+        app:played_color="#000000"
+        app:scrubber_color="#000000"
+        app:scrubber_dragged_size="14dp"
+        app:scrubber_disabled_size="0dp"
+        app:scrubber_enabled_size="0dp"
+        app:touch_target_height="36dp"
+        app:unplayed_color="#E5E5E5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exo_position" />
+
+    <!-- Ряд кнопок управления -->
+    <LinearLayout
+        android:id="@+id/playback_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exo_progress">
+
+        <!-- Перемотка назад на 15 секунд -->
+        <ImageButton
+            android:id="@id/exo_rew"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Назад на 15 секунд"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_replay_15"
+            app:tint="#000000" />
+
+        <!-- Play / Pause: одна кнопка, ExoPlayer сам меняет иконку -->
+        <ImageButton
+            android:id="@id/exo_play_pause"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginHorizontal="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Воспроизвести / пауза"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_play"
+            app:tint="#000000" />
+
+        <!-- Перемотка вперед на 15 секунд -->
+        <ImageButton
+            android:id="@id/exo_ffwd"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Вперед на 15 секунд"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_forward_15"
+            app:tint="#000000" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

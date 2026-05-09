@@ -51,8 +51,11 @@ class StationAttractionsFragment : Fragment() {
         displayStationLogo()
         displayStationData()
 
+        setupBackButton()
+    }
+    private fun setupBackButton() {
         binding.backText.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            findNavController().navigateUp()
         }
     }
     private fun displayStationData() {

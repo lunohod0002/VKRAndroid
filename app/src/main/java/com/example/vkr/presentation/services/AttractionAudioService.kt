@@ -22,6 +22,8 @@ class AttractionAudioService : MediaSessionService() {
         val player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
+            .setSeekBackIncrementMs(15_000)
+            .setSeekForwardIncrementMs(15_000)
             .build()
 
         mediaSession = MediaSession.Builder(this, player).build()
