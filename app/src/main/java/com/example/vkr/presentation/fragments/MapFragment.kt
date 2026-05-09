@@ -134,9 +134,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         val action= MapFragmentDirections.actionScreenMapToScreenStation(
             STATION = stationData
         )
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-         bottomNavigationView?.menu!!.findItem(R.id.menu_item_none)?.isChecked = true
-
+     
         findNavController().navigate(action)
         true
     }

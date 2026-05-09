@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         // Прячем меню на время показа системного окна (чисто для эстетики)
 
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
@@ -84,21 +85,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
         navController.addOnDestinationChangedListener { controller, destination, _ ->
-            val previousDestination = controller.previousBackStackEntry?.destination
-            val fromId = previousDestination?.id
+            val destId = destination.id
+            val fromId = controller.previousBackStackEntry?.destination?.id
 
-            if (fromId == R.id.screen_map && destination.id == R.id.screen_station) {
-            }
+            // Управление видимостью
+            binding.bottomNavigationView.visibility =
+                if (destId == R.id.emptyFragment) View.GONE else View.VISIBLE
 
-            val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-            if (destination.id == R.id.emptyFragment){
-                binding.bottomNavigationView.visibility = View.GONE
-            }
-            else binding.bottomNavigationView.visibility = View.VISIBLE
+            when (destId) {
+                R.id.screen_map -> {
+                    binding.bottomNavigationView.menu.findItem(R.id.screen_map)?.isChecked = true
+                }
 
-            if (destination.id !=  R.id.screen_station && destination.id !=  R.id.screen_map && destination.id !=  R.id.screen_reference_info) {
+                R.id.screen_station -> {
+                    if (fromId == R.id.screen_map) {
+                        binding.bottomNavigationView.menu.findItem(R.id.menu_item_none)?.isChecked =
+                            true
+                    }
+                }
 
-                bottomNavigationView?.menu!!.findItem(R.id.menu_item_none)?.isChecked = true
+                else -> {
+                    // Для всех остальных экранов, кроме screen_reference_info, снимаем выделение
+                    if (destId != R.id.screen_reference_info) {
+                        binding.bottomNavigationView.menu.findItem(R.id.menu_item_none)?.isChecked =
+                            true
+                    }
+                }
             }
         }
     }
