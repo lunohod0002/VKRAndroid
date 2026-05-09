@@ -10,6 +10,7 @@ import com.example.myapplication.R
 import com.example.vkr.network.dto.StationAttractionInfo
 
 class StationAttractionPagerAdapter(
+    private val onItemClick: (StationAttractionInfo) -> Unit,
     private val items: List<StationAttractionInfo>
 ) : RecyclerView.Adapter<StationAttractionPagerAdapter.AttractionViewHolder>() {
 
@@ -32,6 +33,7 @@ class StationAttractionPagerAdapter(
         holder.name.text = item.name
         holder.distance.text = item.distance.toString() + " метров от вас"
         holder.price.text = "От " + item.price.toString() + " ₽"
+        holder.itemView.setOnClickListener { onItemClick(item) }
 
         Glide.with(holder.image.context)
             .load(item.urlRef)

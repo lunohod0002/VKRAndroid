@@ -22,6 +22,7 @@ import com.example.vkr.presentation.fragments.StationFragmentArgs
 import com.example.vkr.logic.viewmodels.MainActivityViewModel
 import com.example.vkr.network.api.AuthEvents
 import com.example.vkr.storage.TokenStorage
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -61,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Прячем меню на время показа системного окна (чисто для эстетики)
-        binding.bottomNavigationView.visibility = View.GONE
 
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
@@ -81,6 +81,24 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             AuthEvents.logoutEvents.collect {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment)
+            }
+        }
+        navController.addOnDestinationChangedListener { controller, destination, _ ->
+            val previousDestination = controller.previousBackStackEntry?.destination
+            val fromId = previousDestination?.id
+
+            if (fromId == R.id.screen_map && destination.id == R.id.screen_station) {
+            }
+
+            val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            if (destination.id == R.id.emptyFragment){
+                binding.bottomNavigationView.visibility = View.GONE
+            }
+            else binding.bottomNavigationView.visibility = View.VISIBLE
+
+            if (destination.id !=  R.id.screen_station && destination.id !=  R.id.screen_map && destination.id !=  R.id.screen_reference_info) {
+
+                bottomNavigationView?.menu!!.findItem(R.id.menu_item_none)?.isChecked = true
             }
         }
     }
@@ -117,7 +135,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun openMapScreen() {
         // Показываем меню обратно
-        binding.bottomNavigationView.visibility = View.VISIBLE
 
         // ВЫПОЛНЯЕМ ПЕРЕХОД. Только в этот момент создастся MapFragment и вызовется его onViewCreated
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -147,7 +164,6 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     Toast.makeText(this@MainActivity, "Не удалось определить текущую станцию.\n" +
                             "Выдайте разрешение на определение местоположения", Toast.LENGTH_SHORT).show()
-                    binding.bottomNavigationView.menu.findItem(previousItemId)?.isChecked = true
 
                     return true
 
@@ -173,7 +189,6 @@ class MainActivity : AppCompatActivity() {
                                     "Не удалось определить текущую станцию",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                binding.bottomNavigationView.menu.findItem(previousItemId)?.isChecked = true
 
                             }
                         }

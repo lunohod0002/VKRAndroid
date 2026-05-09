@@ -19,6 +19,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
 import com.example.vkr.logic.viewmodels.StationViewModel
+import com.example.vkr.network.dto.AttractionId
 import com.example.vkr.network.dto.StationAttractionData
 import com.example.vkr.presentation.adapters.StationAttractionPagerAdapter
 import com.example.vkr.presentation.adapters.StationImagePagerAdapter
@@ -119,7 +120,14 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 }
 
                 if (station.attractionResponseList.isNotEmpty()) {
-                    binding.attractionsGallery.adapter = StationAttractionPagerAdapter(station.attractionResponseList)
+                    binding.attractionsGallery.adapter = StationAttractionPagerAdapter(
+                        { attraction ->
+                            val action= StationFragmentDirections.actionScreenStationToAttractionFragmentDetails(
+                                ATTRACTION = AttractionId(attraction.id)
+                            )
+                            findNavController().navigate(action)
+                        }
+                        ,station.attractionResponseList)
                     val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)
                     binding.attractionsGallery.setPageTransformer(MarginPageTransformer(pageMarginPx))
                     binding.attractionsGallery.offscreenPageLimit = 1
@@ -161,12 +169,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             val action= StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
                 STATION = stationData
             )
-            val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-            val previousItemId = bottomNavigationView?.selectedItemId
-            if (previousItemId != null) {
-                bottomNavigationView.menu.findItem(previousItemId)?.isChecked = false
 
-            }
             findNavController().navigate(action)
         }
     }

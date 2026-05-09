@@ -135,8 +135,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             STATION = stationData
         )
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val previousItemId = bottomNavigationView?.selectedItemId!!
-        bottomNavigationView.menu.findItem(previousItemId)?.isChecked = false
+         bottomNavigationView?.menu!!.findItem(R.id.menu_item_none)?.isChecked = true
 
         findNavController().navigate(action)
         true

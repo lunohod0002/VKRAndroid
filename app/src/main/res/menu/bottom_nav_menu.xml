@@ -15,4 +15,8 @@
         android:icon="@drawable/info_item">
 
     </item>
+    <item
+        android:id="@+id/menu_item_none"
+        android:title=""
+        android:visible="false" />
 </menu>
