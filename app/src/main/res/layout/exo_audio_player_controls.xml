@@ -4,7 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@id/exo_controller"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,7 +18,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
         android:textColor="#000000"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:includeFontPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +31,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_regular"
         android:textColor="#000000"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:includeFontPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +50,7 @@
         app:scrubber_disabled_size="0dp"
         app:scrubber_enabled_size="0dp"
         app:touch_target_height="36dp"
-        app:unplayed_color="#E5E5E5"
+        app:unplayed_color="#AFABAB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/exo_position" />
@@ -73,11 +72,10 @@
             android:id="@id/exo_rew"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Назад на 15 секунд"
-            android:scaleType="centerInside"
             android:src="@drawable/ic_replay_15"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:tint="#000000" />
+
 
         <!-- Play / Pause: одна кнопка, ExoPlayer сам меняет иконку -->
         <ImageButton
@@ -88,6 +86,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Воспроизвести / пауза"
             android:scaleType="centerInside"
+
             android:src="@drawable/ic_play"
             app:tint="#000000" />
 
@@ -96,10 +95,8 @@
             android:id="@id/exo_ffwd"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Вперед на 15 секунд"
-            android:scaleType="centerInside"
             android:src="@drawable/ic_forward_15"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:tint="#000000" />
 
     </LinearLayout>

@@ -80,18 +80,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/branch_with_logo" />
 
 
-            <androidx.media3.ui.PlayerView
+            <androidx.media3.ui.PlayerControlView
                 android:id="@+id/audioPlayer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="15dp"
-                android:background="@android:color/white"
                 app:controller_layout_id="@layout/exo_audio_player_controls"
                 app:show_timeout="0"
-                app:surface_type="none"
-                app:use_artwork="false"
-                app:use_controller="true"
+                app:fastforward_icon="@drawable/ic_forward_15"
+                app:rewind_icon="@drawable/ic_replay_15"
+                app:play_icon="@drawable/ic_play"
+                app:pause_icon="@drawable/ic_pause"
+                app:show_rewind_button="true"
+                app:show_fastforward_button="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/gallery" />
