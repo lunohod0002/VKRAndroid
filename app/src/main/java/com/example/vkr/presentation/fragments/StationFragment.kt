@@ -6,10 +6,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.media3.common.MediaItem
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
@@ -70,10 +72,13 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     }
 
     private fun initVideoPlayer() {
-        videoPlayer = ExoPlayer.Builder(requireContext()).build()
+        videoPlayer = ExoPlayer.Builder(requireContext())
+            .setSeekBackIncrementMs(15_000)
+            .setSeekForwardIncrementMs(15_000).build()
         binding.videoPlayer.player = videoPlayer
     }
 
+    @OptIn(UnstableApi::class)
     private fun initAudioServiceAndController() {
         // Если контроллер уже создается или создан, не делаем это повторно при пересоздании фрагмента
         if (audioControllerFuture != null) return
@@ -213,6 +218,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
 
     }
 
+    @OptIn(UnstableApi::class)
     override fun onDestroyView() {
         super.onDestroyView()
 

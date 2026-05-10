@@ -99,19 +99,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/gallery" />
 
             <!-- Видеоплеер: оставляем стандартные контролы media3 -->
-            <androidx.media3.ui.PlayerView
-                android:id="@+id/videoPlayer"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/videoPlayerCard"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginVertical="15dp"
-                android:keepScreenOn="true"
-                app:show_buffering="when_playing"
-                app:surface_type="surface_view"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+
+                app:strokeWidth="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/audioPlayer" />
+                app:layout_constraintTop_toBottomOf="@+id/audioPlayer">
+
+                <androidx.media3.ui.PlayerView
+                    android:id="@+id/videoPlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:keepScreenOn="true"
+                    app:surface_type="texture_view"
+                    app:resize_mode="zoom"
+                    app:show_buffering="when_playing"
+                    app:controller_layout_id="@layout/exo_video_player_controls"
+                    app:fastforward_icon="@drawable/ic_forward_15"
+                    app:rewind_icon="@drawable/ic_replay_15"
+                    app:play_icon="@drawable/ic_play"
+                    app:pause_icon="@drawable/ic_pause"
+                    app:show_rewind_button="true"
+                    app:show_fastforward_button="true"
+                    app:show_timeout="3000" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/textView2"
@@ -122,7 +141,7 @@
                 android:text="@string/places_nearby"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/videoPlayer" />
+                app:layout_constraintTop_toBottomOf="@+id/videoPlayerCard" />
 
             <TextView
                 android:id="@+id/seeAllTextView"

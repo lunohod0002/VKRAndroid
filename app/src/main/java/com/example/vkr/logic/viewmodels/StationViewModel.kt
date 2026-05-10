@@ -39,7 +39,7 @@ class StationViewModel(
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTQ04WdzI8_nx_D7_gGQK5nyjsunQOHNm5g&s",
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnkXX1msb3FcwUKdveOb4VJ_8dlsezqUlqEQ&s",
                     ),
-                    emptyList(), listOf("https://samplelib.com/mp3/sample-12s.mp3"),listOf(
+                    listOf("https://samplelib.com/preview/mp4/sample-20s-360p.mp4"), listOf("https://samplelib.com/mp3/sample-12s.mp3"),listOf(
                         StationAttractionInfo(
                             1,
                             "Московский зоопарк и еее кп цв йцвйцв йцв цц",

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#66000000">
+
+    <!-- Кнопки по центру -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- Перемотка назад на 15 секунд -->
+        <ImageButton
+            android:id="@id/exo_rew"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_replay_15"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="#ffffff" />
+
+
+        <!-- Play / Pause: одна кнопка, ExoPlayer сам меняет иконку -->
+        <ImageButton
+            android:id="@id/exo_play_pause"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginHorizontal="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Воспроизвести / пауза"
+            android:scaleType="centerInside"
+
+            android:src="@drawable/ic_play"
+            app:tint="#ffffff" />
+
+        <!-- Перемотка вперед на 15 секунд -->
+        <ImageButton
+            android:id="@id/exo_ffwd"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_forward_15"
+
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="#ffffff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@id/exo_position"
+            android:textColor="#ffffff"
+            style="@style/ExoStyledControls.TimeText.Position" />
+
+        <androidx.media3.ui.DefaultTimeBar
+            android:id="@id/exo_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@id/exo_duration"
+            android:textColor="#ffffff"
+
+            style="@style/ExoStyledControls.TimeText.Duration" />
+    </LinearLayout>
+</FrameLayout>
