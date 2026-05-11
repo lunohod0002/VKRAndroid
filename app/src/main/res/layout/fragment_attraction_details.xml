@@ -5,19 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="#FFFFFF"
     tools:context=".fragments.AttractionFragmentDetails">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        >
 
         <TextView
             android:id="@+id/back_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:padding="4dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+
             android:text="@string/back_text"
             android:textColor="#000000"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +29,8 @@
         <TextView
             android:id="@+id/attraction_name_txt"
             android:layout_width="0dp"
+            android:layout_marginHorizontal="16dp"
+
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:fontFamily="@font/inter_bold"
@@ -36,121 +41,135 @@
             app:layout_constraintTop_toBottomOf="@id/back_text"
             tools:text="Название достопримечательности" />
 
-        <TextView
-            android:id="@+id/distance_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:fontFamily="@font/inter_regular"
-            android:textColor="#706A6A"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attraction_name_txt"
-            tools:text="1.2 км" />
-
+        <!-- ИЗМЕНЕННЫЙ VIEWPAGER2 -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/gallery"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginHorizontal="25dp"
+            android:layout_height="120dp"
             android:layout_marginTop="28dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/gallery_peek"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/distance_txt" />
+            app:layout_constraintTop_toBottomOf="@id/attraction_name_txt" />
 
         <TextView
             android:id="@+id/address_label_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="16dp"
+
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/inter_bold"
             android:text="Адрес"
             android:textColor="#000000"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gallery" />
 
         <TextView
             android:id="@+id/address_details_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_regular"
             android:textColor="#000000"
             android:textSize="14sp"
+            android:layout_marginHorizontal="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_label_txt"
             tools:text="Москва, ул. Спиридоновка, 2, стр.1" />
 
         <TextView
             android:id="@+id/reference_information_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
             android:text="Справки и запись на экскурсии:"
             android:textColor="#000000"
             android:textSize="14sp"
+            android:layout_marginHorizontal="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_details_txt" />
 
         <TextView
             android:id="@+id/reference_information_details_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
             android:textColor="#000000"
             android:textSize="14sp"
+            android:layout_marginHorizontal="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reference_information_txt"
             tools:text="+7 495 695-53-08\nex@goslitmuz.ru" />
 
         <TextView
             android:id="@+id/working_hours_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+
             android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
             android:text="График работы"
             android:textColor="#000000"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reference_information_details_txt" />
 
         <TextView
             android:id="@+id/working_hours_details_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+
             android:layout_marginTop="9dp"
             android:fontFamily="@font/inter_regular"
             android:textColor="#000000"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/working_hours_txt"
-            tools:text="ВТ, ПТ, СБ, ВС - 11:00–18:00" />
+            tools:text="ВТ, ПФ, СБ, ВС - 11:00–18:00" />
 
         <TextView
             android:id="@+id/tickets_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:layout_marginHorizontal="16dp"
+
             android:fontFamily="@font/inter_bold"
             android:text="Билеты"
             android:textColor="#000000"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/working_hours_details_txt" />
 
         <TextView
             android:id="@+id/tickets_details_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+
             android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_regular"
             android:textColor="#000000"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tickets_txt"
             tools:text="Полный/льготный - 400/300" />
@@ -161,6 +180,7 @@
             android:layout_width="270dp"
             android:layout_height="32dp"
             android:layout_marginTop="23dp"
+
             android:minHeight="0dp"
             android:text="Купить билеты"
             android:textAllCaps="false"
@@ -168,53 +188,88 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tickets_details_txt" />
 
-        <androidx.media3.ui.PlayerView
+        <androidx.media3.ui.PlayerControlView
             android:id="@+id/audio_player_attraction"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+
+            android:layout_marginVertical="15dp"
+            app:controller_layout_id="@layout/exo_audio_player_controls"
+            app:show_timeout="0"
+            app:fastforward_icon="@drawable/ic_forward_15"
+            app:rewind_icon="@drawable/ic_replay_15"
+            app:play_icon="@drawable/ic_play"
+            app:pause_icon="@drawable/ic_pause"
+            app:show_rewind_button="true"
+            app:show_fastforward_button="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buy_ticket_btn"
-            app:show_buffering="when_playing"
-            app:use_controller="true" />
+            app:layout_constraintTop_toBottomOf="@id/buy_ticket_btn" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/videoPlayerCardAttraction"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginVertical="15dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            android:layout_marginHorizontal="16dp"
+
+            app:strokeWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/audio_player_attraction">
 
         <androidx.media3.ui.PlayerView
-            android:id="@+id/video_player_attraction"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/audio_player_attraction" />
+            android:id="@+id/videoPlayerAttraction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            app:surface_type="texture_view"
 
+            app:resize_mode="zoom"
+            app:show_buffering="when_playing"
+            app:controller_layout_id="@layout/exo_video_player_controls"
+            app:fastforward_icon="@drawable/ic_forward_15"
+            app:rewind_icon="@drawable/ic_replay_15"
+            app:play_icon="@drawable/ic_play"
+            app:pause_icon="@drawable/ic_pause"
+            app:show_rewind_button="true"
+            app:show_fastforward_button="true"
+            app:show_timeout="3000" />
+
+        </com.google.android.material.card.MaterialCardView>
         <TextView
             android:id="@+id/info_attraction_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="16dp"
+
             android:fontFamily="@font/inter_bold"
             android:text="Информация"
             android:textColor="#000000"
             android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/video_player_attraction" />
+            app:layout_constraintTop_toBottomOf="@id/videoPlayerCardAttraction" />
 
         <TextView
             android:id="@+id/info_details_txt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
+            android:layout_marginHorizontal="16dp"
+
             android:layout_marginBottom="24dp"
             android:fontFamily="@font/inter_regular"
             android:text="@string/attraction_info_text"
             android:textColor="#000000"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_attraction_txt"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/info_attraction_txt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

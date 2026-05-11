@@ -8,10 +8,10 @@ object MockAttractions {
             phoneNumber = "+7 495 695-53-08",
             email = "ex@goslitmuz.ru",
             address = "Москва, ул. Спиридоновка, 2, стр. 1\n«Пушкинская», «Баррикадная», «Арбатская»",
-            images = listOf(
-                "https://picsum.photos/id/1015/800/500",
-                "https://picsum.photos/id/1019/800/500",
-                "https://picsum.photos/id/1024/800/500"
+            images =   listOf(
+                "https://classpic.ru/wp-content/uploads/2016/02/15222/Hitryj-minon.jpg",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTQ04WdzI8_nx_D7_gGQK5nyjsunQOHNm5g&s",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnkXX1msb3FcwUKdveOb4VJ_8dlsezqUlqEQ&s",
             ),
             description = "Музей М.А. Булгакова — первый в России музей, посвящённый жизни " +
                     "и творчеству писателя. Расположен в знаменитой «нехорошей квартире» №50 " +

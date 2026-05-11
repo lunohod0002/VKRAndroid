@@ -17,10 +17,13 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.MarginPageTransformer
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAttractionDetailsBinding
 import com.example.vkr.logic.viewmodels.AttractionViewModel
 import com.example.vkr.network.dto.Attraction
 import com.example.vkr.presentation.adapters.AttractionImagesPagerAdapter
+import com.example.vkr.presentation.adapters.StationImagePagerAdapter
 import com.example.vkr.presentation.service.AttractionAudioService
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
@@ -77,7 +80,6 @@ class AttractionFragmentDetails : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun bindData(attraction: Attraction) = with(binding) {
         attractionNameTxt.text = attraction.name
-        distanceTxt.visibility = View.GONE
         addressDetailsTxt.text = attraction.address
 
         val phone = attraction.phoneNumber?.takeIf { it.isNotBlank() }
@@ -111,7 +113,10 @@ class AttractionFragmentDetails : Fragment() {
     }
 
     private fun setupGallery(attraction: Attraction) {
-        binding.gallery.adapter = AttractionImagesPagerAdapter(attraction.images)
+        binding.gallery.adapter = StationImagePagerAdapter(attraction.images)
+        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)
+        binding.gallery.setPageTransformer(MarginPageTransformer(pageMarginPx))
+        binding.gallery.offscreenPageLimit = 1
     }
 
     private fun setupBuyButton(attraction: Attraction) {
@@ -176,7 +181,9 @@ class AttractionFragmentDetails : Fragment() {
             binding.videoPlayerAttraction.visibility = View.GONE
             return
         }
-        videoPlayer = ExoPlayer.Builder(requireContext()).build().also { player ->
+        videoPlayer = ExoPlayer.Builder(requireContext())
+            .setSeekBackIncrementMs(15_000)
+            .setSeekForwardIncrementMs(15_000).build().also { player ->
             binding.videoPlayerAttraction.player = player
             player.setMediaItem(MediaItem.fromUri(url))
             player.prepare()
