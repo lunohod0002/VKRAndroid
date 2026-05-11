@@ -116,7 +116,9 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 binding.descriptionTextView.text = station.description
                 binding.stationNameTxt.text = station.name
                 binding.branchNameTxt.text = station.branch
-
+                binding.extraServicesInfo.text = station.extraServices.joinToString("\n") { service ->
+                    " • ${service}"
+                }
                 if (station.imagesRef.isNotEmpty()) {
                     binding.gallery.adapter = StationImagePagerAdapter(station.imagesRef)
                     val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)

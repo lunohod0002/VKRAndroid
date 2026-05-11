@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="gallery_peek">36dp</dimen>
+    <dimen name="gallery_peek">20dp</dimen>
     <dimen name="gallery_page_margin">12dp</dimen>
     <dimen name="gallery_height">120dp</dimen>
 
