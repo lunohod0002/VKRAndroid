@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/station_fragment"
     android:layout_width="match_parent"
+    android:background="#ffffff"
     android:layout_height="match_parent"
     tools:context="com.example.vkr.presentation.fragments.AddAttractionFragment">
 
@@ -26,7 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="Добавление достопримечательности"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="26sp"                android:text="Добавление достопримечательности"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.055"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +39,9 @@
                 android:id="@+id/add_attraction_name_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter_regular"
                 android:layout_marginTop="12dp"
                 android:text="Название"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +53,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:hint="Введите название"
+                android:fontFamily="@font/inter_regular"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="5dp"
                 android:background="@drawable/edit_text_rounded"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +70,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter_regular"
                 android:text="Описание"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +84,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edit_text_rounded"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="5dp"
+                android:hint="Введите описание"
+                android:fontFamily="@font/inter_regular"
+                android:imeOptions="actionNext"
+
                 android:gravity="top|start"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,6 +102,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Адрес"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_attraction_description_edit" />
@@ -89,6 +115,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:hint="Введите адрес"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/inter_regular"
+                android:imeOptions="actionNext"
+
+                android:paddingVertical="5dp"
                 android:background="@drawable/edit_text_rounded"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,6 +132,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter_regular"
                 android:text="Время работы"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,8 +145,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:imeOptions="actionNext"
+
                 android:background="@drawable/edit_text_rounded"
                 android:inputType="text"
+                android:fontFamily="@font/inter_regular"
+                android:hint="Введите время работы"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_attraction_working_hours_txt" />
@@ -131,6 +172,9 @@
                 <TextView
                     android:id="@+id/upload_photo_txt"
                     android:layout_width="0dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/inter_regular"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Загрузить фото" />
@@ -142,6 +186,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="8dp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Выберите файл"
                     android:textAllCaps="false"
                     app:icon="@drawable/vector__1_"
@@ -150,15 +196,6 @@
                     app:iconTint="@color/colorBlack" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_attraction_photo_count"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_photo_layout" />
 
             <!-- Видео -->
             <LinearLayout
@@ -170,12 +207,15 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_photo_count">
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_photo_layout">
 
                 <TextView
                     android:id="@+id/upload_video_txt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/inter_regular"
                     android:layout_weight="1"
                     android:text="Загрузить видео" />
 
@@ -186,6 +226,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="8dp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Выберите файл"
                     android:textAllCaps="false"
                     app:icon="@drawable/vector__1_"
@@ -194,15 +236,6 @@
                     app:iconTint="@color/colorBlack" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_attraction_video_count"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_video_layout" />
 
             <!-- Аудио -->
             <LinearLayout
@@ -214,13 +247,16 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_video_count">
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_video_layout">
 
                 <TextView
                     android:id="@+id/upload_audio_txt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Загрузить аудио" />
 
                 <com.google.android.material.button.MaterialButton
@@ -231,6 +267,8 @@
                     android:layout_weight="1"
                     android:drawablePadding="8dp"
                     android:text="Выберите файл"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/inter_regular"
                     android:textAllCaps="false"
                     app:icon="@drawable/vector__1_"
                     app:iconGravity="textStart"
@@ -238,15 +276,6 @@
                     app:iconTint="@color/colorBlack" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_attraction_audio_count"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_audio_layout" />
 
             <TextView
                 android:id="@+id/add_attraction_phone_txt"
@@ -254,9 +283,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Телефон"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_attraction_audio_count" />
+                app:layout_constraintTop_toBottomOf="@+id/add_attraction_audio_layout" />
 
             <EditText
                 android:id="@+id/add_attraction_phone_edit"
@@ -265,6 +297,12 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edit_text_rounded"
                 android:inputType="phone"
+                android:imeOptions="actionNext"
+
+                android:paddingVertical="5dp"
+                android:hint="Введите телефон"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_attraction_phone_txt" />
@@ -274,6 +312,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter_regular"
                 android:text="Сайт"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -284,6 +325,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:hint="Введите сайт"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="5dp"
+                android:imeOptions="actionNext"
+
+                android:fontFamily="@font/inter_regular"
                 android:background="@drawable/edit_text_rounded"
                 android:inputType="textUri"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -295,6 +342,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter_regular"
                 android:text="Email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -305,6 +355,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/inter_regular"
+                android:hint="Введите email"
+                android:imeOptions="actionDone"
+
+                android:paddingVertical="5dp"
                 android:background="@drawable/edit_text_rounded"
                 android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -317,6 +373,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:fontFamily="@font/inter_regular"
                 android:text="Добавить станции"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -344,12 +403,17 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/inter_regular"
                         android:text="Название"
-                        android:textSize="14sp" />
+                        />
 
                     <EditText
                         android:id="@+id/add_attraction_station_name_edit"
                         android:layout_width="match_parent"
+                        android:imeOptions="actionNext"
+
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_rounded"
                         android:inputType="text" />
