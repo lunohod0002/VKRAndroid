@@ -62,4 +62,7 @@
         <item name="cornerSize">14dp</item>
     </style>
     <style name="Theme.VKR" parent="Base.Theme.VKR" />
+    <style name="Widget.BottomNavigationView.NoActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
 </resources>
