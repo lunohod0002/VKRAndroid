@@ -430,7 +430,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ветка"
-                        android:textSize="14sp" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/inter_regular"
+                        />
 
                     <EditText
                         android:id="@+id/add_attraction_station_branch_edit"
@@ -446,13 +449,16 @@
                     android:orientation="vertical"
                     android:paddingHorizontal="8dp"
                     android:paddingTop="8dp"
-                    app:layout_flexBasisPercent="30%">
+                    app:layout_flexBasisPercent="31%">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Расстояние"
-                        android:textSize="14sp" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/inter_regular"
+                       />
 
                     <EditText
                         android:id="@+id/add_attraction_station_distance_edit"
