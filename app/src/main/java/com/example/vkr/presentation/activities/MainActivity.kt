@@ -93,22 +93,11 @@ class MainActivity : AppCompatActivity() {
                 if (destId == R.id.emptyFragment) View.GONE else View.VISIBLE
 
             when (destId) {
-                R.id.screen_map -> {
-                    binding.bottomNavigationView.menu.findItem(R.id.screen_map)?.isChecked = true
-                }
-
-                R.id.screen_station -> {
-                    if (fromId == R.id.screen_map) {
-                        binding.bottomNavigationView.menu.findItem(R.id.menu_item_none)?.isChecked =
-                            true
-                    }
-                }
 
                 else -> {
                     // Для всех остальных экранов, кроме screen_reference_info, снимаем выделение
-                    if (destId != R.id.screen_reference_info) {
-                        binding.bottomNavigationView.menu.findItem(R.id.menu_item_none)?.isChecked =
-                            true
+                    if (destId != R.id.screen_reference_info && destId != R.id.screen_map && destId !=R.id.screen_station ) {
+                        binding.bottomNavigationView.menu.findItem(R.id.menu_item_none)?.isChecked =  true
                     }
                 }
             }

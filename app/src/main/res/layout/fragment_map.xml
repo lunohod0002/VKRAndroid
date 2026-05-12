@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     tools:context=".fragments.MapFragment"
     android:id="@+id/map_fragment"
-
-    android:padding="16dp">
+    >
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
