@@ -32,7 +32,11 @@ class StationAttractionPagerAdapter(
 
         holder.name.text = item.name
         holder.distance.text = item.distance.toString() + " метров от вас"
-        holder.price.text = "От " + item.price.toString() + " ₽"
+        if (item.price==0){
+            holder.price.text = "Бесплатно"
+
+        } else holder.price.text = "От ${item.price} ₽"
+
         holder.itemView.setOnClickListener { onItemClick(item) }
 
         Glide.with(holder.image.context)

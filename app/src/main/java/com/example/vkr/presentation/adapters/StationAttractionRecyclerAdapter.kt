@@ -36,7 +36,10 @@ class StationAttractionRecyclerAdapter(
 
         holder.name.text = item.name
         holder.distance.text = formatDistance(item.distance)
-        holder.price.text = "От ${item.price} ₽"
+        if (item.price==0){
+            holder.price.text = "Бесплатно"
+
+        } else holder.price.text = "От ${item.price} ₽"
 
         Glide.with(holder.image)
             .load(item.urlRef)

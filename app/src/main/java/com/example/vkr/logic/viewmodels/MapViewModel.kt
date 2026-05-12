@@ -72,7 +72,7 @@ class MapViewModel(
         println(2)
 
         viewModelScope.launch(Dispatchers.IO) {
-            println(1)
+            println(cellRepository.getAllCells())
             val cell = cellRepository.getCellAllInfo(
                 lac = cellInfo.lac!!,
                 mcc = cellInfo.mcc!!,
@@ -87,7 +87,7 @@ class MapViewModel(
                         resultLiveMutable.postValue(it.coordinates)
                     }
                 }
-                } else{
+            } else{
                 resultLiveMutable.postValue(null)
 
             }

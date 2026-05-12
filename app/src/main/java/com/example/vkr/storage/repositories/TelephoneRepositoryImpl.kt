@@ -13,26 +13,27 @@ import com.example.vkr.logic.dto.request.RadioType
 class TelephoneRepositoryImpl(private val context : Context) : TelephoneRepository {
     @SuppressLint("MissingPermission")
     override fun getCurrentCellInfo(): CellInfo? {
-//        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-//        val allCellInfo= telephonyManager.allCellInfo
-//            .mapNotNull {
-//                when (it) {
-//                    is CellInfoGsm -> getCellInfo(it)
-//                    is CellInfoWcdma -> getCellInfo(it)
-//                    is CellInfoLte -> getCellInfo(it)
-//                    else -> null
-//                }
-//            }
-        return CellInfo(lac="660", mcc = "250",mnc="1",cid="7437",radio="GSM")
-
-//        if (allCellInfo.isEmpty()){
-//            return null
-//        }
-//
-//        return allCellInfo.get(0)
+        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        val allCellInfo = telephonyManager.allCellInfo
+            ?.mapNotNull {
+                when (it) {
+                    is CellInfoGsm -> getCellInfoGsm(it)
+                    is CellInfoWcdma -> getCellInfoWcdma(it)
+                    is CellInfoLte -> getCellInfoLte(it)
+                    else -> null
+                }
+            } ?: emptyList()
+        println(allCellInfo)
+        if (allCellInfo.isEmpty()){
+            return null
+        }
+        println(
+            allCellInfo.find { it.mnc == "1" }
+        )
+        return allCellInfo.find { it.mnc == "1" }
     }
 
-    private fun getCellInfo(info: CellInfoGsm): CellInfo {
+    private fun getCellInfoGsm(info: CellInfoGsm): CellInfo {
         val cellInfo = CellInfo()
         cellInfo.radio = RadioType.GSM
 
@@ -52,7 +53,7 @@ class TelephoneRepositoryImpl(private val context : Context) : TelephoneReposito
         return cellInfo
     }
 
-    private fun getCellInfo(info: CellInfoWcdma): CellInfo {
+    private fun getCellInfoWcdma(info: CellInfoWcdma): CellInfo {
         val cellInfo = CellInfo()
 
         cellInfo.radio = RadioType.CDMA
@@ -72,7 +73,7 @@ class TelephoneRepositoryImpl(private val context : Context) : TelephoneReposito
         return cellInfo
     }
 
-    private fun getCellInfo(info: CellInfoLte): CellInfo {
+    private fun getCellInfoLte(info: CellInfoLte): CellInfo {
         val cellInfo = CellInfo()
 
         cellInfo.radio = RadioType.LTE

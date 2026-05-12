@@ -15,6 +15,7 @@ buildscript {
         maven {
             url=uri("https://maven.google.com/")
         }
+
     }
     dependencies {
         classpath(libs.androidx.navigation.safe.args.gradle.plugin)

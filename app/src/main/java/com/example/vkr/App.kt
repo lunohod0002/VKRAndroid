@@ -1,6 +1,7 @@
 package com.example.vkr
 
 import android.app.Application
+import android.util.Log
 import androidx.room.Room
 import com.example.vkr.storage.AppDatabase
 import com.yandex.mapkit.MapKitFactory
@@ -14,13 +15,13 @@ class App : Application() {
 
         this.db = Room.databaseBuilder(
             this,
-            AppDatabase::class.java,"database"
+            AppDatabase::class.java, "database"
         )
             .createFromAsset("database.db")
             .fallbackToDestructiveMigrationFrom(dropAllTables = true)
             .build()
-    }
 
+    }
     fun getDb(): AppDatabase {
         return db
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MetroGuide</string>
+    <string name="app_name">MetroGuide2</string>
     <string name="text_current_location">Текущая станция:</string>
     <string name="button_text_find">Узнать мою станцию</string>
     <string name="text_location_format">%f, %f</string>

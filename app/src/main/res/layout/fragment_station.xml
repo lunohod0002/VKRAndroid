@@ -25,7 +25,7 @@
                 android:id="@+id/station_name_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/inter_bold"
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/colorBlack"
@@ -42,11 +42,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/station_name_txt"
-                tools:layout_editor_absoluteY="80dp">
+               >
 
                 <ImageView
                     android:id="@+id/branchLogo"
@@ -62,12 +62,11 @@
                     android:id="@+id/branch_name_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingHorizontal="20dp"
                     android:text="@string/branch_name"
                     android:textColor="@color/colorCustomGrey"
-                    android:textSize="15sp" />
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2
@@ -154,9 +153,9 @@
                 android:id="@+id/seeAllTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="30dp"
+                android:paddingHorizontal="40dp"
                 android:text="См. все"
-
+                android:textSize="17sp"
                 android:textColor="@color/colorBlack"
                 android:fontFamily="@font/inter_regular"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
@@ -196,6 +195,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/inter_regular"
                 android:textColor="@color/colorBlack"
+                android:textSize="16sp"
                 android:paddingHorizontal="20dp"
                 android:text="@string/station_description_text"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -224,6 +224,7 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/inter_regular"
                 android:textColor="@color/colorBlack"
+                android:textSize="17sp"
                 android:paddingHorizontal="20dp"
                 android:text="@string/extra_services_info"
                 app:layout_constraintBottom_toBottomOf="parent"

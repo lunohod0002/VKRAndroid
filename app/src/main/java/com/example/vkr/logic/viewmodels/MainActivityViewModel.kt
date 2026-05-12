@@ -16,19 +16,20 @@ class MainActivityViewModel(
 ) : ViewModel() {
 
     fun fetchCurrentLocation(): CellTower? {
+        print("во вьюмодель")
         val cellInfo  = telephoneRepository.getCurrentCellInfo()
+        print(cellInfo)
         if (cellInfo == null){
             return null
         }
-
-            val cell = cellRepository.getCellAllInfo(
+        val cell = cellRepository.getCellAllInfo(
                 lac = cellInfo.lac!!,
                 mcc = cellInfo.mcc!!,
                 mnc = cellInfo.mnc!!,
                 cid = cellInfo.cid!!,
                 radio = cellInfo.radio!!
             )
-            return cell
+        return cell
 
     }
     companion object {
