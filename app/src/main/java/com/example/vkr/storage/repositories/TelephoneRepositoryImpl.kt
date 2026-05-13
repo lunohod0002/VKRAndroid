@@ -23,13 +23,10 @@ class TelephoneRepositoryImpl(private val context : Context) : TelephoneReposito
                     else -> null
                 }
             } ?: emptyList()
-        println(allCellInfo)
         if (allCellInfo.isEmpty()){
             return null
         }
-        println(
-            allCellInfo.find { it.mnc == "1" }
-        )
+
         return allCellInfo.find { it.mnc == "1" }
     }
 

@@ -25,11 +25,11 @@ class AttractionViewModel(
 
     fun getAttraction(stationId:Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val attraction = MockAttractions.first()
-            resultLiveMutable.postValue(attraction)
+//            val attraction = MockAttractions.first()
+//            resultLiveMutable.postValue(attraction)
 
-//            val attraction = stationApi.getAttraction(stationId)
-//            resultLiveMutable.postValue(attraction.body())
+            val attraction = stationApi.getAttraction(stationId)
+            resultLiveMutable.postValue(attraction.body())
 
             }
         }

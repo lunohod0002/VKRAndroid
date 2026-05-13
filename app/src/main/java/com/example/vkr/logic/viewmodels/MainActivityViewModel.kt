@@ -16,9 +16,7 @@ class MainActivityViewModel(
 ) : ViewModel() {
 
     fun fetchCurrentLocation(): CellTower? {
-        print("во вьюмодель")
         val cellInfo  = telephoneRepository.getCurrentCellInfo()
-        print(cellInfo)
         if (cellInfo == null){
             return null
         }
