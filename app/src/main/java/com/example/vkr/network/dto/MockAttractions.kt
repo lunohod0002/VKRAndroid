@@ -22,7 +22,7 @@ object MockAttractions {
                     "СР, ЧТ — 11:00–21:00 (касса до 20:30)\n" +
                     "ПН — выходной день",
             price = 400,
-            audios = listOf("https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"),
+            audios = listOf("https://samplelib.com/mp3/sample-12s.mp3"),
             videos = listOf("https://samplelib.com/preview/mp4/sample-20s.mp4"),
             url = "https://bulgakovmuseum.ru/tickets"
         )

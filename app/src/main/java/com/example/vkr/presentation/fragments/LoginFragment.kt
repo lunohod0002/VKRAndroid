@@ -13,6 +13,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.vkr.logic.viewmodels.LoginViewModel
 import com.example.vkr.presentation.fragments.MapFragmentDirections
+import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : Fragment() {
 
@@ -55,9 +56,8 @@ class LoginFragment : Fragment() {
 
 
     private fun renderError(message: String) {
-        Toast.makeText(context, "Не удалось выполнить запрос, ошибка: " + message
-            , Toast.LENGTH_SHORT).show()
-
+        val snackbar = Snackbar.make(binding.root, "Не удалось выполнить запрос, ошибка: $message", Snackbar.LENGTH_SHORT)
+        snackbar.show()
     }
 
     override fun onDestroyView() {

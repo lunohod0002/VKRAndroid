@@ -43,13 +43,7 @@ class MainActivity : AppCompatActivity() {
     // Сработает в любом случае (разрешил или запретил)
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (!isGranted) {
-            Toast.makeText(this@MainActivity, "Не удалось определить текущую станцию.\n" +
-                    "Выдайте разрешение на определение местоположения", Toast.LENGTH_SHORT).show()
-
-            // Диалог закрыт -> открываем карту (MapFragment создастся только тут)
-        }
+    ) {
         openMapScreen()
 
     }
@@ -163,7 +157,7 @@ class MainActivity : AppCompatActivity() {
                         Manifest.permission.ACCESS_FINE_LOCATION
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    Toast.makeText(this@MainActivity, "Не удалось определить текущую станцию.\n" +
+                    Toast.makeText(this@MainActivity,
                             "Выдайте разрешение на определение местоположения", Toast.LENGTH_SHORT).show()
 
                     return true

@@ -109,7 +109,7 @@ class StationViewModel(
 //                            "https://storage.yandexcloud.net/moskvichmag/uploads/2024/04/211203-IDR_5163-scaled-e1713550443889.jpg",
 //                        ),
 //                        listOf("https://media.istockphoto.com/id/929486240/video/the-flow-of-passengers-on-the-escalators-and-underpass-of-the-metro-station-time-lapse.mp4?s=mp4-640x640-is&k=20&c=PcVnxxIfeoCIU9TOEyTTJOnDp5T9ITc64LVoJxQsqFM="),
-//                        listOf("https://samplelib.com/mp3/sample-12s.mp3"),
+//                        listOf("http://192.168.1.20:8082/api/medias/download/359c529e-0b0f-4dcc-a899-a2ca2cb2b8df.mp3"),
 //                        listOf(
 //                            StationAttractionInfo(
 //                                1,

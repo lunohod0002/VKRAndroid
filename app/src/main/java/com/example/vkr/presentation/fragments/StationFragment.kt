@@ -4,13 +4,17 @@ import android.Manifest
 import android.content.ComponentName
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaController
@@ -77,10 +81,8 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             .setSeekForwardIncrementMs(15_000).build()
         binding.videoPlayer.player = videoPlayer
     }
-
     @OptIn(UnstableApi::class)
     private fun initAudioServiceAndController() {
-        // Если контроллер уже создается или создан, не делаем это повторно при пересоздании фрагмента
         if (audioControllerFuture != null) return
 
         val sessionToken = SessionToken(
@@ -94,10 +96,13 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             try {
                 val controller = audioControllerFuture?.get()
                 if (controller != null) {
-                    currentAudioController = controller // Кэшируем контроллер
+                    currentAudioController = controller
+
+                    // ПОДКЛЮЧАЕМ КОНТРОЛЛЕР К UI
+                    // Как только эта строка выполняется, PlayerControlView сам находит
+                    // exo_duration и начинает автоматически обновлять его!
                     binding.audioPlayer.player = controller
 
-                    // Если URL пришел до того, как контроллер подключился, играем его сейчас
                     pendingAudioUrl?.let { url ->
                         playAudio(controller, url)
                         pendingAudioUrl = null
@@ -129,12 +134,13 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 if (station.attractionResponseList.isNotEmpty()) {
                     binding.attractionsGallery.adapter = StationAttractionPagerAdapter(
                         { attraction ->
-                            val action= StationFragmentDirections.actionScreenStationToAttractionFragmentDetails(
+                            val action = StationFragmentDirections.actionScreenStationToAttractionFragmentDetails(
                                 ATTRACTION = AttractionId(attraction.id)
                             )
                             findNavController().navigate(action)
-                        }
-                        ,station.attractionResponseList)
+                        },
+                        station.attractionResponseList
+                    )
                     val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.gallery_page_margin)
                     binding.attractionsGallery.setPageTransformer(MarginPageTransformer(pageMarginPx))
                     binding.attractionsGallery.offscreenPageLimit = 1
@@ -171,9 +177,10 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         binding.seeAllTextView.setOnClickListener {
 
             val stationData = StationAttractionData(
-                title = args.STATION.title,id=stationId!!, branchNumber = args.STATION.branchNumber)
+                title = args.STATION.title, id = stationId!!, branchNumber = args.STATION.branchNumber
+            )
 
-            val action= StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
+            val action = StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
                 STATION = stationData
             )
 
@@ -199,7 +206,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         // Устанавливаем новый трек
         controller.setMediaItem(audioItem)
         controller.prepare()
-        // controller.playWhenReady = true // Раскомментировано для автоматического воспроизведения
+        // controller.playWhenReady = true
     }
 
     private fun initStationData() {
@@ -217,7 +224,6 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             name = stationName,
             branch = branchName
         )
-
     }
 
     @OptIn(UnstableApi::class)
@@ -248,4 +254,6 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         }
         audioControllerFuture = null
     }
+
+
 }

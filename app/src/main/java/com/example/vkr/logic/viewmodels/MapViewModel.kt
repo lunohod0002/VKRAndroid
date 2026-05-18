@@ -66,7 +66,7 @@ class MapViewModel(
     fun fetchCurrentLocation() {
         val cellInfo  = telephoneRepository.getCurrentCellInfo()
         if (cellInfo == null){
-            resultLiveMutable.value = StationCoordinates(55.729218, 37.611187)
+            resultLiveMutable.value = null
             return
         }
 

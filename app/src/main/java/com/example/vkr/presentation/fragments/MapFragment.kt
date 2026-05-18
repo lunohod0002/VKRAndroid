@@ -61,8 +61,22 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     }
 
-    private fun displayCurrentLocation(){
-        viewModel.fetchCurrentLocation()
+    private fun displayCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Toast.makeText(
+                requireContext(),
+                        "Выдайте разрешение на определение местоположения для обнаружения станции", Toast.LENGTH_SHORT
+            ).show()
+
+
+        }
+        else {
+            viewModel.fetchCurrentLocation()
+        }
     }
 
     private fun initLocationLiveData() {
