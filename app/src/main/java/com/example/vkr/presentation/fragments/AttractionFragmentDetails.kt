@@ -200,7 +200,6 @@ class AttractionFragmentDetails : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        // Отвязываем UI от контроллера, но НЕ останавливаем сервис — звук продолжит играть
         _binding?.audioPlayerAttraction?.player = null
         audioController?.release()
         audioController = null

@@ -87,10 +87,10 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_addAttractionFragment"
-            app:destination="@id/addAttractionFragment" />
+            app:destination="@id/screen_add_attraction" />
     </fragment>
     <fragment
-        android:id="@+id/addAttractionFragment"
+        android:id="@+id/screen_add_attraction"
         android:name="com.example.vkr.presentation.fragments.AddAttractionFragment"
         android:label="fragment_add_attraction"
         tools:layout="@layout/fragment_add_attraction" />

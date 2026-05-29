@@ -64,20 +64,12 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             handleNavigation(item.itemId, navController)
         }
-        binding.bottomNavigationView.setOnItemReselectedListener { item ->
-            if (item.itemId == R.id.screen_reference_info) {
-                registerReferenceInfoTap(navController)
-            }
-        }
+
         if (savedInstanceState == null) {
 
             checkPermissionAndOpenMap()
         }
-        lifecycleScope.launch {
-            AuthEvents.logoutEvents.collect {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment)
-            }
-        }
+
         navController.addOnDestinationChangedListener { controller, destination, _ ->
             val destId = destination.id
             val fromId = controller.previousBackStackEntry?.destination?.id
@@ -97,22 +89,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun registerReferenceInfoTap(navController: NavController) {
-        val now = System.currentTimeMillis()
-        if (now - refFirstTapAt > SECRET_TAP_WINDOW_MS) {
-            // Окно истекло — начинаем заново с этого тапа
-            refTapCount = 1
-            refFirstTapAt = now
-        } else {
-            refTapCount++
-        }
 
-        if (refTapCount >= SECRET_TAP_REQUIRED) {
-            refTapCount = 0
-            refFirstTapAt = 0L
-            decideStartDestination(navController)
-        }
-    }
     private fun checkPermissionAndOpenMap() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -135,20 +112,8 @@ class MainActivity : AppCompatActivity() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHost.navController.navigate(R.id.action_emptyFragment_to_screen_map)
     }
-    private fun decideStartDestination(navController: NavController) {
-        val tokenStorage = TokenStorage(applicationContext)
-        lifecycleScope.launch {
-            val isLoggedIn = tokenStorage.isRefreshTokenValid()
-            if (isLoggedIn) {
-                navController.navigate(R.id.addAttractionFragment)
-            } else {
-                // Refresh истёк или его нет — на логин
-                navController.navigate(R.id.loginFragment)
-            }
-        }
-    }
+
     private fun handleNavigation(itemId: Int, navController: NavController): Boolean {
-        val previousItemId = binding.bottomNavigationView.selectedItemId
 
         when (itemId) {
             R.id.screen_station -> {
@@ -192,7 +157,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
              R.id.screen_reference_info -> {
-                registerReferenceInfoTap(navController)
                  navController.navigate(itemId)
                  return true
 

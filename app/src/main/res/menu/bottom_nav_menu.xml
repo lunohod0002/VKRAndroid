@@ -16,6 +16,11 @@
         android:icon="@drawable/info_item">
 
     </item>
+    <item android:id="@+id/screen_add_attraction"
+        android:title="Достопримечательности"
+        android:icon="@drawable/attraction_item">
+
+    </item>
     <item
         android:id="@+id/menu_item_none"
         android:title=""
