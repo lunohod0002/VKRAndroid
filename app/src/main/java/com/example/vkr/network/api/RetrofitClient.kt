@@ -15,24 +15,6 @@ object RetrofitClient {
     const val BASE_URL = "http://192.168.1.20:8080"
 
 
-    private val cleanClient: OkHttpClient by lazy {
-        val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-        OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .build()
-    }
-
-    private val cleanRetrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(cleanClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
 
     private fun okHttp(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }

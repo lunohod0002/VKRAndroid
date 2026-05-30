@@ -38,8 +38,8 @@
             app:itemTextAppearanceInactive="@style/BottomNavTextInactive"
             app:itemTextAppearanceActive="@style/BottomNavTextActive"
             app:itemBackground="@android:color/transparent"
-
-        app:itemActiveIndicatorStyle="@style/Widget.BottomNavigationView.NoActiveIndicator"
+            app:itemIconSize="32dp"
+            app:itemActiveIndicatorStyle="@style/Widget.BottomNavigationView.NoActiveIndicator"
             app:backgroundTint="#FFFFFF"
             app:menu="@menu/bottom_nav_menu" />
 
