@@ -1,4 +1,4 @@
-package com.example.vkr.network.dto
+package com.example.vkr.logic.models
 
 data class StationAttractionInfo(
     var id: Long,

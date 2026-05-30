@@ -1,7 +1,6 @@
-package com.example.vkr.network.dto
+package com.example.vkr.logic.models
 
 import java.io.Serializable
-
 
 data class Attraction(
     var name: String,

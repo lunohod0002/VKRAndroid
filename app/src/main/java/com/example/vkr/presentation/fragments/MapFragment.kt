@@ -30,12 +30,13 @@ import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.TextStyle
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class MapFragment : Fragment(R.layout.fragment_map) {
     private var _binding: FragmentMapBinding? = null
-    private  val viewModel: MapViewModel by viewModels { MapViewModel.Factory(requireContext(),(requireActivity().application as App).getDb().cellDao() )}
+    private  val viewModel: MapViewModel by viewModels ()
     private lateinit var mapView : MapView
     private lateinit var mapObjects : MapObjectCollection
 

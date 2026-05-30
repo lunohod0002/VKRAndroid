@@ -1,51 +1,49 @@
 package com.example.vkr.network.api
 
-import com.example.vkr.network.dto.Station
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.vkr.logic.models.Station
 import android.util.Log
-import com.example.vkr.network.dto.Attraction
-import com.example.vkr.network.dto.StationAttractionsResponse
+import com.example.vkr.logic.models.Attraction
+import com.example.vkr.logic.models.StationAttractionsResponse
+import com.example.vkr.logic.repositories.StationRepository
+import javax.inject.Inject
 
-class StationApiImpl(
+class StationApiImpl @Inject constructor(
     private val stationApi: StationApi
-){
+) : StationRepository {
 
-suspend fun getStationByNameAndBranch(
+    override suspend fun getStationByNameAndBranch(
         name: String,
         branch: String
-    ): Response<Station> {
-    stationApi.getStationByNameAndBranch(name=name,branch=branch).let { response ->
-            if (response.code() == 200 && response.body() != null) {
-                return response
-            } else {
-                Log.e("Error", response.toString())
-                return response
-            }
+    ): Station? {
+        val response = stationApi.getStationByNameAndBranch(name = name, branch = branch)
+        val body = response.body()
+        return if (response.isSuccessful && body != null) {
+            body
+        } else {
+            Log.e("Error", response.toString())
+            null
         }
     }
 
-
-    suspend fun getStationAttractions(stationId: Long): Response<StationAttractionsResponse> {
-        stationApi.getStationAttractions(stationId).let { response ->
-            if (response.code() == 200 && response.body() != null) {
-                return response
-            } else {
-                Log.e("Error", response.toString())
-                return response
-            }
+    override suspend fun getStationAttractions(stationId: Long): StationAttractionsResponse? {
+        val response = stationApi.getStationAttractions(stationId)
+        val body = response.body()
+        return if (response.isSuccessful && body != null) {
+            body
+        } else {
+            Log.e("Error", response.toString())
+            null
         }
     }
 
-    suspend fun getAttraction(attractionId: Long): Response<Attraction> {
-        stationApi.getAttraction(attractionId).let { response ->
-            if (response.code() == 200 && response.body() != null) {
-                return response
-            } else {
-                Log.e("Error", response.toString())
-                return response
-            }
+    override suspend fun getAttraction(attractionId: Long): Attraction? {
+        val response = stationApi.getAttraction(attractionId)
+        val body = response.body()
+        return if (response.isSuccessful && body != null) {
+            body
+        } else {
+            Log.e("Error", response.toString())
+            null
         }
     }
 }

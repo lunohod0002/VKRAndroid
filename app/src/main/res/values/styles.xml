@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="BottomNavTextInactive" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">0sp</item> <!-- Укажите нужный размер -->
+        <item name="android:textSize">10sp</item> <!-- Укажите нужный размер -->
     </style>
 
     <!-- Стиль для выбранного пункта меню -->

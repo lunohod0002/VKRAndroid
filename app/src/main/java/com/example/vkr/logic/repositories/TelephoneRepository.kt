@@ -1,4 +1,4 @@
-package com.example.vkr.storage.repositories
+package com.example.vkr.logic.repositories
 
 import com.example.vkr.logic.dto.request.CellInfo
 

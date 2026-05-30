@@ -22,18 +22,17 @@ import com.example.vkr.presentation.fragments.StationFragmentArgs
 import com.example.vkr.logic.viewmodels.MainActivityViewModel
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainActivityViewModel by viewModels {
-        MainActivityViewModel.Factory(this, (application as App).getDb().cellDao())
-    }
+    private val viewModel: MainActivityViewModel by viewModels()
 
-    // Сработает в любом случае (разрешил или запретил)
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {

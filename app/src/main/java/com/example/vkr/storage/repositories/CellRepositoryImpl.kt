@@ -1,9 +1,11 @@
 package com.example.vkr.storage.repositories
 
+import com.example.vkr.logic.repositories.CellRepository
 import com.example.vkr.storage.dao.CellDao
 import com.example.vkr.storage.models.CellTower
+import jakarta.inject.Inject
 
-class CellRepositoryImpl(private val cellDao: CellDao): CellRepository {
+class CellRepositoryImpl @Inject constructor(private val cellDao: CellDao): CellRepository {
     override fun getAllCells(): List<CellTower> {
         
         return cellDao.getAllCells()

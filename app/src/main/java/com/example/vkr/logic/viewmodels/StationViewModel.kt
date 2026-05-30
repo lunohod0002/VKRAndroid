@@ -1,21 +1,17 @@
 package com.example.vkr.logic.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.vkr.network.RetrofitClient
-import com.example.vkr.storage.dao.CellDao
-import com.example.vkr.network.dto.Station
-import com.example.vkr.network.api.StationApi
+import com.example.vkr.logic.models.Station
 import com.example.vkr.network.api.StationApiImpl
-import com.example.vkr.network.dto.StationAttractionInfo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
-class StationViewModel(
+@HiltViewModel
+class StationViewModel @Inject constructor(
     private val stationApi: StationApiImpl,
 ) : ViewModel() {
 
@@ -170,19 +166,5 @@ class StationViewModel(
     }
 
 
-    companion object {
-        fun Factory(context: Context): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-            ): T {
-                val stationApi = StationApiImpl(
-                    RetrofitClient.stationApi()
-                )
-                return StationViewModel(
-                    stationApi
-                ) as T
-            }
-        }
-    }
+
 }

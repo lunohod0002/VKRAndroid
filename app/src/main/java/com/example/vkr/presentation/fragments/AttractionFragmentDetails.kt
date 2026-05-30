@@ -21,7 +21,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAttractionDetailsBinding
 import com.example.vkr.logic.viewmodels.AttractionViewModel
-import com.example.vkr.network.dto.Attraction
+import com.example.vkr.logic.models.Attraction
 import com.example.vkr.presentation.adapters.AttractionImagesPagerAdapter
 import com.example.vkr.presentation.adapters.StationImagePagerAdapter
 import com.example.vkr.presentation.service.AttractionAudioService

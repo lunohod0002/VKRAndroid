@@ -11,13 +11,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationAttractionsBinding
-import com.example.vkr.App
 import com.example.vkr.logic.viewmodels.StationAttractionsViewModel
-import com.example.vkr.logic.viewmodels.StationViewModel
 import com.example.vkr.network.dto.AttractionId
-import com.example.vkr.network.dto.StationAttractionInfo
 import com.example.vkr.presentation.adapters.StationAttractionRecyclerAdapter
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.getValue
 
 

@@ -7,13 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.vkr.network.RetrofitClient
-import com.example.vkr.network.api.StationApi
 import com.example.vkr.network.api.StationApiImpl
-import com.example.vkr.network.dto.StationAttractionInfo
+import com.example.vkr.logic.models.StationAttractionInfo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StationAttractionsViewModel(
+@HiltViewModel
+class StationAttractionsViewModel @Inject constructor(
     private val stationApi: StationApiImpl,
 ) : ViewModel() {
 

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
-import com.example.vkr.network.dto.StationAttractionInfo
+import com.example.vkr.logic.models.StationAttractionInfo
 
 class StationAttractionPagerAdapter(
     private val onItemClick: (StationAttractionInfo) -> Unit,

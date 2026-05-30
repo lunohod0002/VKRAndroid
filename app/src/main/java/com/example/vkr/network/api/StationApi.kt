@@ -1,8 +1,8 @@
 package com.example.vkr.network.api
 
-import com.example.vkr.network.dto.Attraction
-import com.example.vkr.network.dto.Station
-import com.example.vkr.network.dto.StationAttractionsResponse
+import com.example.vkr.logic.models.Attraction
+import com.example.vkr.logic.models.Station
+import com.example.vkr.logic.models.StationAttractionsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

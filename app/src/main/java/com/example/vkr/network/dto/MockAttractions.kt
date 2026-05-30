@@ -1,5 +1,7 @@
 package com.example.vkr.network.dto
 
+import com.example.vkr.logic.models.Attraction
+
 object MockAttractions {
 
     val list: List<Attraction> = listOf(
@@ -8,7 +10,7 @@ object MockAttractions {
             phoneNumber = "+7 495 695-53-08",
             email = "ex@goslitmuz.ru",
             address = "Москва, ул. Спиридоновка, 2, стр. 1\n«Пушкинская», «Баррикадная», «Арбатская»",
-            images =   listOf(
+            images = listOf(
                 "https://classpic.ru/wp-content/uploads/2016/02/15222/Hitryj-minon.jpg",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnTQ04WdzI8_nx_D7_gGQK5nyjsunQOHNm5g&s",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnkXX1msb3FcwUKdveOb4VJ_8dlsezqUlqEQ&s",

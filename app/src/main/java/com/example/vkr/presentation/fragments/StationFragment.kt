@@ -35,12 +35,12 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.TextStyle
 import com.yandex.runtime.image.ImageProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StationFragment : Fragment(R.layout.fragment_station) {
 
-    private val viewModel: StationViewModel by viewModels {
-        StationViewModel.Factory(requireContext())
-    }
+    private val viewModel: StationViewModel by viewModels()
 
     private var stationId: Long? = null
     private var _binding: FragmentStationBinding? = null

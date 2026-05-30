@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.vkr.network.RetrofitClient
 import com.example.vkr.network.api.StationApi
 import com.example.vkr.network.api.StationApiImpl
-import com.example.vkr.network.dto.Attraction
+import com.example.vkr.logic.models.Attraction
 import com.example.vkr.network.dto.MockAttractions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

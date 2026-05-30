@@ -9,8 +9,12 @@ import android.telephony.CellInfoWcdma
 import android.telephony.TelephonyManager
 import com.example.vkr.logic.dto.request.CellInfo
 import com.example.vkr.logic.dto.request.RadioType
+import com.example.vkr.logic.repositories.TelephoneRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
+import jakarta.inject.Inject
 
-class TelephoneRepositoryImpl(private val context : Context) : TelephoneRepository {
+class TelephoneRepositoryImpl @Inject constructor(
+    @param:ApplicationContext private val context : Context) : TelephoneRepository {
     @SuppressLint("MissingPermission")
     override fun getCurrentCellInfo(): CellInfo? {
         val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager

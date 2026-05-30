@@ -11,11 +11,12 @@ import com.example.vkr.storage.repositories.CellRepositoryImpl
 import com.example.vkr.storage.repositories.TelephoneRepositoryImpl
 import com.example.vkr.network.dto.MapMarker
 import com.example.vkr.network.dto.StationCoordinates
-import com.example.vkr.storage.repositories.CellRepository
-import com.example.vkr.storage.repositories.TelephoneRepository
+import com.example.vkr.logic.repositories.CellRepository
+import com.example.vkr.logic.repositories.TelephoneRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+@HiltViewModel
 class MapViewModel(
     private val cellRepository: CellRepository,
     private val telephoneRepository: TelephoneRepository,
@@ -91,19 +92,5 @@ class MapViewModel(
         }
 
     }
-    companion object {
-        fun Factory(context: Context,cellDao: CellDao): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-            ): T {
-                val telephoneRepository = TelephoneRepositoryImpl(context = context)
-                val cellRepository = CellRepositoryImpl(cellDao)
-                return MapViewModel(
-                    cellRepository,
-                    telephoneRepository
-                ) as T
-            }
-        }
-    }
+
 }
