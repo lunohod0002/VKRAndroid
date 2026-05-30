@@ -1,4 +1,4 @@
-package com.example.vkr.network.dto
+package com.example.vkr.logic.models
 
 data class MediaRequest(
     val urlRef: String,

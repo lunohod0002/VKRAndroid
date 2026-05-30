@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vkr.logic.models.Station
-import com.example.vkr.network.api.StationApiImpl
+import com.example.vkr.logic.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 @HiltViewModel
 class StationViewModel @Inject constructor(
-    private val stationApi: StationApiImpl,
+    private val stationRepository: StationRepository,
 ) : ViewModel() {
 
     private val resultLiveMutable = MutableLiveData<Station?>()
@@ -158,8 +158,8 @@ class StationViewModel @Inject constructor(
 //                    )
 //                )
 //            }
-            val station = stationApi.getStationByNameAndBranch(name = name, branch = branch)
-                resultLiveMutable.postValue(station.body())
+            val station = stationRepository.getStationByNameAndBranch(name = name, branch = branch)
+                resultLiveMutable.postValue(station)
 
 
         }

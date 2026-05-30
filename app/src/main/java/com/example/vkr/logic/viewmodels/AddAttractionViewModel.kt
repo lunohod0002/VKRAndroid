@@ -1,21 +1,17 @@
 package com.example.vkr.presentation.viewmodel
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.vkr.network.RetrofitClient
-import com.example.vkr.network.api.AttractionApi
-import com.example.vkr.network.api.AttractionApiImpl
-import com.example.vkr.network.dto.AttractionRequest
+import com.example.vkr.network.api.AttractionRepositoryImpl
+import com.example.vkr.logic.models.AttractionRequest
 import com.example.vkr.network.dto.StationAttractionRequest
 import kotlinx.coroutines.launch
 
 class AddAttractionViewModel(
-    private val repository: AttractionApiImpl
+    private val repository: AttractionRepositoryImpl
 ) : ViewModel() {
 
     sealed interface UiState {
@@ -88,27 +84,5 @@ class AddAttractionViewModel(
         }
     }
 
-    /**
-     * Фабрика лежит прямо внутри ViewModel — чтобы фрагменту не нужно
-     * было знать про устройство зависимостей.
-     */
-    companion object {
-        fun factory(context: Context): ViewModelProvider.Factory {
-            val appContext = context.applicationContext
-            return object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    require(modelClass.isAssignableFrom(AddAttractionViewModel::class.java)) {
-                        "Unknown ViewModel class: ${modelClass.name}"
-                    }
-                    val repository = AttractionApiImpl(
-                        context = appContext,
-                        mediaApi = RetrofitClient.mediaApi(),
-                        attractionApi = RetrofitClient.attractionApi()
-                    )
-                    return AddAttractionViewModel(repository) as T
-                }
-            }
-        }
-    }
+
 }

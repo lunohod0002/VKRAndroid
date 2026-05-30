@@ -1,4 +1,6 @@
-package com.example.vkr.network.dto
+package com.example.vkr.logic.models
+
+import com.example.vkr.network.dto.StationAttractionRequest
 
 data class AttractionRequest(
     val name: String,

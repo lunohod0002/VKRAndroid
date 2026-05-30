@@ -7,7 +7,7 @@ import com.example.vkr.logic.models.StationAttractionsResponse
 import com.example.vkr.logic.repositories.StationRepository
 import javax.inject.Inject
 
-class StationApiImpl @Inject constructor(
+class StationRepositoryImpl @Inject constructor(
     private val stationApi: StationApi
 ) : StationRepository {
 

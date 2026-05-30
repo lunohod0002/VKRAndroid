@@ -1,7 +1,7 @@
 package com.example.vkr.network.api
 
-import com.example.vkr.network.dto.AttractionCreatedResponse
-import com.example.vkr.network.dto.AttractionRequest
+import com.example.vkr.logic.models.AttractionCreatedResponse
+import com.example.vkr.logic.models.AttractionRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

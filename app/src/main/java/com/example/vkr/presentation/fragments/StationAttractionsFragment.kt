@@ -14,15 +14,13 @@ import com.example.myapplication.databinding.FragmentStationAttractionsBinding
 import com.example.vkr.logic.viewmodels.StationAttractionsViewModel
 import com.example.vkr.network.dto.AttractionId
 import com.example.vkr.presentation.adapters.StationAttractionRecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
-
+@AndroidEntryPoint
 class StationAttractionsFragment : Fragment() {
 
-    private val viewModel: StationAttractionsViewModel by viewModels {
-        StationAttractionsViewModel.Factory(requireContext())
-    }
-
+    private val viewModel: StationAttractionsViewModel by viewModels()
     private var _binding: FragmentStationAttractionsBinding? = null
     private val binding get() = _binding!!
 

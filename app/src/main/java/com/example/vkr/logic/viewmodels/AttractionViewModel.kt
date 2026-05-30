@@ -7,15 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.vkr.network.RetrofitClient
-import com.example.vkr.network.api.StationApi
-import com.example.vkr.network.api.StationApiImpl
+import com.example.vkr.network.api.StationRepositoryImpl
 import com.example.vkr.logic.models.Attraction
-import com.example.vkr.network.dto.MockAttractions
+import com.example.vkr.logic.repositories.StationRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+@HiltViewModel
 class AttractionViewModel(
-    private val stationApi: StationApiImpl,
+    private val stationRepository: StationRepository
 ) : ViewModel() {
 
     private val resultLiveMutable = MutableLiveData<Attraction?>()
@@ -27,8 +27,8 @@ class AttractionViewModel(
 //            val attraction = MockAttractions.first()
 //            resultLiveMutable.postValue(attraction)
 
-            val attraction = stationApi.getAttraction(stationId)
-            resultLiveMutable.postValue(attraction.body())
+            val attraction = stationRepository.getAttraction(stationId)
+            resultLiveMutable.postValue(attraction)
 
             }
         }
@@ -40,7 +40,7 @@ class AttractionViewModel(
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
             ): T {
-                val stationApi = StationApiImpl(
+                val stationApi = StationRepositoryImpl(
                     RetrofitClient.stationApi()
                 )
                 return AttractionViewModel(stationApi

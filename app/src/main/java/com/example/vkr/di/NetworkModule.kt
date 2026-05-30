@@ -1,12 +1,12 @@
 package com.example.vkr.di
 
-import com.example.vkr.network.RetrofitClient.okHttp
+import com.example.vkr.network.api.AttractionApi
+import com.example.vkr.network.api.MediaApi
 import com.example.vkr.network.api.StationApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
-package com.example.vkr.di
 
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,6 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-
     private fun provideOkHttp(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         return OkHttpClient.Builder()
@@ -33,9 +32,9 @@ object NetworkModule {
     }
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl("http://192.168.1.20:8080")
-        .client(okHttp())
+        .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -43,4 +42,11 @@ object NetworkModule {
     @Singleton
     fun provideStationApi(retrofit: Retrofit): StationApi =
         retrofit.create(StationApi::class.java)
+    @Provides
+    @Singleton
+    fun mediaApi(retrofit: Retrofit): MediaApi =
+        retrofit.create(MediaApi::class.java)
+
+    fun attractionApi(retrofit: Retrofit): AttractionApi =
+        retrofit.create(AttractionApi::class.java)
 }

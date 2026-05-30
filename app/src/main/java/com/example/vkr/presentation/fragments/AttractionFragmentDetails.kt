@@ -27,12 +27,12 @@ import com.example.vkr.presentation.adapters.StationImagePagerAdapter
 import com.example.vkr.presentation.service.AttractionAudioService
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AttractionFragmentDetails : Fragment() {
 
-    private val viewModel: AttractionViewModel by viewModels {
-        AttractionViewModel.Factory(requireContext())
-    }
+    private val viewModel: AttractionViewModel by viewModels ()
 
     private var _binding: FragmentAttractionDetailsBinding? = null
     private val binding get() = _binding!!

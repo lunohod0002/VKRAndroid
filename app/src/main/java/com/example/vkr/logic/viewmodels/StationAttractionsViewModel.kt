@@ -1,14 +1,11 @@
 package com.example.vkr.logic.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.vkr.network.RetrofitClient
-import com.example.vkr.network.api.StationApiImpl
 import com.example.vkr.logic.models.StationAttractionInfo
+import com.example.vkr.logic.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StationAttractionsViewModel @Inject constructor(
-    private val stationApi: StationApiImpl,
+    private val stationRepository: StationRepository
 ) : ViewModel() {
 
     private val resultLiveMutable = MutableLiveData<List<StationAttractionInfo>?>()
@@ -35,26 +32,12 @@ class StationAttractionsViewModel @Inject constructor(
 //            )
 //            resultLiveMutable.postValue(attractions)
 
-            val attractions = stationApi.getStationAttractions(stationId)
-            resultLiveMutable.postValue(attractions.body()?.content)
+            val attractions = stationRepository.getStationAttractions(stationId)
+            resultLiveMutable.postValue(attractions?.content)
 
             }
         }
 
 
-    companion object {
-        fun Factory(context: Context): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
 
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-            ): T {
-                val stationApi = StationApiImpl(
-                    RetrofitClient.stationApi()
-                )
-                return StationAttractionsViewModel(stationApi
-                ) as T
-            }
-        }
-    }
 }

@@ -4,9 +4,10 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import com.example.vkr.network.RetrofitClient
-import com.example.vkr.network.dto.AttractionCreatedResponse
-import com.example.vkr.network.dto.AttractionRequest
-import com.example.vkr.network.dto.MediaRequest
+import com.example.vkr.logic.models.AttractionCreatedResponse
+import com.example.vkr.logic.models.AttractionRequest
+import com.example.vkr.logic.models.MediaRequest
+import com.example.vkr.logic.repositories.AttractionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -14,13 +15,13 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-class AttractionApiImpl(
+class AttractionRepositoryImpl(
     private val context: Context,
     private val mediaApi: MediaApi,
     private val attractionApi: AttractionApi
-) {
+) : AttractionRepository {
 
-    suspend fun uploadMedia(uris: List<Uri>, type: String): List<MediaRequest> =
+    override suspend fun uploadMedia(uris: List<Uri>, type: String): List<MediaRequest> =
         withContext(Dispatchers.IO) {
             if (uris.isEmpty()) return@withContext emptyList()
 
@@ -35,7 +36,7 @@ class AttractionApiImpl(
             keys.map { MediaRequest(urlRef = RetrofitClient.BASE_URL+"/api/medias/download/"+ it, type = type) }
         }
 
-    suspend fun createAttraction(request: AttractionRequest): AttractionCreatedResponse =
+    override suspend fun createAttraction(request: AttractionRequest): AttractionCreatedResponse =
         withContext(Dispatchers.IO) {
             val response = attractionApi.createAttraction(request)
             if (!response.isSuccessful) {
