@@ -7,8 +7,14 @@
 
     </item>
     <item android:id="@+id/screen_station"
-        android:title="Текущая станция"
+        android:title="Моя станция"
         android:icon="@drawable/current_location_item">
+
+    </item>
+
+    <item android:id="@+id/screen_add_attraction"
+        android:title="Достоприм."
+        android:icon="@drawable/attraction_item">
 
     </item>
     <item android:id="@+id/screen_reference_info"
@@ -16,11 +22,7 @@
         android:icon="@drawable/info_item">
 
     </item>
-    <item android:id="@+id/screen_add_attraction"
-        android:title="Достопримечательности"
-        android:icon="@drawable/attraction_item">
 
-    </item>
     <item
         android:id="@+id/menu_item_none"
         android:title=""

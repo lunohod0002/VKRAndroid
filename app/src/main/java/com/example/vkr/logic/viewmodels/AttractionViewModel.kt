@@ -11,7 +11,6 @@ import com.example.vkr.network.api.StationApi
 import com.example.vkr.network.api.StationApiImpl
 import com.example.vkr.network.dto.Attraction
 import com.example.vkr.network.dto.MockAttractions
-import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -42,7 +41,7 @@ class AttractionViewModel(
                 modelClass: Class<T>,
             ): T {
                 val stationApi = StationApiImpl(
-                    RetrofitClient.stationApi(TokenStorage(context = context.applicationContext))
+                    RetrofitClient.stationApi()
                 )
                 return AttractionViewModel(stationApi
                 ) as T

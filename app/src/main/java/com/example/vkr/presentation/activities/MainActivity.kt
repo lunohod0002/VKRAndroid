@@ -20,21 +20,14 @@ import com.example.vkr.App
 import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.fragments.StationFragmentArgs
 import com.example.vkr.logic.viewmodels.MainActivityViewModel
-import com.example.vkr.network.api.AuthEvents
-import com.example.vkr.storage.TokenStorage
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private var refTapCount = 0
-    private var refFirstTapAt = 0L
 
-    companion object {
-        private const val SECRET_TAP_WINDOW_MS = 5_000L
-        private const val SECRET_TAP_REQUIRED = 5
-    }
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainActivityViewModel by viewModels {
         MainActivityViewModel.Factory(this, (application as App).getDb().cellDao())

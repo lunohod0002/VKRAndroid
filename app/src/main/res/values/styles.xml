@@ -6,7 +6,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="BottomNavTextInactive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">9sp</item> <!-- Укажите нужный размер -->
+    </style>
 
+    <!-- Стиль для выбранного пункта меню -->
+    <style name="BottomNavTextActive" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item> <!-- Укажите нужный размер -->
+    </style>
     <style name="TextAddress">
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginTop">8dp</item>

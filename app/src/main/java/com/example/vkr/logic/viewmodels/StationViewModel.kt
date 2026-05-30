@@ -12,7 +12,6 @@ import com.example.vkr.network.dto.Station
 import com.example.vkr.network.api.StationApi
 import com.example.vkr.network.api.StationApiImpl
 import com.example.vkr.network.dto.StationAttractionInfo
-import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -178,7 +177,7 @@ class StationViewModel(
                 modelClass: Class<T>,
             ): T {
                 val stationApi = StationApiImpl(
-                    RetrofitClient.stationApi(TokenStorage(context = context.applicationContext))
+                    RetrofitClient.stationApi()
                 )
                 return StationViewModel(
                     stationApi

@@ -1,12 +1,9 @@
 package com.example.vkr.network
 
 import com.example.vkr.network.api.AttractionApi
-import com.example.vkr.network.api.AuthApi
-import com.example.vkr.network.api.AuthInterceptor
 import com.example.vkr.network.api.MediaApi
 import com.example.vkr.network.api.StationApi
-import com.example.vkr.network.api.TokenAuthenticator
-import com.example.vkr.storage.TokenStorage
+
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,13 +33,10 @@ object RetrofitClient {
             .build()
     }
 
-    private val authApi: AuthApi by lazy { cleanRetrofit.create(AuthApi::class.java) }
 
-    private fun okHttp(tokenStorage: TokenStorage): OkHttpClient {
+    private fun okHttp(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         return OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenStorage))
-            .authenticator(TokenAuthenticator(tokenStorage, authApi))
             .addInterceptor(logging)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
@@ -50,20 +44,19 @@ object RetrofitClient {
             .build()
     }
 
-    private fun retrofit(tokenStorage: TokenStorage): Retrofit = Retrofit.Builder()
+    private fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .client(okHttp(tokenStorage))
+        .client(okHttp())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun authApi(): AuthApi = authApi
 
-    fun stationApi(tokenStorage: TokenStorage): StationApi =
-        retrofit(tokenStorage).create(StationApi::class.java)
+    fun stationApi(): StationApi =
+        retrofit().create(StationApi::class.java)
 
-    fun mediaApi(tokenStorage: TokenStorage): MediaApi =
-        retrofit(tokenStorage).create(MediaApi::class.java)
+    fun mediaApi(): MediaApi =
+        retrofit().create(MediaApi::class.java)
 
-    fun attractionApi(tokenStorage: TokenStorage): AttractionApi =
-        retrofit(tokenStorage).create(AttractionApi::class.java)
+    fun attractionApi(): AttractionApi =
+        retrofit().create(AttractionApi::class.java)
 }

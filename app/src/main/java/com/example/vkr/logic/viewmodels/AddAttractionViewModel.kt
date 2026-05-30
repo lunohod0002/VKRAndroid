@@ -12,7 +12,6 @@ import com.example.vkr.network.api.AttractionApi
 import com.example.vkr.network.api.AttractionApiImpl
 import com.example.vkr.network.dto.AttractionRequest
 import com.example.vkr.network.dto.StationAttractionRequest
-import com.example.vkr.storage.TokenStorage
 import kotlinx.coroutines.launch
 
 class AddAttractionViewModel(
@@ -102,11 +101,10 @@ class AddAttractionViewModel(
                     require(modelClass.isAssignableFrom(AddAttractionViewModel::class.java)) {
                         "Unknown ViewModel class: ${modelClass.name}"
                     }
-                    val tokenStorage = TokenStorage(appContext)
                     val repository = AttractionApiImpl(
                         context = appContext,
-                        mediaApi = RetrofitClient.mediaApi(tokenStorage),
-                        attractionApi = RetrofitClient.attractionApi(tokenStorage)
+                        mediaApi = RetrofitClient.mediaApi(),
+                        attractionApi = RetrofitClient.attractionApi()
                     )
                     return AddAttractionViewModel(repository) as T
                 }

@@ -20,7 +20,6 @@ class AttractionApiImpl(
     private val attractionApi: AttractionApi
 ) {
 
-    /** Грузит несколько файлов одним запросом и оборачивает результат в MediaRequest. */
     suspend fun uploadMedia(uris: List<Uri>, type: String): List<MediaRequest> =
         withContext(Dispatchers.IO) {
             if (uris.isEmpty()) return@withContext emptyList()
