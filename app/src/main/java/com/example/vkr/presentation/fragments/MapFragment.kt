@@ -141,26 +141,26 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             }
         }
     }
-    private val placemarkTapListener = MapObjectTapListener { mapObject,_ ->
-        val marker = mapObject.userData as? MapMarker ?: MapMarker(StationCoordinates(0.0,0.0),"Без названия",0)
-        val stationData = StationData(title=marker.title, branchNumber = marker.branchNumber)
-        val action= MapFragmentDirections.actionScreenMapToScreenStation(
-            STATION = stationData
-        )
+    private val placemarkTapListener = MapObjectTapListener { _,_ ->
+        val action= MapFragmentDirections.actionScreenMapToScreenStation()
         findNavController().navigate(action)
         true
     }
     override fun onStart() {
-
         super.onStart()
         MapKitFactory.getInstance().onStart()
         mapView.onStart()
     }
+
+    override fun onStop() {
+        mapView.onStop()
+        MapKitFactory.getInstance().onStop()
+        super.onStop()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        MapKitFactory.getInstance().onStop()
-        super.onStop()
     }
 
 

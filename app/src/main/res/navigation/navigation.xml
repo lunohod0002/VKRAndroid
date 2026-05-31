@@ -10,10 +10,6 @@
         android:id="@+id/screen_map"
         android:name="com.example.vkr.presentation.fragments.MapFragment"
         tools:layout="@layout/fragment_map" >
-        <argument
-            android:name="STATION"
-            app:argType="com.example.vkr.network.dto.StationData"
-            app:nullable="false"/>
         <action
             android:id="@+id/action_screen_map_to_screen_station"
             app:destination="@id/screen_station" />
@@ -25,10 +21,7 @@
 
         android:name="com.example.vkr.presentation.fragments.StationFragment"
         tools:layout="@layout/fragment_station">
-        <argument
-            android:name="STATION"
-            app:argType="com.example.vkr.network.dto.StationData"
-            app:nullable="false"/>
+
         <action
             android:id="@+id/action_screen_station_to_stationAttractionsFragment"
             app:destination="@id/stationAttractionsFragment" />
@@ -81,14 +74,7 @@
         app:argType="com.example.vkr.network.dto.AttractionId"
         app:nullable="false"/>
     </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.vkr.fragments.LoginFragment"
-        android:label="LoginFragment" >
-        <action
-            android:id="@+id/action_loginFragment_to_addAttractionFragment"
-            app:destination="@id/screen_add_attraction" />
-    </fragment>
+
     <fragment
         android:id="@+id/screen_add_attraction"
         android:name="com.example.vkr.presentation.fragments.AddAttractionFragment"

@@ -57,25 +57,19 @@ class StationAttractionsFragment : Fragment() {
 
 
         val stationName = args.STATION.title
-        val branchName = when (args.STATION.branchNumber) {
-            1 -> "Сокольническая"
-            3 -> "Арбатско-Покровская"
-            5 -> "Кольцевая"
-            9 -> "Серпуховско-Тимирязевская"
-            else -> ""
-        }
+        val branchName = args.STATION.branch
         binding.stationAttractionStationNameTxt.text = stationName
         binding.stationAttractionBranchNameTxt.text = branchName
     }
     private fun displayStationLogo(){
         val args: StationAttractionsFragmentArgs by navArgs()
 
-        val branchNumber = args.STATION.branchNumber
+        val branchNumber = args.STATION.branch
         val iconResId = when (branchNumber) {
-            1 -> R.drawable.red_branch_logo
-            9 -> R.drawable.gray_branch_logo
-            3 -> R.drawable.blue_branch_logo
-            5 -> R.drawable.brown_branch_logo
+            "Сокольническая" -> R.drawable.red_branch_logo
+            "Серпуховская" -> R.drawable.gray_branch_logo
+            "Арбатско-Покровская" -> R.drawable.blue_branch_logo
+            "Кольцевая" -> R.drawable.brown_branch_logo
             else -> 0
         }
 

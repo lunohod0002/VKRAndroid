@@ -33,7 +33,6 @@ class TelephoneRepositoryImpl @Inject constructor(
 
         return allCellInfo.find { it.mnc == "1" }
     }
-
     private fun getCellInfoGsm(info: CellInfoGsm): CellInfo {
         val cellInfo = CellInfo()
         cellInfo.radio = RadioType.GSM

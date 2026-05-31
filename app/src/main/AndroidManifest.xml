@@ -15,6 +15,7 @@
 
     <application
         android:name="com.example.vkr.App"
+        android:enableOnBackInvokedCallback="true"
         xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"

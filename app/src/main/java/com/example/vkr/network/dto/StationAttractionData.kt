@@ -5,6 +5,6 @@ import java.io.Serializable
 data class StationAttractionData(
     val id : Long,
     val title: String,
-    val branchNumber: Int
+    val branch: String
 
 ): Serializable {}

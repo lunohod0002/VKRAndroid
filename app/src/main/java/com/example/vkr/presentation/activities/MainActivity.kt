@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
             var checkedItemId = when (destId) {
                 R.id.screen_map,
+                R.id.screen_add_attraction,
                 R.id.screen_station,
                 R.id.screen_reference_info -> destId
                 else -> R.id.menu_item_none
@@ -100,14 +101,25 @@ class MainActivity : AppCompatActivity() {
 
         if (itemId == navController.currentDestination?.id) return true
 
-        navController.navigate(itemId,
-            null,
-            navOptions {
-            launchSingleTop = true
-        })
+        if (itemId == R.id.screen_station){
+            if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Toast.makeText(
+                this, "Выдайте разрешение на определение местоположения",
+                Toast.LENGTH_SHORT
+            ).show()
+            return true
+        }
+        }
+        navController.navigate(itemId)
         return true
     }
-
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 
 
 
