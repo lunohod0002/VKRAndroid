@@ -47,7 +47,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
-        //TODO:Поменять onCreate на         super.onViewCreated(view,savedInstanceState)
         MapKitFactory.initialize(context)
         _binding = FragmentMapBinding.bind(view)
 
@@ -58,7 +57,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         displayMap()
         initLocationLiveData()
 
-        //  TODO    Добавить слушатель по нажатию на станцию, для появления pop-up с краткой инфой о станции
 
     }
 
@@ -149,7 +147,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         val action= MapFragmentDirections.actionScreenMapToScreenStation(
             STATION = stationData
         )
-        activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.menu?.findItem(R.id.menu_item_none)?.isChecked =  true
         findNavController().navigate(action)
         true
     }

@@ -14,30 +14,28 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.vkr.App
-import com.example.vkr.network.dto.StationData
-import com.example.vkr.presentation.fragments.StationFragmentArgs
-import com.example.vkr.logic.viewmodels.MainActivityViewModel
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainActivityViewModel by viewModels()
-
+    private lateinit var navController: NavController
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {
-        openMapScreen()
+    ) { /* isGranted */
 
+        openMapScreen()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,116 +45,70 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        // Прячем меню на время показа системного окна (чисто для эстетики)
-
-        val navHost =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHost.navController
+        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHost.navController
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            handleNavigation(item.itemId, navController)
+            handleNavigation(item.itemId)
         }
 
         if (savedInstanceState == null) {
-
             checkPermissionAndOpenMap()
         }
 
-        navController.addOnDestinationChangedListener { controller, destination, _ ->
+        navController.addOnDestinationChangedListener { controller  , destination, _ ->
             val destId = destination.id
             val fromId = controller.previousBackStackEntry?.destination?.id
 
-            // Управление видимостью
             binding.bottomNavigationView.visibility =
                 if (destId == R.id.emptyFragment) View.GONE else View.VISIBLE
 
-            when (destId) {
-
-                else -> {
-                    // Для всех остальных экранов, кроме screen_reference_info, снимаем выделение
-                    if (destId != R.id.screen_reference_info && destId != R.id.screen_map && destId !=R.id.screen_station ) {
-                        binding.bottomNavigationView.menu.findItem(R.id.menu_item_none)?.isChecked =  true
-                    }
-                }
+            var checkedItemId = when (destId) {
+                R.id.screen_map,
+                R.id.screen_station,
+                R.id.screen_reference_info -> destId
+                else -> R.id.menu_item_none
             }
+            if (fromId == R.id.screen_map && destId ==R.id.screen_station){
+                checkedItemId =R.id.menu_item_none
+            }
+
+            binding.bottomNavigationView.menu.findItem(checkedItemId)?.isChecked = true
         }
     }
 
     private fun checkPermissionAndOpenMap() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            // Права уже есть -> сразу открываем карту
+        val granted = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (granted) {
             openMapScreen()
         } else {
-            // Прав нет -> показываем системное окно.
-            // Пользователь видит пустой экран + системный диалог.
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
     private fun openMapScreen() {
-        // Показываем меню обратно
 
-        // ВЫПОЛНЯЕМ ПЕРЕХОД. Только в этот момент создастся MapFragment и вызовется его onViewCreated
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navHost.navController.navigate(R.id.action_emptyFragment_to_screen_map)
-    }
-
-    private fun handleNavigation(itemId: Int, navController: NavController): Boolean {
-
-        when (itemId) {
-            R.id.screen_station -> {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    Toast.makeText(this@MainActivity,
-                            "Выдайте разрешение на определение местоположения", Toast.LENGTH_SHORT).show()
-
-                    return true
-
-
-                }
-                else {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        val cell = viewModel.fetchCurrentLocation()
-                        if (cell != null) {
-                            val args = StationFragmentArgs(
-                                STATION = StationData(
-                                    cell.station!!,
-                                    cell.branch!!
-                                )
-                            )
-                            launch(Dispatchers.Main) {
-                                navController.navigate(R.id.screen_station, args.toBundle())
-                            }
-                        } else {
-                            launch(Dispatchers.Main) {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Не удалось определить текущую станцию",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                            }
-                        }
-                    }
-                    return true
-                }
-            }
-             R.id.screen_reference_info -> {
-                 navController.navigate(itemId)
-                 return true
-
-             }
-            else -> {
-                navController.navigate(itemId)
-                return true
-            }
+        if (navController.currentDestination?.id == R.id.emptyFragment) {
+            navController.navigate(R.id.action_emptyFragment_to_screen_map)
         }
     }
+
+    private fun handleNavigation(itemId: Int): Boolean {
+
+        if (itemId == navController.currentDestination?.id) return true
+
+        navController.navigate(itemId,
+            null,
+            navOptions {
+            launchSingleTop = true
+        })
+        return true
+    }
+
+
+
+
 }
