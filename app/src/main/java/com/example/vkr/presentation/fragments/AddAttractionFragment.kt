@@ -16,15 +16,15 @@ import com.example.myapplication.databinding.ItemAddedStationBinding
 
 import com.example.vkr.network.dto.StationAttractionRequest
 import com.example.vkr.presentation.viewmodel.AddAttractionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddAttractionFragment : Fragment() {
 
     private var _binding: FragmentAddAttractionBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AddAttractionViewModel by viewModels {
-        AddAttractionViewModel.factory(requireContext())
-    }
+    private val viewModel: AddAttractionViewModel by viewModels()
 
     private val pickPhotos = registerForActivityResult(
         ActivityResultContracts.GetMultipleContents()

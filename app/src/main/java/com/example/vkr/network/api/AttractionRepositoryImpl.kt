@@ -8,6 +8,8 @@ import com.example.vkr.logic.models.AttractionCreatedResponse
 import com.example.vkr.logic.models.AttractionRequest
 import com.example.vkr.logic.models.MediaRequest
 import com.example.vkr.logic.repositories.AttractionRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
+import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -15,8 +17,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-class AttractionRepositoryImpl(
-    private val context: Context,
+class AttractionRepositoryImpl @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val mediaApi: MediaApi,
     private val attractionApi: AttractionApi
 ) : AttractionRepository {

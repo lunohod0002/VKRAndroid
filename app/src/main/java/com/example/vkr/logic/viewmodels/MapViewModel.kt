@@ -14,10 +14,11 @@ import com.example.vkr.network.dto.StationCoordinates
 import com.example.vkr.logic.repositories.CellRepository
 import com.example.vkr.logic.repositories.TelephoneRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 @HiltViewModel
-class MapViewModel(
+class MapViewModel @Inject constructor(
     private val cellRepository: CellRepository,
     private val telephoneRepository: TelephoneRepository,
 ) : ViewModel() {

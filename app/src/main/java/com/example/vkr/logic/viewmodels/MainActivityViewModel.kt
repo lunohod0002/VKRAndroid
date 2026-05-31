@@ -28,19 +28,5 @@ class MainActivityViewModel @Inject constructor(
         return cell
 
     }
-//    companion object {
-//        fun Factory(context: Context,cellDao: CellDao): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-//            @Suppress("UNCHECKED_CAST")
-//            override fun <T : ViewModel> create(
-//                modelClass: Class<T>,
-//            ): T {
-//                val telephoneRepository = TelephoneRepositoryImpl(context = context)
-//                val cellRepository = CellRepositoryImpl(cellDao)
-//                return MainActivityViewModel(
-//                    cellRepository,
-//                    telephoneRepository
-//                ) as T
-//            }
-//        }
-//    }
+
 }

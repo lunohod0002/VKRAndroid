@@ -11,10 +11,11 @@ import com.example.vkr.network.api.StationRepositoryImpl
 import com.example.vkr.logic.models.Attraction
 import com.example.vkr.logic.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 @HiltViewModel
-class AttractionViewModel(
+class AttractionViewModel @Inject constructor(
     private val stationRepository: StationRepository
 ) : ViewModel() {
 
@@ -34,18 +35,5 @@ class AttractionViewModel(
         }
 
 
-    companion object {
-        fun Factory(context: Context): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-            ): T {
-                val stationApi = StationRepositoryImpl(
-                    RetrofitClient.stationApi()
-                )
-                return AttractionViewModel(stationApi
-                ) as T
-            }
-        }
-    }
+
 }

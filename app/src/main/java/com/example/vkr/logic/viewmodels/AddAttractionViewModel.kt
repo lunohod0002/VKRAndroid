@@ -7,11 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vkr.network.api.AttractionRepositoryImpl
 import com.example.vkr.logic.models.AttractionRequest
+import com.example.vkr.logic.repositories.AttractionRepository
 import com.example.vkr.network.dto.StationAttractionRequest
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.launch
-
-class AddAttractionViewModel(
-    private val repository: AttractionRepositoryImpl
+@HiltViewModel
+class AddAttractionViewModel @Inject constructor(
+    private val repository: AttractionRepository
 ) : ViewModel() {
 
     sealed interface UiState {

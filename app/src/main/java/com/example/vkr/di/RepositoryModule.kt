@@ -1,7 +1,12 @@
 package com.example.vkr.di
 
+import com.example.vkr.logic.models.Station
+import com.example.vkr.logic.repositories.AttractionRepository
 import com.example.vkr.logic.repositories.CellRepository
+import com.example.vkr.logic.repositories.StationRepository
 import com.example.vkr.logic.repositories.TelephoneRepository
+import com.example.vkr.network.api.AttractionRepositoryImpl
+import com.example.vkr.network.api.StationRepositoryImpl
 import com.example.vkr.storage.repositories.CellRepositoryImpl
 import com.example.vkr.storage.repositories.TelephoneRepositoryImpl   // ← проверь пакет своего Impl
 import dagger.Binds
@@ -21,4 +26,14 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindTelephoneRepository(impl: TelephoneRepositoryImpl): TelephoneRepository
+
+
+    @Binds
+    @Singleton
+    abstract fun bindStationRepository(impl: StationRepositoryImpl): StationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAttractionRepository(impl: AttractionRepositoryImpl): AttractionRepository
+
 }

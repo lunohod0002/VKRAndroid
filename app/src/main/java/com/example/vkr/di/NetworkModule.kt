@@ -21,7 +21,7 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    private fun provideOkHttp(): OkHttpClient {
+    fun provideOkHttp(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         return OkHttpClient.Builder()
             .addInterceptor(logging)
@@ -46,7 +46,8 @@ object NetworkModule {
     @Singleton
     fun mediaApi(retrofit: Retrofit): MediaApi =
         retrofit.create(MediaApi::class.java)
-
+    @Provides
+    @Singleton
     fun attractionApi(retrofit: Retrofit): AttractionApi =
         retrofit.create(AttractionApi::class.java)
 }
