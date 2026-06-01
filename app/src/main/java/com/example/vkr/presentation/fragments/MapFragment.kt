@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentMapBinding
 import com.example.vkr.App
+import com.example.vkr.logic.navigation.NavigationCommand
 import com.example.vkr.network.dto.MapMarker
 import com.example.vkr.network.dto.StationCoordinates
 import com.example.vkr.network.dto.StationData
@@ -31,6 +32,8 @@ import com.yandex.mapkit.map.TextStyle
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @AndroidEntryPoint
@@ -142,8 +145,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         }
     }
     private val placemarkTapListener = MapObjectTapListener { _,_ ->
-        val action= MapFragmentDirections.actionScreenMapToScreenStation()
-        findNavController().navigate(action)
+        viewModel.navigate()
         true
     }
     override fun onStart() {

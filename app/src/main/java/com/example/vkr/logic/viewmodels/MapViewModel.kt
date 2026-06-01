@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.vkr.logic.navigation.AppNavigator
+import com.example.vkr.logic.navigation.NavigationCommand
 import com.example.vkr.storage.dao.CellDao
 import com.example.vkr.storage.repositories.CellRepositoryImpl
 import com.example.vkr.storage.repositories.TelephoneRepositoryImpl
@@ -13,16 +15,19 @@ import com.example.vkr.network.dto.MapMarker
 import com.example.vkr.network.dto.StationCoordinates
 import com.example.vkr.logic.repositories.CellRepository
 import com.example.vkr.logic.repositories.TelephoneRepository
+import com.example.vkr.presentation.fragments.MapFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val cellRepository: CellRepository,
     private val telephoneRepository: TelephoneRepository,
+    private val navigator: AppNavigator
 ) : ViewModel() {
-
     private val resultLiveMutable = MutableLiveData<StationCoordinates?>()
     val resultLive: LiveData<StationCoordinates?> = resultLiveMutable
 
@@ -93,5 +98,11 @@ class MapViewModel @Inject constructor(
         }
 
     }
+    fun navigate() {
+        val direction = MapFragmentDirections.actionScreenMapToScreenStation()
+
+        navigator.navigate(NavigationCommand.To(direction))
+    }
+
 
 }

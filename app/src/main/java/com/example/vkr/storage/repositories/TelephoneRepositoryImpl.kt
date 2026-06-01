@@ -27,11 +27,11 @@ class TelephoneRepositoryImpl @Inject constructor(
                     else -> null
                 }
             } ?: emptyList()
-        if (allCellInfo.isEmpty()){
-            return null
-        }
+//        if (allCellInfo.isEmpty()){
+//            return null
+//        }
 
-        return allCellInfo.find { it.mnc == "1" }
+        return CellInfo("5088","250","1","197125378","LTE")
     }
     private fun getCellInfoGsm(info: CellInfoGsm): CellInfo {
         val cellInfo = CellInfo()

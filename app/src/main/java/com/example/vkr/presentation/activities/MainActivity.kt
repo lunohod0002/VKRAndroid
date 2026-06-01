@@ -17,10 +17,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.vkr.logic.navigation.AppNavigator
+import com.example.vkr.presentation.navigation.NavigatorImpl
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
+    @Inject  lateinit var navigator: NavigatorImpl
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { /* isGranted */
@@ -47,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHost.navController
-
+        navigator.bind(navController)
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             handleNavigation(item.itemId)
         }
