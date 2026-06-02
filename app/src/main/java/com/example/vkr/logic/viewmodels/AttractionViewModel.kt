@@ -10,6 +10,7 @@ import com.example.vkr.network.RetrofitClient
 import com.example.vkr.network.api.StationRepositoryImpl
 import com.example.vkr.logic.models.Attraction
 import com.example.vkr.logic.repositories.StationRepository
+import com.example.vkr.network.dto.MockAttractions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +26,11 @@ class AttractionViewModel @Inject constructor(
 
     fun getAttraction(stationId:Long) {
         viewModelScope.launch(Dispatchers.IO) {
-//            val attraction = MockAttractions.first()
-//            resultLiveMutable.postValue(attraction)
-
-            val attraction = stationRepository.getAttraction(stationId)
+            val attraction = MockAttractions.first()
             resultLiveMutable.postValue(attraction)
+
+//            val attraction = stationRepository.getAttraction(stationId)
+//            resultLiveMutable.postValue(attraction)
 
             }
         }

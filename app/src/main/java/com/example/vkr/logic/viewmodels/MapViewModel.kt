@@ -15,6 +15,7 @@ import com.example.vkr.network.dto.MapMarker
 import com.example.vkr.network.dto.StationCoordinates
 import com.example.vkr.logic.repositories.CellRepository
 import com.example.vkr.logic.repositories.TelephoneRepository
+import com.example.vkr.network.dto.StationData
 import com.example.vkr.presentation.fragments.MapFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -98,8 +99,10 @@ class MapViewModel @Inject constructor(
         }
 
     }
-    fun navigate() {
-        val direction = MapFragmentDirections.actionScreenMapToScreenStation()
+    fun navigateToStation(stationData: StationData) {
+        val direction= MapFragmentDirections.actionScreenMapToScreenStation(
+            STATION = stationData
+        )
 
         navigator.navigate(NavigationCommand.To(direction))
     }

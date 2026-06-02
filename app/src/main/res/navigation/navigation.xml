@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/emptyFragment">
+    app:startDestination="@id/screen_map">
 
 
     <fragment
@@ -21,7 +21,12 @@
 
         android:name="com.example.vkr.presentation.fragments.StationFragment"
         tools:layout="@layout/fragment_station">
-
+        <argument
+            android:name="STATION"
+            app:argType="com.example.vkr.network.dto.StationData"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
         <action
             android:id="@+id/action_screen_station_to_stationAttractionsFragment"
             app:destination="@id/stationAttractionsFragment" />
@@ -42,16 +47,7 @@
             app:nullable="false"/>
 
     </fragment>
-    <fragment
-        android:id="@+id/emptyFragment"
-        android:name="com.example.vkr.presentation.fragments.EmptyFragment"
-        android:label="EmptyFragment" >
-        <action
-            android:id="@+id/action_emptyFragment_to_screen_map"
-            app:destination="@id/screen_map"
-            app:popUpTo="@id/emptyFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+
     <fragment
         android:id="@+id/stationAttractionsFragment"
         android:name="com.example.vkr.presentation.fragments.StationAttractionsFragment"

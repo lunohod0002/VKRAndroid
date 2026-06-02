@@ -45,6 +45,13 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     private val binding: FragmentMapBinding
         get() = _binding ?: throw RuntimeException()
+    private val locationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            viewModel.fetchCurrentLocation()
+        }
+    }
 
 
 
@@ -55,29 +62,26 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
         mapView = binding.mapview
         mapObjects =mapView.mapWindow.map.mapObjects
-        displayCurrentLocation()
+
         initMap()
         displayMap()
         initLocationLiveData()
 
+        checkAndRequestLocation()
+
+
 
     }
-
-    private fun displayCurrentLocation() {
+    private fun checkAndRequestLocation() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
-            Toast.makeText(
-                requireContext(),
-                        "Выдайте разрешение на определение местоположения для обнаружения станции", Toast.LENGTH_SHORT
-            ).show()
-
-
-        }
-        else {
             viewModel.fetchCurrentLocation()
+        } else {
+
+            locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
@@ -144,8 +148,10 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             }
         }
     }
-    private val placemarkTapListener = MapObjectTapListener { _,_ ->
-        viewModel.navigate()
+    private val placemarkTapListener = MapObjectTapListener {  mapObject,_ ->
+        val marker = mapObject.userData as? MapMarker ?: MapMarker(StationCoordinates(0.0,0.0),"Без названия",0)
+        val stationData = StationData(title=marker.title, branchNumber = marker.branchNumber)
+        viewModel.navigateToStation(stationData)
         true
     }
     override fun onStart() {

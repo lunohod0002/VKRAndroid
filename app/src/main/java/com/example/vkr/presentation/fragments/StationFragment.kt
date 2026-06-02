@@ -2,10 +2,12 @@ package com.example.vkr.presentation.fragments
 
 import android.Manifest
 import android.content.ComponentName
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
@@ -56,16 +58,33 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { }
+    private val locationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            binding.root.visibility = View.VISIBLE
+
+            requestNotificationPermission()
+
+            initStationData()
+            displayStationData()
+            initVideoPlayer()
+            initAudioServiceAndController()
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Без разрешения на геолокацию работа станции невозможна",
+                Toast.LENGTH_LONG
+            ).show()
+
+            viewModel.onBackPressed()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStationBinding.bind(view)
-
-        requestNotificationPermission()
-        initStationData()
-        displayStationData()
-        initVideoPlayer()
-        initAudioServiceAndController()
+        checkLocationPermission()
     }
 
     private fun requestNotificationPermission() {
@@ -74,12 +93,33 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         }
     }
 
+    private fun checkLocationPermission() {
+        val hasPermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (hasPermission) {
+            binding.root.visibility = View.VISIBLE
+            requestNotificationPermission()
+            initStationData()
+            displayStationData()
+            initVideoPlayer()
+            initAudioServiceAndController()
+        } else {
+
+            locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+
+
     private fun initVideoPlayer() {
         videoPlayer = ExoPlayer.Builder(requireContext())
             .setSeekBackIncrementMs(15_000)
             .setSeekForwardIncrementMs(15_000).build()
         binding.videoPlayer.player = videoPlayer
     }
+
     @OptIn(UnstableApi::class)
     private fun initAudioServiceAndController() {
         if (audioControllerFuture != null) return
@@ -97,9 +137,6 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 if (controller != null) {
                     currentAudioController = controller
 
-                    // ПОДКЛЮЧАЕМ КОНТРОЛЛЕР К UI
-                    // Как только эта строка выполняется, PlayerControlView сам находит
-                    // exo_duration и начинает автоматически обновлять его!
                     binding.audioPlayer.player = controller
 
                     pendingAudioUrl?.let { url ->
@@ -134,11 +171,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 if (station.attractionResponseList.isNotEmpty()) {
                     binding.attractionsGallery.adapter = StationAttractionPagerAdapter(
                         { attraction ->
-                            val action =
-                                StationFragmentDirections.actionScreenStationToAttractionFragmentDetails(
-                                    ATTRACTION = AttractionId(attraction.id)
-                                )
-                            findNavController().navigate(action)
+                            viewModel.navigateToAttractionDetails(attraction.id)
                         },
                         station.attractionResponseList
                     )
@@ -154,14 +187,13 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                     videoPlayer?.prepare()
                 }
 
-                // Запускаем аудио
                 if (station.audiosRef.isNotEmpty()) {
                     playAudioSafely(station.audiosRef[0])
                 }
 
                 val iconResId = when (station.branch) {
                     "Сокольническая" -> R.drawable.red_branch_logo
-                    "Серпуховская" -> R.drawable.gray_branch_logo
+                    "Серпуховско-Тимирязевская" -> R.drawable.gray_branch_logo
                     "Арбатско-Покровская" -> R.drawable.blue_branch_logo
                     "Кольцевая" -> R.drawable.brown_branch_logo
                     else -> 0
@@ -174,19 +206,12 @@ class StationFragment : Fragment(R.layout.fragment_station) {
                 }
 
                 binding.seeAllTextView.setOnClickListener {
-
                     val stationData = StationAttractionData(
                         title = station.name,
                         id = station.id,
                         branch = station.branch
                     )
-
-                    val action =
-                        StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
-                            STATION = stationData
-                        )
-
-                    findNavController().navigate(action)
+                    viewModel.navigateToStationAttractions(stationData)
                 }
             }
         }
@@ -212,7 +237,23 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     }
 
     private fun initStationData() {
+        val args: StationFragmentArgs by navArgs()
+        if (args.STATION != null) {
+            val stationName = args.STATION!!.title
+            val branchName = when (args.STATION!!.branchNumber) {
+                1 -> "Сокольническая"
+                3 -> "Арбатско-Покровская"
+                5 -> "Кольцевая"
+                9 -> "Серпуховско-Тимирязевская"
+                else -> ""
+            }
 
+            viewModel.getStationInfo(
+                name = stationName,
+                branch = branchName
+            )
+            return
+        }
         viewModel.getCurrentStation()
     }
 
@@ -235,8 +276,6 @@ class StationFragment : Fragment(R.layout.fragment_station) {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Полностью отключаемся от сервиса только когда фрагмент окончательно умирает
-        // (Не при смене экрана назад/вперед, а именно при уничтожении ViewModel/Фрагмента)
         audioControllerFuture?.let { future ->
             MediaController.releaseFuture(future)
         }

@@ -67,7 +67,7 @@ class StationAttractionsFragment : Fragment() {
         val branchNumber = args.STATION.branch
         val iconResId = when (branchNumber) {
             "Сокольническая" -> R.drawable.red_branch_logo
-            "Серпуховская" -> R.drawable.gray_branch_logo
+            "Серпуховско-Тимирязевская" -> R.drawable.gray_branch_logo
             "Арбатско-Покровская" -> R.drawable.blue_branch_logo
             "Кольцевая" -> R.drawable.brown_branch_logo
             else -> 0
@@ -86,10 +86,7 @@ class StationAttractionsFragment : Fragment() {
     }
     private fun setupRecyclerView() {
         adapter = StationAttractionRecyclerAdapter { attraction ->
-            val action= StationAttractionsFragmentDirections.actionStationAttractionsFragmentToAttractionFragmentDetails(
-                ATTRACTION = AttractionId(attraction.id)
-            )
-            findNavController().navigate(action)
+            viewModel.navigateToAttractionDetails(attraction.id)
         }
         binding.attractionsList.layoutManager = LinearLayoutManager(requireContext())
         binding.attractionsList.adapter = adapter
