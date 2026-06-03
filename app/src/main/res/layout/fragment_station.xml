@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/station_fragment"
     android:layout_width="match_parent"
-    android:background="#ffffff"
     android:layout_height="match_parent"
-    android:visibility="invisible"
+    android:background="#ffffff"
+    android:visibility="visible"
     tools:context=".fragments.StationFragment">
+    <!-- TODO: УБРАТЬ ВИДИМОСТЬ-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -29,9 +30,9 @@
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/inter_bold"
                 android:paddingHorizontal="20dp"
-                android:textColor="@color/colorBlack"
-
                 android:text="@string/station_name"
+
+                android:textColor="@color/colorBlack"
                 android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.055"
@@ -42,12 +43,11 @@
                 android:id="@+id/branch_with_logo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/station_name_txt"
-               >
+                app:layout_constraintTop_toBottomOf="@+id/station_name_txt">
 
                 <ImageView
                     android:id="@+id/branchLogo"
@@ -80,114 +80,26 @@
                 android:paddingHorizontal="@dimen/gallery_peek"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/branch_with_logo" />
+                app:layout_constraintTop_toBottomOf="@id/branch_with_logo" />
 
-
-            <androidx.media3.ui.PlayerControlView
-                android:id="@+id/audioPlayer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="15dp"
-                app:controller_layout_id="@layout/exo_audio_player_controls"
-                app:show_timeout="0"
-                app:fastforward_icon="@drawable/ic_forward_15"
-                app:rewind_icon="@drawable/ic_replay_15"
-                app:play_icon="@drawable/ic_play"
-                app:pause_icon="@drawable/ic_pause"
-                app:show_rewind_button="true"
-                app:show_fastforward_button="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gallery" />
 
             <!-- Видеоплеер: оставляем стандартные контролы media3 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/videoPlayerCard"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="15dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-
-                app:strokeWidth="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/audioPlayer">
-
-                <androidx.media3.ui.PlayerView
-                    android:id="@+id/videoPlayer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:keepScreenOn="true"
-                    app:surface_type="texture_view"
-                    app:resize_mode="zoom"
-                    app:show_buffering="when_playing"
-                    app:controller_layout_id="@layout/exo_video_player_controls"
-                    app:fastforward_icon="@drawable/ic_forward_15"
-                    app:rewind_icon="@drawable/ic_replay_15"
-                    app:play_icon="@drawable/ic_play"
-                    app:pause_icon="@drawable/ic_pause"
-                    app:show_rewind_button="true"
-                    app:show_fastforward_button="true"
-                    app:show_timeout="3000" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textColor="@color/colorBlack"
-
-                android:paddingHorizontal="20dp"
-                android:textSize="22sp"
-                android:fontFamily="@font/inter_bold"
-                android:text="@string/places_nearby"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/videoPlayerCard" />
-
-            <TextView
-                android:id="@+id/seeAllTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="40dp"
-                android:text="См. все"
-                android:textSize="17sp"
-                android:textColor="@color/colorBlack"
-                android:fontFamily="@font/inter_regular"
-                app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/attractionsGallery"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/attractions_gallery_height"
-                android:layout_marginVertical="15dp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/gallery_peek"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/informationTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="22sp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/inter_bold"
-                android:textColor="@color/colorBlack"
                 android:paddingHorizontal="20dp"
                 android:text="@string/station_information_text"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/attractionsGallery" />
+                app:layout_constraintTop_toBottomOf="@id/gallery"
+                tools:layout_editor_absoluteY="766dp" />
+
 
             <TextView
                 android:id="@+id/descriptionTextView"
@@ -195,44 +107,113 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/inter_regular"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"
                 android:paddingHorizontal="20dp"
                 android:text="@string/station_description_text"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/informationTextView" />
+                app:layout_constraintTop_toBottomOf="@id/informationTextView" />
 
             <TextView
                 android:id="@+id/extraServicesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textSize="22sp"
                 android:fontFamily="@font/inter_bold"
-                android:textColor="@color/colorBlack"
                 android:paddingHorizontal="20dp"
                 android:text="@string/extra_services_text"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
+                app:layout_constraintTop_toBottomOf="@id/descriptionTextView" />
 
             <TextView
                 android:id="@+id/extraServicesInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/inter_regular"
-                android:textColor="@color/colorBlack"
-                android:textSize="17sp"
                 android:paddingHorizontal="20dp"
                 android:text="@string/extra_services_info"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/colorBlack"
+                android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/extraServicesTextView" />
+                app:layout_constraintTop_toBottomOf="@id/extraServicesTextView" />
 
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flex_box_attraction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="16dp"
+                app:alignItems="flex_start"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/extraServicesInfo">
+
+                <!-- Места рядом -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_places_nearby"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:letterSpacing="0"
+                    android:text="@string/places_nearby"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    app:backgroundTint="#DC2929"
+                    app:cornerRadius="@dimen/gallery_corner_radius"
+                    app:layout_flexBasisPercent="40%"
+                    app:layout_flexGrow="1" />
+
+                <!-- Аудиогид -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_audio_guide"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:letterSpacing="0"
+                    android:text="@string/audio_guide"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    app:backgroundTint="#DC2929"
+                    app:cornerRadius="@dimen/gallery_corner_radius"
+                    app:layout_flexBasisPercent="40%"
+                    app:layout_flexGrow="1" />
+
+                <!-- Видеогид (на всю ширину) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_video_guide"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:letterSpacing="0"
+                    android:text="@string/video_guide"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    app:backgroundTint="#DC2929"
+                    app:cornerRadius="@dimen/gallery_corner_radius"
+                    app:layout_flexBasisPercent="100%" />
+
+            </com.google.android.flexbox.FlexboxLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,9 @@
     <string name="branch_name">Название ветки</string>
     <string name="places_nearby">Места рядом</string>
     <string name="extra_services_text">Дополнительные сервисы</string>
-
+    <string name="places_nearby">Места рядом</string>
+    <string name="audio_guide">Аудиогид</string>
+    <string name="video_guide">Видеогид</string>
     <string name="station_information_text">Информация</string>
     <string name="station_description_text">В кабинете А. Н. Толстого можно увидеть старинные китайские курильницы и кресла из дворца императора Павла I, письменный прибор каррарского мрамора и пишущую машинку марки «Ундервуд», любимые курительные трубки писателя и каминные часы фирмы «Павел Буре». А также многочисленные предметы, помогавшие Толстому в работе над романом «Петр I»: </string>
     <string name="video_guide_text">Видео гид</string>
