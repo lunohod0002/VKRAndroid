@@ -15,12 +15,35 @@
             app:destination="@id/screen_station" />
 
     </fragment>
+    <dialog
+        android:id="@+id/audioPlayerBottomSheet"
+        android:name="com.example.vkr.presentation.fragments.AudioPlayerBottomSheet"
+        android:label="AudioPlayerBottomSheet">
 
+        <argument
+            android:name="audioUrl"
+            app:argType="string" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/videoPlayerBottomSheet"
+        android:name="com.example.vkr.presentation.fragments.VideoPlayerBottomSheet"
+        android:label="VideoPlayerBottomSheet"
+        tools:layout="@layout/video_player_bottom_sheet">
+
+        <argument
+            android:name="videoUrl"
+            app:argType="string" />
+    </dialog>
     <fragment
         android:id="@+id/screen_station"
 
         android:name="com.example.vkr.presentation.fragments.StationFragment"
         tools:layout="@layout/fragment_station">
+        <action
+            android:id="@+id/action_stationFragment_to_videoPlayerBottomSheet"
+            app:destination="@id/videoPlayerBottomSheet" />
         <argument
             android:name="STATION"
             app:argType="com.example.vkr.network.dto.StationData"
@@ -34,7 +57,9 @@
             android:id="@+id/action_screen_station_to_attractionFragmentDetails"
             app:destination="@id/attractionFragmentDetails"
             />
-
+        <action
+            android:id="@+id/action_stationFragment_to_audioPlayerBottomSheet"
+            app:destination="@id/audioPlayerBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/screen_reference_info"

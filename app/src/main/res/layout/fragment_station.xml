@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/inter_bold"
-                android:paddingHorizontal="20dp"
                 android:text="@string/station_name"
 
                 android:textColor="@color/colorBlack"
@@ -64,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:paddingHorizontal="20dp"
                     android:text="@string/branch_name"
                     android:textColor="@color/colorCustomGrey"
                     android:textSize="17sp" />
@@ -94,7 +92,7 @@
                 android:paddingHorizontal="20dp"
                 android:text="@string/station_information_text"
                 android:textColor="@color/colorBlack"
-                android:textSize="22sp"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/gallery"
@@ -124,25 +122,11 @@
                 android:paddingHorizontal="20dp"
                 android:text="@string/extra_services_text"
                 android:textColor="@color/colorBlack"
-                android:textSize="22sp"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTextView" />
 
-            <TextView
-                android:id="@+id/extraServicesInfo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/inter_regular"
-                android:paddingHorizontal="20dp"
-                android:text="@string/extra_services_info"
-                android:textColor="@color/colorBlack"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/extraServicesTextView" />
 
             <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/flex_box_attraction"
@@ -155,7 +139,7 @@
                 app:justifyContent="flex_start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/extraServicesInfo">
+                app:layout_constraintTop_toBottomOf="@id/extraServicesTextView">
 
                 <!-- Места рядом -->
                 <com.google.android.material.button.MaterialButton

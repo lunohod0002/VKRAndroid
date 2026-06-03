@@ -9,8 +9,7 @@
     <string name="branch_logo">branchLogo</string>
     <string name="branch_name">Название ветки</string>
     <string name="places_nearby">Места рядом</string>
-    <string name="extra_services_text">Дополнительные сервисы</string>
-    <string name="places_nearby">Места рядом</string>
+    <string name="extra_services_text">Сервисы</string>
     <string name="audio_guide">Аудиогид</string>
     <string name="video_guide">Видеогид</string>
     <string name="station_information_text">Информация</string>

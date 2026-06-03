@@ -41,13 +41,7 @@ class StationViewModel @Inject constructor(
     private val resultLiveMutable = MutableLiveData<Station?>()
     val resultLive: LiveData<Station?> = resultLiveMutable
 
-    fun navigateToAttractionDetails(attractionId: Long){
-        val direction =
-            StationFragmentDirections.actionScreenStationToAttractionFragmentDetails(
-                ATTRACTION = AttractionId(attractionId)
-            )
-        navigator.navigate(NavigationCommand.To(direction))
-    }
+
     fun navigateToStationAttractions(station: StationAttractionData){
         val direction =
             StationFragmentDirections.actionScreenStationToStationAttractionsFragment(
@@ -266,7 +260,7 @@ class StationViewModel @Inject constructor(
                             "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/MoscowMetro_Krasnopresnenskaya_HW1_6326.jpg/500px-MoscowMetro_Krasnopresnenskaya_HW1_6326.jpg",
                             "https://img-fotki.yandex.ru/get/6729/5104826.150/0_9988f_1dbbf376_XXXL.jpg",
                         ),
-                        listOf("https://videos.pexels.com/video-files/18226432/18226432-hd_1080_1920_60fps.mp4"),
+                        listOf("https://samplelib.com/preview/mp4/sample-20s.mp4"),
                         listOf("https://samplelib.com/mp3/sample-12s.mp3"),
                         listOf(
                             StationAttractionInfo(
@@ -381,4 +375,26 @@ class StationViewModel @Inject constructor(
 
         }
     }
+    fun openAudioGuide(
+        audioUrl: String,
+
+    ) {
+        val direction = StationFragmentDirections
+            .actionStationFragmentToAudioPlayerBottomSheet(
+                audioUrl = audioUrl
+            )
+        navigator.navigate(NavigationCommand.To(direction))
+    }
+    fun openVideoGuide(
+        videoUrl: String,
+    ) {
+        val direction = StationFragmentDirections
+            .actionStationFragmentToVideoPlayerBottomSheet(
+                videoUrl = videoUrl
+            )
+
+        navigator.navigate(NavigationCommand.To(direction))
+    }
+
+
 }
