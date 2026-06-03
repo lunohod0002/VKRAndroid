@@ -94,6 +94,12 @@
         android:name="ATTRACTION"
         app:argType="com.example.vkr.network.dto.AttractionId"
         app:nullable="false"/>
+        <action
+            android:id="@+id/action_attractionFragment_to_videoPlayerBottomSheet"
+            app:destination="@id/videoPlayerBottomSheet" />
+        <action
+            android:id="@+id/action_attractionFragment_to_audioPlayerBottomSheet"
+            app:destination="@id/audioPlayerBottomSheet" />
     </fragment>
 
     <fragment

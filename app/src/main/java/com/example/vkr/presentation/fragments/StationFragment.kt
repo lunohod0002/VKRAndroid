@@ -18,6 +18,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentStationBinding
+import com.example.vkr.logic.models.Station
 import com.example.vkr.logic.viewmodels.StationViewModel
 import com.example.vkr.network.dto.StationAttractionData
 import com.example.vkr.presentation.adapters.StationAttractionPagerAdapter
@@ -39,8 +40,6 @@ class StationFragment : Fragment(R.layout.fragment_station) {
     private var audioUrl: String? = null
     private var videoUrl: String? = null
 
-    private var stationName: String? = null
-    private var branchName: String? = null
     private var branchLogoRes: Int = 0
 
     private val notificationPermissionLauncher = registerForActivityResult(
@@ -94,20 +93,10 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         }
     }
 
-//    private fun initVideoPlayer() {
-//        videoPlayer = ExoPlayer.Builder(requireContext())
-//            .setSeekBackIncrementMs(15_000)
-//            .setSeekForwardIncrementMs(15_000)
-//            .build()
-//        binding.videoPlayer.player = videoPlayer
-//    }
-
     private fun displayStationData() {
         viewModel.resultLive.observe(viewLifecycleOwner) { station ->
             if (station == null) return@observe
 
-            stationName = station.name
-            branchName = station.branch
 
             binding.descriptionTextView.text = station.description
             binding.stationNameTxt.text = station.name
@@ -139,13 +128,25 @@ class StationFragment : Fragment(R.layout.fragment_station) {
             }
             binding.branchLogo.setImageResource(branchLogoRes)
 
+            binding.btnAudioGuide.setOnClickListener { openAudioGuide() }
+            binding.btnVideoGuide.setOnClickListener { openVideoGuide() }
+            binding.btnPlacesNearby.setOnClickListener { openStationAttractions(station = station) }
 
         }
 
-        binding.btnAudioGuide.setOnClickListener { openAudioGuide() }
-        binding.btnVideoGuide.setOnClickListener { openVideoGuide() }
+
 
     }
+    private fun openStationAttractions(station: Station) {
+        val stationData = StationAttractionData(
+            title = station.name,
+            id = station.id,
+            branch = station.branch
+        )
+        viewModel.navigateToStationAttractions(stationData)
+    }
+
+
     private fun openVideoGuide() {
         val url = videoUrl
         if (url.isNullOrEmpty()) {

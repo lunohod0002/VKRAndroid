@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,12 +38,8 @@ class AttractionFragmentDetails : Fragment() {
     private var _binding: FragmentAttractionDetailsBinding? = null
     private val binding get() = _binding!!
 
-    // Аудио теперь идёт через сервис
-    private var controllerFuture: ListenableFuture<MediaController>? = null
-    private var audioController: MediaController? = null
-
-    // Видео остаётся локальным
-    private var videoPlayer: ExoPlayer? = null
+    private var audioUrl: String? = null
+    private var videoUrl: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,8 +63,6 @@ class AttractionFragmentDetails : Fragment() {
                 setupGallery(attraction)
                 setupBackButton()
                 setupBuyButton(attraction)
-                setupAudio(attraction)
-                setupVideo(attraction)
             }
         }
     }
@@ -110,6 +105,13 @@ class AttractionFragmentDetails : Fragment() {
             buyTicketBtn.visibility = View.GONE
         }
         infoDetailsTxt.text = attraction.description
+        val audioUrl= attraction.audios?.firstOrNull()?.takeIf { it.isNotBlank() }
+        if (audioUrl!=null){
+            binding.btnAudioGuideAttraction.setOnClickListener { openAudioGuide(audioUrl) }
+        }
+        val videoUrl = attraction.videos?.firstOrNull()?.takeIf { it.isNotBlank() }
+
+        binding.btnVideoGuideAttraction.setOnClickListener { openVideoGuide(videoUrl) }
     }
 
     private fun setupGallery(attraction: Attraction) {
@@ -132,82 +134,30 @@ class AttractionFragmentDetails : Fragment() {
         }
     }
 
-    private fun setupAudio(attraction: Attraction) {
-        val url = attraction.audios?.firstOrNull()?.takeIf { it.isNotBlank() }
-        if (url == null) {
-            binding.audioPlayerAttraction.visibility = View.GONE
+    private fun openVideoGuide(videoUrl: String?) {
+        if (videoUrl.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Видеогид недоступен", Toast.LENGTH_SHORT).show()
             return
         }
-
-        // Подключаемся к сервису через MediaController
-        val token = SessionToken(
-            requireContext(),
-            ComponentName(requireContext(), AttractionAudioService::class.java)
+        viewModel.openVideoGuide(
+            videoUrl = videoUrl
         )
 
-        controllerFuture = MediaController.Builder(requireContext(), token)
-            .buildAsync()
-            .also { future ->
-                future.addListener({
-                    if (!isAdded || _binding == null) return@addListener
-                    val controller = future.get()
-                    audioController = controller
-                    binding.audioPlayerAttraction.player = controller
-
-                    val mediaItem = MediaItem.Builder()
-                        .setUri(url)
-                        .setMediaMetadata(
-                            MediaMetadata.Builder()
-                                .setTitle(attraction.name)
-                                .setArtist("Аудиогид")
-                                .build()
-                        )
-                        .build()
-
-                    // Если в сервисе уже играет тот же трек — не пересоздаём
-                    val currentUri = controller.currentMediaItem?.localConfiguration?.uri?.toString()
-                    if (currentUri != url) {
-                        controller.setMediaItem(mediaItem)
-                        controller.prepare()
-                        controller.playWhenReady = false
-                    }
-                }, MoreExecutors.directExecutor())
-            }
     }
-
-    private fun setupVideo(attraction: Attraction) {
-        val url = attraction.videos?.firstOrNull()?.takeIf { it.isNotBlank() }
-        if (url == null) {
-            binding.videoPlayerAttraction.visibility = View.GONE
+    private fun openAudioGuide(audioUrl : String?) {
+        if (audioUrl.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Аудиогид недоступен", Toast.LENGTH_SHORT).show()
             return
         }
-        videoPlayer = ExoPlayer.Builder(requireContext())
-            .setSeekBackIncrementMs(15_000)
-            .setSeekForwardIncrementMs(15_000).build().also { player ->
-            binding.videoPlayerAttraction.player = player
-            player.setMediaItem(MediaItem.fromUri(url))
-            player.prepare()
-            player.playWhenReady = false
-        }
+        viewModel.openAudioGuide(
+            audioUrl = audioUrl)
+
     }
 
-    override fun onPause() {
-        super.onPause()
-        // Аудио НЕ ставим на паузу — пусть играет в фоне.
-        videoPlayer?.pause()
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        _binding?.audioPlayerAttraction?.player = null
-        audioController?.release()
-        audioController = null
-        controllerFuture?.let { MediaController.releaseFuture(it) }
-        controllerFuture = null
-
-        videoPlayer?.release()
-        videoPlayer = null
 
         _binding = null
     }
