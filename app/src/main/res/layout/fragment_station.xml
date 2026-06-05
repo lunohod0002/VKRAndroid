@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:visibility="visible"
+    android:visibility="invisible"
     tools:context=".fragments.StationFragment">
     <!-- TODO: УБРАТЬ ВИДИМОСТЬ-->
 
@@ -113,20 +113,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/informationTextView" />
 
-            <TextView
-                android:id="@+id/extraServicesTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/inter_bold"
-                android:paddingHorizontal="20dp"
-                android:text="@string/extra_services_text"
-                android:textColor="@color/colorBlack"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/descriptionTextView" />
-
 
             <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/flex_box_attraction"
@@ -139,13 +125,13 @@
                 app:justifyContent="flex_start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/extraServicesTextView">
+                app:layout_constraintTop_toBottomOf="@id/descriptionTextView">
 
                 <!-- Места рядом -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_places_nearby"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:layout_margin="5dp"
                     android:fontFamily="@font/inter_bold"
                     android:insetTop="0dp"
@@ -158,13 +144,15 @@
                     app:backgroundTint="#DC2929"
                     app:cornerRadius="@dimen/gallery_corner_radius"
                     app:layout_flexBasisPercent="40%"
-                    app:layout_flexGrow="1" />
+                    app:layout_flexGrow="1"
+                    tools:layout_editor_absoluteX="20dp"
+                    tools:layout_editor_absoluteY="21dp" />
 
                 <!-- Аудиогид -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_audio_guide"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:layout_margin="5dp"
                     android:fontFamily="@font/inter_bold"
                     android:insetTop="0dp"
@@ -177,13 +165,15 @@
                     app:backgroundTint="#DC2929"
                     app:cornerRadius="@dimen/gallery_corner_radius"
                     app:layout_flexBasisPercent="40%"
-                    app:layout_flexGrow="1" />
+                    app:layout_flexGrow="1"
+                    tools:layout_editor_absoluteX="211dp"
+                    tools:layout_editor_absoluteY="21dp" />
 
                 <!-- Видеогид (на всю ширину) -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_video_guide"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:layout_margin="5dp"
                     android:fontFamily="@font/inter_bold"
                     android:insetTop="0dp"
@@ -195,7 +185,9 @@
                     android:textSize="15sp"
                     app:backgroundTint="#DC2929"
                     app:cornerRadius="@dimen/gallery_corner_radius"
-                    app:layout_flexBasisPercent="100%" />
+                    app:layout_flexBasisPercent="100%"
+                    tools:layout_editor_absoluteX="20dp"
+                    tools:layout_editor_absoluteY="79dp" />
 
             </com.google.android.flexbox.FlexboxLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

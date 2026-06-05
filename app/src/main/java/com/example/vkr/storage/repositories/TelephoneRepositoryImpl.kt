@@ -31,7 +31,7 @@ class TelephoneRepositoryImpl @Inject constructor(
 //            return null
 //        }
 
-        return CellInfo("5088","250","1","197125378","LTE")
+        return null
     }
     private fun getCellInfoGsm(info: CellInfoGsm): CellInfo {
         val cellInfo = CellInfo()

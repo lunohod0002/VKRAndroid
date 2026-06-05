@@ -72,6 +72,7 @@ class MapViewModel @Inject constructor(
         )
 
     fun fetchCurrentLocation() {
+
         val cellInfo  = telephoneRepository.getCurrentCellInfo()
         if (cellInfo == null){
             resultLiveMutable.value = null

@@ -6,21 +6,27 @@ app/
 │   │   │   ├── com/
 │   │   │       ├── example/
 │   │   │           ├── vkr/
+│   │   │               ├── di/ # Контейнер внедрения зависимостей
+│   │   │               │   ├── DatabaseModule.kt
+│   │   │               │   └── NetworkModule.kt
 │   │   │               ├── logic/ # Слой бизнес-логики
-│   │   │               │   ├── usecases/ # Пользовательские сценарии
-│   │   │               │   │   └── GetCurrentStationUseCase.java
+│   │   │               │   ├── repositories/ # Репозитории (контракты)
+│   │   │               │   │   ├── AttractionRepository.kt
+│   │   │               │   │   ├── CellRepository.kt
 │   │   │               │   ├── viewmodels/ # Viewmodels (управление состоянием)
-│   │   │               │       ├── MainActivityViewModel.kt
-│   │   │               │       ├── MapViewModel.kt
-│   │   │               │       └── StationViewModel.kt
+│   │   │               │   │   ├── MainActivityViewModel.kt
+│   │   │               │   │   ├── MapViewModel.kt
+│   │   │               │   │   └── StationViewModel.kt
+│   │   │               │   └── models/ Сущности (управление состоянием)
+│   │   │               │       ├── Station.kt
+│   │   │               │       ├── Attraction.kt
+│   │   │               │       └── CellInfo.kt
 │   │   │               ├── network/ # Слой доступа к данным (работа с сетью)
 │   │   │               │   ├── api/ # Классы Reftrofit
-│   │   │               │   │   ├── AudioPlayerApi.kt
-│   │   │               │   │   ├── StationRepository.kt
-│   │   │               │   │   └── StationRepositoryImpl.kt
+│   │   │               │   │   ├── AttractionRepositoryImpl.kt
+│   │   │               │   │   └── MediaApi.kt
 │   │   │               │   ├── dto/ # DTO запросов и ответов
 │   │   │               │       ├── CellInfo.kt
-│   │   │               │       ├── MapMarker.kt
 │   │   │               │       ├── StationCoordinates.kt
 │   │   │               │       └── StationData.kt
 │   │   │               ├── presentation/ # Слой представления

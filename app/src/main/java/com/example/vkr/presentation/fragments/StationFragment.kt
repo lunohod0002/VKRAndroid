@@ -54,7 +54,7 @@ class StationFragment : Fragment(R.layout.fragment_station) {
         } else {
             Toast.makeText(
                 requireContext(),
-                "Без разрешения на геолокацию работа станции невозможна",
+                "Без разрешения на геолокацию определении станции невозможно",
                 Toast.LENGTH_LONG
             ).show()
             viewModel.onBackPressed()

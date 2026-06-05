@@ -123,7 +123,6 @@ class AddAttractionFragment : Fragment() {
                 is AddAttractionViewModel.UiState.Success -> {
                     setLoading(false)
                     toast("Сохранено, id=${state.id}")
-                    // findNavController().popBackStack()
                 }
                 is AddAttractionViewModel.UiState.Error -> {
                     setLoading(false)

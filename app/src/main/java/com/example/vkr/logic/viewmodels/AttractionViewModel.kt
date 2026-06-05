@@ -32,11 +32,11 @@ class AttractionViewModel @Inject constructor(
 
     fun getAttraction(stationId:Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val attraction = MockAttractions.first()
-            resultLiveMutable.postValue(attraction)
-
-//            val attraction = stationRepository.getAttraction(stationId)
+//            val attraction = MockAttractions.first()
 //            resultLiveMutable.postValue(attraction)
+
+            val attraction = stationRepository.getAttraction(stationId)
+            resultLiveMutable.postValue(attraction)
 
             }
         }
