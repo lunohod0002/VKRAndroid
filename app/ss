@@ -38,7 +38,7 @@ app/
 │   │   │               │   │   └── StationFragment.kt
 │   │   │               │   ├── services/ # Сервисы
 │   │   │               │   │   └── AudioService.kt
-│   │   │               │   ├── navigation/ # Сервисы
+│   │   │               │   ├── navigation/ # Навигатор (navigation-graph)
 │   │   │               │   │   └── NavigatorImpl.kt
 │   │   │               │   └── AppDatabase.kt
 │   │   │               ├── storage/ # Слой доступа к даннм (локальное хранилище данных)
