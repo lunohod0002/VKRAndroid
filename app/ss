@@ -46,10 +46,9 @@ app/
 │   │   │               │   │   └── CellDao.kt
 │   │   │               │   ├── models/ # Entity Room
 │   │   │               │   │   └── CellTower.kt
-│   │   │               │   ├── repositories/ # Репозитории Room
-│   │   │               │   │   ├── CellRepositoryImpl.kt
-│   │   │               │   │   └── TelephoneRepositoryImpl.kt
-│   │   │               │   └── AppDatabase.kt
+│   │   │               │   └── repositories/ # Репозитории Room
+│   │   │               │       ├── CellRepositoryImpl.kt
+│   │   │               │       └── TelephoneRepositoryImpl.kt
 │   │   │               └── App.kt
 │   │   ├── res/ # Верстка XML
 │   │   │   ├── layout/ # Макеты
