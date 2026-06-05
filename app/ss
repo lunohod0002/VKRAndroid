@@ -33,19 +33,21 @@ app/
 │   │   │               │   ├── activities/ # Активити
 │   │   │               │   │   └── MainActivity.kt
 │   │   │               │   ├── fragments/ # Фрагменты
-│   │   │               │       ├── AddAttractionFragment.kt
-│   │   │               │       ├── AttractionFragment.kt
-│   │   │               │       ├── MapFragment.kt
-│   │   │               │       └── StationFragment.kt
+│   │   │               │   │   ├── AddAttractionFragment.kt
+│   │   │               │   │   ├── MapFragment.kt
+│   │   │               │   │   └── StationFragment.kt
+│   │   │               │   ├── services/ # Сервисы
+│   │   │               │   │   └── AudioService.kt
+│   │   │               │   ├── navigation/ # Сервисы
+│   │   │               │   │   └── NavigatorImpl.kt
+│   │   │               │   └── AppDatabase.kt
 │   │   │               ├── storage/ # Слой доступа к даннм (локальное хранилище данных)
 │   │   │               │   ├── dao/ # DAO Room
 │   │   │               │   │   └── CellDao.kt
 │   │   │               │   ├── models/ # Entity Room
 │   │   │               │   │   └── CellTower.kt
 │   │   │               │   ├── repositories/ # Репозитории Room
-│   │   │               │   │   ├── CellRepository.kt
 │   │   │               │   │   ├── CellRepositoryImpl.kt
-│   │   │               │   │   ├── TelephoneRepository.kt
 │   │   │               │   │   └── TelephoneRepositoryImpl.kt
 │   │   │               │   └── AppDatabase.kt
 │   │   │               └── App.kt
