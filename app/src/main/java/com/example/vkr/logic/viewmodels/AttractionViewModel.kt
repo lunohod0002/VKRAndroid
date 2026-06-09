@@ -1,28 +1,21 @@
 package com.example.vkr.logic.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.vkr.network.RetrofitClient
-import com.example.vkr.network.api.StationRepositoryImpl
 import com.example.vkr.logic.models.Attraction
 import com.example.vkr.logic.navigation.AppNavigator
 import com.example.vkr.logic.navigation.NavigationCommand
-import com.example.vkr.logic.repositories.StationRepository
-import com.example.vkr.network.dto.MockAttractions
-import com.example.vkr.presentation.fragments.AttractionFragmentDetails
+import com.example.vkr.logic.repositories.StationAPIRepository
 import com.example.vkr.presentation.fragments.AttractionFragmentDetailsDirections
-import com.example.vkr.presentation.fragments.StationFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 @HiltViewModel
 class AttractionViewModel @Inject constructor(
-    private val stationRepository: StationRepository,
+    private val stationAPIRepository: StationAPIRepository,
     private val navigator: AppNavigator,
 ) : ViewModel() {
 
@@ -35,7 +28,7 @@ class AttractionViewModel @Inject constructor(
 //            val attraction = MockAttractions.first()
 //            resultLiveMutable.postValue(attraction)
 
-            val attraction = stationRepository.getAttraction(stationId)
+            val attraction = stationAPIRepository.getAttraction(stationId)
             resultLiveMutable.postValue(attraction)
 
             }

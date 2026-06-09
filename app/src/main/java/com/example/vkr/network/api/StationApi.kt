@@ -3,6 +3,7 @@ package com.example.vkr.network.api
 import com.example.vkr.logic.models.Attraction
 import com.example.vkr.logic.models.Station
 import com.example.vkr.logic.models.StationAttractionsResponse
+import com.example.vkr.network.dto.AllStationsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,5 +16,6 @@ interface StationApi {
     suspend fun getStationAttractions(@Path("stationId") stationId:Long): Response<StationAttractionsResponse>
     @GET(value="/api/attractions/{attractionId}")
     suspend fun getAttraction(@Path("attractionId") attractionId:Long): Response<Attraction>
-
+    @GET(value="/api/stations/all")
+    suspend fun getAllStations(): Response<AllStationsResponse>
 }

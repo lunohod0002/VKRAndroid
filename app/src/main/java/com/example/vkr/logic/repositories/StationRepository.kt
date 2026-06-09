@@ -1,11 +1,12 @@
 package com.example.vkr.logic.repositories
 
-import com.example.vkr.logic.models.Attraction
-import com.example.vkr.logic.models.Station
-import com.example.vkr.logic.models.StationAttractionsResponse
+import com.example.vkr.storage.models.StationEntity
 
 interface StationRepository {
-    suspend fun getStationByNameAndBranch(name: String, branch: String): Station?
-    suspend fun getStationAttractions(stationId: Long): StationAttractionsResponse?
-    suspend fun getAttraction(attractionId: Long): Attraction?
+    suspend fun getStations(): List<StationEntity>
+
+    suspend fun getStationByCellTower(
+        cid: String, lac: String, mcc: String, mnc: String, radio: String
+    ): StationEntity?
+
 }

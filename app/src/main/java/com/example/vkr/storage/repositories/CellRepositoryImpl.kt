@@ -6,14 +6,10 @@ import com.example.vkr.storage.models.CellTower
 import jakarta.inject.Inject
 
 class CellRepositoryImpl @Inject constructor(private val cellDao: CellDao): CellRepository {
-    override fun getAllCells(): List<CellTower> {
-        
-        return cellDao.getAllCells()
 
 
-    }
 
-    override fun getCellAllInfo(
+    override suspend fun getCellAllInfo(
         lac: String,
         mcc: String,
         mnc: String,
@@ -30,24 +26,6 @@ class CellRepositoryImpl @Inject constructor(private val cellDao: CellDao): Cell
     }
 
 
-    override suspend fun insert(
-        lac: String?,
-        mcc: String?,
-        mnc: String?,
-        cid: String?,
-        station: String?,
-        radio: String?,
 
-        ) {
-        val cellTower = CellTower(
-            lac = lac,
-            mcc = mcc,
-            mnc = mnc,
-            cid = cid,
-            station = station,
-            radio = radio,
-        )
 
-        cellDao.insert(cellTower)
-    }
 }

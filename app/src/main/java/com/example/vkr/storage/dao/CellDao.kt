@@ -10,20 +10,13 @@ interface CellDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(cellTower: CellTower): Long
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(cellTowers: List<CellTower>)
 
-    @Query("SELECT * FROM cell ORDER BY id DESC")
-    fun getAllCells(): List<CellTower>
+    // Остальные методы оставь как есть, но getCellByAllInfo теперь будет возвращать вышку с stationId
+    @Query("SELECT * FROM cell WHERE cid = :cid AND lac = :lac AND mcc = :mcc AND mnc = :mnc AND radio = :radio LIMIT 1")
+    suspend fun getCellByAllInfo(cid: String, lac: String, mcc: String, mnc: String, radio: String): CellTower?
 
-    @Query("SELECT * FROM cell WHERE id = :id")
-    suspend fun getCellById(id: Long): CellTower?
-
-    @Query("SELECT * FROM cell WHERE cid = :cid and lac = :lac and mcc = :mcc and mnc = :mnc and radio = :radio")
-    fun getCellByAllInfo(cid: String,lac: String,mcc:String,mnc:String,radio:String): CellTower?
-
-    @Query("SELECT * FROM cell WHERE station = :station and branch =:branch")
-    fun getCellsByStationNameAndBranch(station: String,branch: Int): Flow<List<CellTower>>
 
     @Delete
     suspend fun delete(cellTower: CellTower)

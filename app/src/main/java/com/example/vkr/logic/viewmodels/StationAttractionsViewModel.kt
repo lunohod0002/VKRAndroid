@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.vkr.logic.models.StationAttractionInfo
 import com.example.vkr.logic.navigation.AppNavigator
 import com.example.vkr.logic.navigation.NavigationCommand
-import com.example.vkr.logic.repositories.StationRepository
+import com.example.vkr.logic.repositories.StationAPIRepository
 import com.example.vkr.network.dto.AttractionId
 import com.example.vkr.presentation.fragments.StationAttractionsFragmentDirections
-import com.example.vkr.presentation.fragments.StationFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StationAttractionsViewModel @Inject constructor(
-    private val stationRepository: StationRepository,
+    private val stationAPIRepository: StationAPIRepository,
     private val navigator: AppNavigator
 ) : ViewModel() {
 
@@ -44,7 +43,7 @@ class StationAttractionsViewModel @Inject constructor(
 //            )
 //            resultLiveMutable.postValue(attractions)
 
-            val attractions = stationRepository.getStationAttractions(stationId)
+            val attractions = stationAPIRepository.getStationAttractions(stationId)
             resultLiveMutable.postValue(attractions?.content)
 
             }

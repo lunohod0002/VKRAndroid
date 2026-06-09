@@ -36,8 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemRippleColor="@android:color/transparent"
-            app:itemTextAppearanceInactive="@style/BottomNavTextInactive"
-            app:itemTextAppearanceActive="@style/BottomNavTextActive"
+
             app:itemBackground="@android:color/transparent"
             app:itemIconSize="32dp"
             app:itemActiveIndicatorStyle="@style/Widget.BottomNavigationView.NoActiveIndicator"

@@ -1,39 +1,31 @@
 package com.example.vkr.logic.viewmodels
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.example.vkr.logic.models.Station
 import com.example.vkr.logic.models.StationAttractionInfo
 import com.example.vkr.logic.navigation.AppNavigator
 import com.example.vkr.logic.navigation.NavigationCommand
 import com.example.vkr.logic.repositories.CellRepository
+import com.example.vkr.logic.repositories.StationAPIRepository
 import com.example.vkr.logic.repositories.StationRepository
 import com.example.vkr.logic.repositories.TelephoneRepository
-import com.example.vkr.network.dto.AttractionId
 import com.example.vkr.network.dto.StationAttractionData
-import com.example.vkr.network.dto.StationData
-import com.example.vkr.presentation.fragments.MapFragmentDirections
 import com.example.vkr.presentation.fragments.StationFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class StationViewModel @Inject constructor(
-    private val stationRepository: StationRepository,
+    private val stationAPIRepository: StationAPIRepository,
     private val telephoneRepository: TelephoneRepository,
-    private val cellRepository: CellRepository,
+    private val stationRepository: StationRepository,
     private val navigator: AppNavigator,
     @param:ApplicationContext private val context: Context,
 ) : ViewModel() {
@@ -60,22 +52,15 @@ class StationViewModel @Inject constructor(
             return
         }
         viewModelScope.launch(Dispatchers.IO) {
-            val cell = cellRepository.getCellAllInfo(
+            val station = stationRepository.getStationByCellTower(
+                cid = cellInfo.cid!!,
                 lac = cellInfo.lac!!,
                 mcc = cellInfo.mcc!!,
                 mnc = cellInfo.mnc!!,
-                cid = cellInfo.cid!!,
                 radio = cellInfo.radio!!
             )
-            if (cell != null) {
-                val branch = when (cell.branch) {
-                    1 -> "Сокольничекская"
-                    9 -> "Серпуховско-Тимирязевская"
-                    3 -> "Арбатско-Покро́вская"
-                    5 -> "Кольцевая"
-                    else -> " "
-                }
-                val station = stationRepository.getStationByNameAndBranch(name = cell.station!!, branch = branch)
+            if (station != null) {
+                val station = stationAPIRepository.getStationByNameAndBranch(name = station.name, branch =station.branch)
                 resultLiveMutable.postValue(station)
 
 

@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
             var checkedItemId = when (destId) {
                 R.id.screen_map,
-                R.id.screen_add_attraction,
                 R.id.screen_station,
                 R.id.screen_reference_info -> destId
 

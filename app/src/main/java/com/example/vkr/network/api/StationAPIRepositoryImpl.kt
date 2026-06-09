@@ -4,12 +4,12 @@ import com.example.vkr.logic.models.Station
 import android.util.Log
 import com.example.vkr.logic.models.Attraction
 import com.example.vkr.logic.models.StationAttractionsResponse
-import com.example.vkr.logic.repositories.StationRepository
+import com.example.vkr.logic.repositories.StationAPIRepository
 import javax.inject.Inject
 
-class StationRepositoryImpl @Inject constructor(
+class StationAPIRepositoryImpl @Inject constructor(
     private val stationApi: StationApi
-) : StationRepository {
+) : StationAPIRepository {
 
     override suspend fun getStationByNameAndBranch(
         name: String,

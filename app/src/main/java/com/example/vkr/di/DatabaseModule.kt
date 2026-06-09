@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.vkr.storage.AppDatabase
 import com.example.vkr.storage.dao.CellDao
+import com.example.vkr.storage.dao.StationDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,10 +25,11 @@ class DatabaseModule {
         AppDatabase::class.java,
         "database"
     )
-        .createFromAsset("database.db")
-        .fallbackToDestructiveMigrationFrom(dropAllTables = true)
+        .fallbackToDestructiveMigration()
         .build()
 
     @Provides
     fun provideCellDao(db: AppDatabase): CellDao = db.cellDao()
+    @Provides
+    fun provideStationlDao(db: AppDatabase): StationDao = db.stationDao()
 }
